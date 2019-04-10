@@ -14,7 +14,7 @@ public class OtherActivity extends BaseEntity {
     public OtherActivity() {
     }
 
-    @Column(name = "category_name", unique = true, updatable = true)
+    @Column(name = "category_name", unique = true)
     public String getName() {
         return name;
     }
