@@ -9,15 +9,21 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="mt-3">
-    <div class="jumbotron bg-light">
-
-        <div >
-            <p>Name: <span th:text="*{username}">Sebastian</span>.</p>
-        </div>
-
-        <p>If you want to proceed, please, register your child and choose your programme schedule <a th:href="@{/templates/kid/add}">HERE.</a></p>
-        <hr>
+    <div>
+        <h3>
+            <br/>
+            <p>Welcome to our 𝕂𝕚𝕕𝕤 ℂ𝕖𝕟𝕥𝕖𝕣, dear
+                <span th:text="${#authentication.getPrincipal().getUsername()}"></span>!!!
+            </p>
+        </h3>
+        <br/>
+        <br/>
+        <br/>
     </div>
+    <p>If you want to proceed, please, register your child and choose your programme schedule <a
+            th:href="@{/kids/add}">HERE.</a></p>
+    <br class="text-right"/>
+    <hr>
 </main>
 <footer>
     <th:block th:include="~{fragments/footer}"></th:block>

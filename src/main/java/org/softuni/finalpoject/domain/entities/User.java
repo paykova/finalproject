@@ -4,6 +4,8 @@ package org.softuni.finalpoject.domain.entities;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,6 +17,8 @@ public class User extends BaseEntity implements UserDetails {
     private String email;
 
     private Set<Role> authorities;
+
+    private List<Kid> kids = new ArrayList<>();
 
     private User() {
     }
@@ -59,6 +63,15 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setAuthorities(Set<Role> authorities) {
         this.authorities = authorities;
+    }
+
+    @OneToMany(mappedBy = "parent")
+    public List<Kid> getKids() {
+        return kids;
+    }
+
+    public void setKids(List<Kid> kids) {
+        this.kids = kids;
     }
 
     @Override

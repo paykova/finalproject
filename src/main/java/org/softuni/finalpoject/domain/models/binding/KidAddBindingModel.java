@@ -2,7 +2,10 @@ package org.softuni.finalpoject.domain.models.binding;
 
 import org.softuni.finalpoject.domain.entities.Gender;
 import org.softuni.finalpoject.domain.entities.User;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class KidAddBindingModel {
@@ -14,6 +17,8 @@ public class KidAddBindingModel {
     public KidAddBindingModel() {
     }
 
+    @NotNull
+    @Size(min = 3, max = 10, message = "Name should be between 3 and 10 symbols!")
     public String getName() {
         return name;
     }
@@ -22,6 +27,7 @@ public class KidAddBindingModel {
         this.name = name;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate getBirthDate() {
         return birthDate;
     }

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class KidServiceImpl implements KidService{
-    private final KidRepository kidRepository;
 
+    private final KidRepository kidRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
@@ -22,6 +22,12 @@ public class KidServiceImpl implements KidService{
     @Override
     public KidServiceModel addKid(KidServiceModel kidServiceModel) {
         Kid kid = this.modelMapper.map(kidServiceModel, Kid.class);
-        return this.modelMapper.map(this.kidRepository.saveAndFlush(kid), KidServiceModel.class);
+        try {
+            kid = this.kidRepository.saveAndFlush(kid);
+            return this.modelMapper.map(kid, KidServiceModel.class);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

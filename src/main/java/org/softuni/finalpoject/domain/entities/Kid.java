@@ -43,7 +43,7 @@ public class Kid extends BaseEntity {
         this.gender = gender;
     }
 
-    @OneToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     @JoinColumn(
             name = "parent_id",
             referencedColumnName = "id",
