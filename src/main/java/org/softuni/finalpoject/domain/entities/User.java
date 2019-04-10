@@ -65,7 +65,7 @@ public class User extends BaseEntity implements UserDetails {
         this.authorities = authorities;
     }
 
-    @OneToMany(mappedBy = "parent")
+     @OneToMany(mappedBy = "parent")
     public List<Kid> getKids() {
         return kids;
     }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/kids")
@@ -40,14 +41,15 @@ public class KidController extends BaseController {
     @PostMapping("/add")
     @PreAuthorize("isAuthenticated()")
     public ModelAndView addKidConfirm(@Valid @ModelAttribute(name = "bindingModel") KidAddBindingModel bindingModel,
-                                      BindingResult bindingResult, ModelAndView modelAndView) {
+                                      BindingResult bindingResult, ModelAndView modelAndView, Principal principal) {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("bindingModel", bindingModel);
 
             return super.view("kid/kid-add", modelAndView);
         }
+        String name = principal.getName();
         KidServiceModel kidServiceModel = this.modelMapper.map(bindingModel, KidServiceModel.class);
-        this.kidService.addKid(kidServiceModel);
+        this.kidService.addKid(kidServiceModel, name);
 
         return super.redirect("/home");
     }
