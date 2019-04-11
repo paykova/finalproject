@@ -26,3 +26,35 @@ img.img-thumbnail {
 }
 
 
+
+
+.bg-kidcenter {
+    background-color: #FFF8F0;
+}
+
+.bg-kidcenter2 {
+    background-color: #48922e;
+}
+
+.text-kidcenter {
+    color: #48922e;
+}
+
+.text-kidcenter2 {
+    color: #9BC53D;
+}
+
+.hr-2 {
+    height: 2px;
+}
+
+textarea {
+    resize: none;
+}
+
+.home-doc {
+    width: 16%;
+    margin: 0% 4% 1% 0%;
+}
+
+

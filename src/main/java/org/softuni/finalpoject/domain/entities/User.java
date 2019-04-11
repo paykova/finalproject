@@ -15,9 +15,7 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
-
     private Set<Role> authorities;
-
     private List<Kid> kids = new ArrayList<>();
 
     private User() {
@@ -65,7 +63,7 @@ public class User extends BaseEntity implements UserDetails {
         this.authorities = authorities;
     }
 
-     @OneToMany(mappedBy = "parent")
+    @OneToMany(mappedBy = "parent", targetEntity = Kid.class)
     public List<Kid> getKids() {
         return kids;
     }

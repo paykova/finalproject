@@ -2,9 +2,12 @@ package org.softuni.finalpoject.web.controllers;
 
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.domain.entities.User;
 import org.softuni.finalpoject.domain.models.binding.KidAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.KidServiceModel;
+import org.softuni.finalpoject.domain.models.view.KidAllViewModel;
 import org.softuni.finalpoject.service.KidService;
+import org.softuni.finalpoject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,17 +20,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/kids")
 public class KidController extends BaseController {
 
     private final KidService kidService;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public KidController(KidService kidService, ModelMapper modelMapper) {
+    public KidController(KidService kidService, UserService userService, ModelMapper modelMapper) {
         this.kidService = kidService;
+        this.userService = userService;
         this.modelMapper = modelMapper;
     }
 
@@ -52,5 +59,18 @@ public class KidController extends BaseController {
         this.kidService.addKid(kidServiceModel, name);
 
         return super.redirect("/home");
+    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView allKids(ModelAndView modelAndView, UserService userService) {
+
+        List<KidAllViewModel> viewModels = kidService.findAllKids()
+                .stream()
+                .map(k -> modelMapper.map(k, KidAllViewModel.class))
+                .collect(Collectors.toList());
+        modelAndView.addObject("kids", viewModels);
+        return view("all-kids", modelAndView);
+
     }
 }

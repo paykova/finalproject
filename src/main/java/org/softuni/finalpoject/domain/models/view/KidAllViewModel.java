@@ -1,21 +1,27 @@
-package org.softuni.finalpoject.domain.models.service;
+package org.softuni.finalpoject.domain.models.view;
 
-import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.entities.Gender;
-import org.softuni.finalpoject.domain.entities.Kid;
 import org.softuni.finalpoject.domain.entities.User;
-import org.softuni.finalpoject.mappings.IHaveCustomMappings;
 
 import java.time.LocalDate;
 
-public class KidServiceModel{
+public class KidAllViewModel {
 
+    private String id;
     private String name;
     private LocalDate birthDate;
     private Gender gender;
     private User parent;
 
-    public KidServiceModel() {
+    public KidAllViewModel() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

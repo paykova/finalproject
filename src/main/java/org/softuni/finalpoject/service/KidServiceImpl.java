@@ -9,20 +9,22 @@ import org.softuni.finalpoject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class KidServiceImpl implements KidService{
 
     private final KidRepository kidRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
-    private final UserService userService;
+
 
     @Autowired
-    public KidServiceImpl(KidRepository kidRepository, ModelMapper modelMapper, UserRepository userRepository, UserService userService) {
+    public KidServiceImpl(KidRepository kidRepository, ModelMapper modelMapper, UserRepository userRepository) {
         this.kidRepository = kidRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
-        this.userService = userService;
     }
 
     @Override
@@ -37,5 +39,15 @@ public class KidServiceImpl implements KidService{
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public List<KidServiceModel> findAllKids() {
+        var models = this.kidRepository.findAll()
+                .stream()
+                .map(u -> this.modelMapper
+                        .map(u, KidServiceModel.class))
+                .collect(Collectors.toList());
+        return models;
     }
 }

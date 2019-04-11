@@ -31,27 +31,6 @@
                 <td class="col-md-3 text-center">
 
                     <div class="row">
-                        <!--<th:block sec:authorize="hasAnyRole('ROLE_MODERATOR', 'ROLE_ADMIN')">-->
-                        <!--<form th:action="@{/users/set-user/{id}(id = ${user.id})}" method="post"-->
-                        <!--&gt;<input type="hidden" name="_csrf"-->
-                        <!--value="80417983-fe8b-45c7-963e-31f6915a1560">&ndash;&gt;-->
-                        <!--<button class="btn btn-dark">USER</button>-->
-                        <!--</form>-->
-                        <!--</th:block>-->
-                        <!--<th:block sec:authorize="!hasRole('ROLE_MODERATOR')">-->
-                        <!--<form th:action="@{/users/set-moderator/{id}(id = ${user.id})}" method="post"-->
-                        <!--&gt;<input type="hidden" name="_csrf"-->
-                        <!--value="80417983-fe8b-45c7-963e-31f6915a1560">&ndash;&gt;-->
-                        <!--<button class="btn btn-dark">MODERATOR</button>-->
-                        <!--</form>-->
-                        <!--</th:block>-->
-                        <!--<th:block sec:authorize="!hasRole('ROLE_ADMIN')">-->
-                        <!--<form th:action="@{/users/set-moderator/{id}(id = ${user.id})}" method="post"><input type="hidden" name="_csrf"-->
-                        <!--value="80417983-fe8b-45c7-963e-31f6915a1560">&ndash;&gt;-->
-                        <!--<button class="btn btn-dark">ADMIN</button>-->
-                        <!--</form>-->
-                        <!--</th:block>-->
-
                         <th:block th:if="${#lists.contains(user.authorities, 'ROLE_USER') &&
                         !#lists.contains(user.authorities, 'ROLE_MODERATOR') && !#lists.contains(user.authorities, 'ROLE_ADMIN')}">
                             <form th:action="@{/users/set-moderator/{id}(id = ${user.id})}" method="post"

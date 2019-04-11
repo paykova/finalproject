@@ -8,7 +8,6 @@ public class UserAllViewModel {
     private String username;
     private String password;
     private String email;
-
     private Set<String> authorities;
 
     public UserAllViewModel() {
