@@ -1,5 +1,6 @@
 package org.softuni.finalpoject.web.controllers;
 
+import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.models.binding.LanguageAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.LanguageServiceModel;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -55,7 +57,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editLanguage(@PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView editLanguage(@PathVariable String id, ModelAndView modelAndView) throws NotFoundException {
         modelAndView.addObject("model",
                 this.modelMapper.map(this.languageService.findLanguageById(id), LanguageViewModel.class));
         return super.view("language/edit-language", modelAndView);
@@ -72,7 +74,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView deleteLanguage(@PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView deleteLanguage(@PathVariable String id, ModelAndView modelAndView) throws NotFoundException {
         modelAndView.addObject("model",
                 this.modelMapper.map(this.languageService.findLanguageById(id), LanguageViewModel.class));
         return super.view("language/delete-language", modelAndView);
@@ -84,6 +86,16 @@ public class LanguageController extends BaseController {
 
         this.languageService.deleteLanguage(id);
         return super.redirect("/languages/all");
+    }
+
+    @GetMapping("/fetch")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @ResponseBody
+    public List<LanguageViewModel> fetchLanguages() {
+        return this.languageService.findAllLanguages()
+                .stream()
+                .map(l -> this.modelMapper.map(l, LanguageViewModel.class))
+                .collect(Collectors.toList());
     }
 
 }

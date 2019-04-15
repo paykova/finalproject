@@ -37,11 +37,14 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public LanguageServiceModel findLanguageById(String id) {
-        Language language = this.languageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException());
+    public Language findLanguageById(String id) {
+        Language language = this.languageRepository.findById(id).orElse(null);
+        if(language == null){
+            throw  new IllegalArgumentException(id);
+        }
 
-        return this.modelMapper.map(language, LanguageServiceModel.class);
+       // return this.modelMapper.map(language, LanguageServiceModel.class);
+        return language;
     }
 
     @Override
