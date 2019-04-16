@@ -18,7 +18,7 @@ public class User extends BaseEntity implements UserDetails {
     private Set<Role> authorities;
     private List<Kid> kids = new ArrayList<>();
 
-    private User() {
+    public User() {
     }
 
     @Override

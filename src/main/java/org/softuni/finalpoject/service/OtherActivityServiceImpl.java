@@ -37,11 +37,12 @@ public class OtherActivityServiceImpl implements OtherActivityService {
     }
 
     @Override
-    public OtherActivityServiceModel findOtherActivityById(String id) {
-        OtherActivity otherActivity = this.otherActivityRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException());
-
-        return this.modelMapper.map(otherActivity,OtherActivityServiceModel.class);
+    public OtherActivity findOtherActivityById(String id) {
+        OtherActivity otherActivity = this.otherActivityRepository.findById(id).orElse(null);
+        if(otherActivity == null){
+            throw  new IllegalArgumentException(id);
+        }
+        return otherActivity;
     }
 
     @Override

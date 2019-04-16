@@ -47,13 +47,13 @@ public class OtherActivityController extends BaseController {
         return super.view("otheractivity/all-otheractivities", modelAndView);
     }
 
-    @GetMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
-        modelAndView.addObject("model",
-                this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));
-        return super.view("otheractivity/edit-otheractivity", modelAndView);
-    }
+//    @GetMapping("/edit/{id}")
+//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+//    public ModelAndView editOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
+//        modelAndView.addObject("model",
+//                this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));
+//        return super.view("otheractivity/edit-otheractivity", modelAndView);
+//    }
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
@@ -64,13 +64,13 @@ public class OtherActivityController extends BaseController {
     }
 
 
-    @GetMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView deleteOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
-        modelAndView.addObject("model",
-                this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));
-        return super.view("otheractivity/delete-otheractivity", modelAndView);
-    }
+//    @GetMapping("/delete/{id}")
+//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+//    public ModelAndView deleteOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
+//        modelAndView.addObject("model",
+//                this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));
+//        return super.view("otheractivity/delete-otheractivity", modelAndView);
+//    }
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")

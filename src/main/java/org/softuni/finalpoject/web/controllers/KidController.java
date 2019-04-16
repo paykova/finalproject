@@ -6,18 +6,17 @@ import org.softuni.finalpoject.domain.entities.User;
 import org.softuni.finalpoject.domain.models.binding.KidAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.KidServiceModel;
 import org.softuni.finalpoject.domain.models.view.KidAllViewModel;
+import org.softuni.finalpoject.domain.models.view.KidViewModel;
 import org.softuni.finalpoject.service.KidService;
 import org.softuni.finalpoject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
@@ -42,7 +41,7 @@ public class KidController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView addKid(ModelAndView modelAndView, @ModelAttribute(name = "bindingModel") KidAddBindingModel bindingModel) {
         modelAndView.addObject("bindingModel", bindingModel);
-        return super.view("kid/kid-add", modelAndView);
+        return super.view("kid/add-kid", modelAndView);
     }
 
     @PostMapping("/add")
@@ -52,7 +51,7 @@ public class KidController extends BaseController {
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("bindingModel", bindingModel);
 
-            return super.view("kid/kid-add", modelAndView);
+            return super.view("kid/add-kid", modelAndView);
         }
         String name = principal.getName();
         KidServiceModel kidServiceModel = this.modelMapper.map(bindingModel, KidServiceModel.class);
@@ -63,14 +62,28 @@ public class KidController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView allKids(ModelAndView modelAndView, UserService userService) {
-
+    public ModelAndView allKids(ModelAndView modelAndView) {
         List<KidAllViewModel> viewModels = kidService.findAllKids()
                 .stream()
                 .map(k -> modelMapper.map(k, KidAllViewModel.class))
                 .collect(Collectors.toList());
         modelAndView.addObject("kids", viewModels);
-        return view("all-kids", modelAndView);
+        return view("kid/all-kids", modelAndView);
+    }
 
+
+    @GetMapping("/my/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @ResponseBody
+    public ModelAndView getMyKids(ModelAndView modelAndView, @PathVariable String id) {
+        List<KidViewModel> kidViewModels = kidService.findKidsByParent(id)
+                .stream()
+                .map(k -> modelMapper.map(k, KidViewModel.class))
+                .collect(Collectors.toList());
+        modelAndView.addObject("kids", kidViewModels);
+        return view("kid/my-kids", modelAndView);
     }
 }
+
+
+

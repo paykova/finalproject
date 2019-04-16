@@ -7,6 +7,7 @@ import org.softuni.finalpoject.domain.entities.User;
 import org.softuni.finalpoject.mappings.IHaveCustomMappings;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class KidServiceModel{
 
@@ -49,4 +50,6 @@ public class KidServiceModel{
     public void setParent(User parent) {
         this.parent = parent;
     }
+
+
 }

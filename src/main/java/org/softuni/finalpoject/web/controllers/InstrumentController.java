@@ -47,13 +47,13 @@ public class InstrumentController extends BaseController  {
         return super.view("instrument/all-instruments", modelAndView);
     }
 
-    @GetMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editInstrument(@PathVariable String id, ModelAndView modelAndView){
-        modelAndView.addObject("model",
-                this.modelMapper.map(this.instrumentService.findInstrumentById(id), InstrumentViewModel.class));
-        return super.view("instrument/edit-instrument", modelAndView);
-    }
+//    @GetMapping("/edit/{id}")
+//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+//    public ModelAndView editInstrument(@PathVariable String id, ModelAndView modelAndView){
+//        modelAndView.addObject("model",
+//                this.modelMapper.map(this.instrumentService.findInstrumentById(id), InstrumentViewModel.class));
+//        return super.view("instrument/edit-instrument", modelAndView);
+//    }
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
@@ -61,14 +61,14 @@ public class InstrumentController extends BaseController  {
         this.instrumentService.editInstrument(id, this.modelMapper.map(model, InstrumentServiceModel.class));
         return super.redirect("/instruments/all");
     }
-
-    @GetMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView deleteInstrument(@PathVariable String id, ModelAndView modelAndView) {
-        modelAndView.addObject("model",
-                this.modelMapper.map(this.instrumentService.findInstrumentById(id), InstrumentViewModel.class));
-        return super.view("instrument/delete-instrument", modelAndView);
-    }
+//
+//    @GetMapping("/delete/{id}")
+//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+//    public ModelAndView deleteInstrument(@PathVariable String id, ModelAndView modelAndView) {
+//        modelAndView.addObject("model",
+//                this.modelMapper.map(this.instrumentService.findInstrumentById(id), InstrumentViewModel.class));
+//        return super.view("instrument/delete-instrument", modelAndView);
+//    }
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")

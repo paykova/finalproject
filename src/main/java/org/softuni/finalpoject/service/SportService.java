@@ -1,5 +1,7 @@
 package org.softuni.finalpoject.service;
 
+import javassist.NotFoundException;
+import org.softuni.finalpoject.domain.entities.Sport;
 import org.softuni.finalpoject.domain.models.service.SportServiceModel;
 
 import java.util.List;
@@ -10,7 +12,7 @@ public interface SportService {
 
     List<SportServiceModel> findAllSports();
 
-    SportServiceModel findSportById(String id);
+    Sport findSportById(String id) throws NotFoundException;
 
     SportServiceModel editSport(String id, SportServiceModel sportServiceModel);
 

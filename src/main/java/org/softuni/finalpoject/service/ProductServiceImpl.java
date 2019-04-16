@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductServiceModel createProduct(ProductServiceModel productServiceModel) {
         Product product = this.productRepository
-                .findByName(productServiceModel.getName())
+                .findById(productServiceModel.getId())
                 .orElse(null);
 
         if (product != null) {
@@ -118,18 +118,18 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(String id) {
 
     }
-
-    private void populateLanguages(ProductServiceModel productServiceModel, ProductAddBindingModel bindingModel) {
-        List<Language> languageList = new ArrayList<>();
-        for (Language language : bindingModel.getLanguages()) {
-            Language entity;
-            try {
-                entity = this.languageService.findLanguageById(language.getId());
-            } catch (NotFoundException e) {
-                continue;
-            }
-            languageList.add(entity);
-        }
-        productServiceModel.setLanguages(languageList);
-    }
+//
+//    private void populateLanguages(ProductServiceModel productServiceModel, ProductAddBindingModel bindingModel) {
+//        List<Language> languageList = new ArrayList<>();
+//        for (Language language : bindingModel.getLanguages()) {
+//            Language entity;
+//            try {
+//                entity = this.languageService.findLanguageById(language.getId());
+//            } catch (NotFoundException e) {
+//                continue;
+//            }
+//            languageList.add(entity);
+//        }
+//        productServiceModel.setLanguages(languageList);
+//    }
 }

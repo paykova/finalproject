@@ -10,39 +10,12 @@ import java.util.List;
 
 public class ProductServiceModel extends BaseServiceModel {
 
-    private String name;
-    private String description;
-    private BigDecimal price;
     private List<Language> languages;
     private List<Sport> sports;
     private List<Instrument> instruments;
     private List<OtherActivity> otherActivities;
 
     public ProductServiceModel() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public List<Language> getLanguages() {

@@ -39,11 +39,13 @@ public class SportServiceImpl implements SportService {
     }
 
     @Override
-    public SportServiceModel findSportById(String id) {
+    public Sport findSportById(String id) {
 
-        Sport sport = this.sportRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
-
-        return this.modelMapper.map(sport, SportServiceModel.class);
+        Sport sport = this.sportRepository.findById(id).orElse(null);
+        if(sport == null){
+            throw  new IllegalArgumentException(id);
+        }
+        return sport;
     }
 
     @Override

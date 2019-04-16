@@ -52,13 +52,13 @@ public class SportController extends BaseController{
 
         return super.view("sport/all-sports", modelAndView);
     }
-
-    @GetMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editSport(@PathVariable String id, ModelAndView modelAndView){
-        modelAndView.addObject("model", this.modelMapper.map(this.sportService.findSportById(id), SportViewModel.class));
-        return super.view("sport/edit-sport", modelAndView);
-    }
+//
+//    @GetMapping("/edit/{id}")
+//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+//    public ModelAndView editSport(@PathVariable String id, ModelAndView modelAndView){
+//        modelAndView.addObject("model", this.modelMapper.map(this.sportService.findSportById(id), SportViewModel.class));
+//        return super.view("sport/edit-sport", modelAndView);
+//    }
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
@@ -67,12 +67,12 @@ public class SportController extends BaseController{
         return super.redirect("/sports/all");
     }
 
-    @GetMapping("delete/{id}")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView deleteSport(@PathVariable String id, ModelAndView modelAndView){
-        modelAndView.addObject("model", this.modelMapper.map(this.sportService.findSportById(id), SportViewModel.class));
-        return super.view("sport/delete-sport", modelAndView);
-    }
+//    @GetMapping("delete/{id}")
+//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+//    public ModelAndView deleteSport(@PathVariable String id, ModelAndView modelAndView){
+//        modelAndView.addObject("model", this.modelMapper.map(this.sportService.findSportById(id), SportViewModel.class));
+//        return super.view("sport/delete-sport", modelAndView);
+//    }
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")

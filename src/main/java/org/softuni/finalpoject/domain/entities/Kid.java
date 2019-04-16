@@ -2,6 +2,8 @@ package org.softuni.finalpoject.domain.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "kid")
@@ -11,6 +13,7 @@ public class Kid extends BaseEntity {
     private LocalDate birthDate;
     private Gender gender;
     private User parent;
+    private List<Product> products = new ArrayList<>();
 
     public Kid() {
     }
@@ -55,5 +58,14 @@ public class Kid extends BaseEntity {
 
     public void setParent(User parent) {
         this.parent = parent;
+    }
+
+    @OneToMany(mappedBy = "kid", targetEntity = Product.class)
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

@@ -8,22 +8,13 @@ import java.util.List;
 @Table(name = "products")
 public class Product extends BaseEntity{
 
-    private BigDecimal price;
     private List<Language> languages;
     private List<Sport> sports;
     private List<Instrument> instruments;
     private List<OtherActivity> otherActivities;
+    private Kid kid;
 
     public Product() {
-    }
-
-    @Column(name = "price", nullable = false)
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     @ManyToMany(targetEntity = Language.class)
@@ -104,5 +95,19 @@ public class Product extends BaseEntity{
 
     public void setOtherActivities(List<OtherActivity> otherActivities) {
         this.otherActivities = otherActivities;
+    }
+
+    @ManyToOne(targetEntity = Kid.class)
+    @JoinColumn(
+            name = "kid_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
+    public Kid getKid() {
+        return kid;
+    }
+
+    public void setKid(Kid kid) {
+        this.kid = kid;
     }
 }

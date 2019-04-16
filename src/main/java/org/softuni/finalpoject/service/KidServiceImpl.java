@@ -50,4 +50,13 @@ public class KidServiceImpl implements KidService{
                 .collect(Collectors.toList());
         return models;
     }
+
+    @Override
+    public List<KidServiceModel> findKidsByParent(String username) {
+        var model = this.kidRepository.findAllKidsByParent_Id(username)
+                .stream()
+                .map(k -> modelMapper.map(k, KidServiceModel.class))
+                .collect(Collectors.toList());
+        return model;
+    }
 }

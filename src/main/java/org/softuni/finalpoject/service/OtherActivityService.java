@@ -1,5 +1,6 @@
 package org.softuni.finalpoject.service;
 
+import javassist.NotFoundException;
 import org.softuni.finalpoject.domain.entities.OtherActivity;
 import org.softuni.finalpoject.domain.models.service.OtherActivityServiceModel;
 
@@ -11,7 +12,7 @@ public interface OtherActivityService {
 
     List<OtherActivityServiceModel> findAllOtherActivities();
 
-    OtherActivityServiceModel findOtherActivityById(String id);
+    OtherActivity findOtherActivityById(String id) throws NotFoundException;
 
     OtherActivityServiceModel editOtherActivity(String id, OtherActivityServiceModel otherActivityServiceModel);
 

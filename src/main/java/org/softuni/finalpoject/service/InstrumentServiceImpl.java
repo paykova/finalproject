@@ -39,10 +39,10 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     @Override
-    public InstrumentServiceModel findInstrumentById(String id) {
+    public Instrument findInstrumentById(String id) {
         Instrument instrument = this.instrumentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException());
-        return this.modelMapper.map(instrument, InstrumentServiceModel.class);
+        return this.modelMapper.map(instrument, Instrument.class);
     }
 
     @Override
