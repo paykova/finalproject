@@ -12,5 +12,7 @@ public interface KidService {
 
     List<KidServiceModel> findKidsByParent(String username);
 
+    KidServiceModel findKidById(String id);
+
 
 }

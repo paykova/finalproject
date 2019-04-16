@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -80,6 +81,17 @@ public class SportController extends BaseController{
 
         this.sportService.deleteSport(id);
         return super.redirect("/sports/all");
+    }
+
+    @GetMapping("/fetch")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @ResponseBody
+    public List<SportViewModel> fetchSports() {
+        List<SportViewModel> sports = this.sportService.findAllSports()
+                .stream()
+                .map(l -> this.modelMapper.map(l, SportViewModel.class))
+                .collect(Collectors.toList());
+        return sports;
     }
 
 

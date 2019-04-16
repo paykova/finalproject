@@ -9,7 +9,7 @@ import org.softuni.finalpoject.mappings.IHaveCustomMappings;
 import java.time.LocalDate;
 import java.util.List;
 
-public class KidServiceModel{
+public class KidServiceModel extends BaseServiceModel{
 
     private String name;
     private LocalDate birthDate;
@@ -18,6 +18,7 @@ public class KidServiceModel{
 
     public KidServiceModel() {
     }
+
 
     public String getName() {
         return name;

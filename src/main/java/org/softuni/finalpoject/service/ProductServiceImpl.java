@@ -42,15 +42,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductServiceModel createProduct(ProductServiceModel productServiceModel) {
-        Product product = this.productRepository
-                .findById(productServiceModel.getId())
-                .orElse(null);
+//        Product product = this.productRepository
+//                .findById(productServiceModel.getId())
+//                .orElse(null);
+//
+//        if (product != null) {
+//            throw new IllegalArgumentException("Product already exists");
+//        }
 
-        if (product != null) {
-            throw new IllegalArgumentException("Product already exists");
-        }
-
-        product = this.modelMapper.map(productServiceModel, Product.class);
+        Product product = this.modelMapper.map(productServiceModel, Product.class);
         product = this.productRepository.save(product);
 
         return this.modelMapper.map(product, ProductServiceModel.class);

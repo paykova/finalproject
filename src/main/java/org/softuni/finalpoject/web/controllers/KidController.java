@@ -83,6 +83,17 @@ public class KidController extends BaseController {
         modelAndView.addObject("kids", kidViewModels);
         return view("kid/my-kids", modelAndView);
     }
+
+    @GetMapping("/fetch")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @ResponseBody
+    public List<KidViewModel> fetchKids() {
+        List<KidViewModel> kids = this.kidService.findAllKids()
+                .stream()
+                .map(l -> this.modelMapper.map(l, KidViewModel.class))
+                .collect(Collectors.toList());
+        return kids;
+    }
 }
 
 

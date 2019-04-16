@@ -12,7 +12,7 @@ public interface LanguageService {
 
     List<LanguageServiceModel> findAllLanguages();
 
-    Language findLanguageById(String id) throws NotFoundException;
+    LanguageServiceModel findLanguageById(String id) throws NotFoundException;
 
     LanguageServiceModel editLanguage(String id, LanguageServiceModel languageServiceModel);
 

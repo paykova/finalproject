@@ -28,6 +28,16 @@ public class KidServiceImpl implements KidService{
     }
 
     @Override
+    public KidServiceModel findKidById(String id) {
+        Kid kid = this.kidRepository.findById(id).orElse(null);
+        if (kid == null) {
+            throw new IllegalArgumentException(id);
+        }
+        return this.modelMapper.map(kid, KidServiceModel.class);
+
+    }
+
+    @Override
     public KidServiceModel addKid(KidServiceModel kidServiceModel, String name) {
         User user = userRepository.findByUsername(name).orElseThrow();
         Kid kid = this.modelMapper.map(kidServiceModel, Kid.class);

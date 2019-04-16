@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:include="~{fragments/navbar}"></th:block>
+    </header>
+    <main class="jumbotron mt-3 bg-kidcenter">
+        <h4 class="text-center text-dark">Dear <span class="font-weight-bold"
+                                                     th:text="${#authentication.getPrincipal().getUsername()}">
+        </span>, your kid - ...., was successfully registered to our <span class="font-weight-bold">Full Time Care Programme</span>
+        </h4>
+        <hr class="hr-2 bg-dark w-25">
+        <form id="add-product-form" class="form w-50 mx-auto" th:action="@{/products/details}" method="post">
+            <div class="form-group">
+                <label class="font-weight-bold">
+                    <div class="row">
+                        <div th:text="'Parent Name: ' + ${#authentication.getPrincipal().getUsername()}"></div>
+                    </div>
+                    <div class="row">
+                        <div th:text="'Kid Name: '"></div>
+                    </div>
+                    <br/>
+                    <div class="row" style="background-color:yellowgreen">
+                        <p th:text="'  Breakfast (upon individual habits of each kid): YES  '"></p>
+                    </div>
+                    <br/>
+                    <div class="row" style="background-color:yellowgreen">
+                        <p th:text="'  Gymnastics: YES  '"></p>
+                    </div>
+                    <br/>
+                    <div class="row" style="background-color:#ffc107">
+                        <p th:text="'  Language: '"></p>
+                    </div>
+                    <br/>
+                    <div class="row" style="background-color:yellowgreen">
+                        <p  th:text="'  Lunch: YES  '"></p>
+                    </div>
+                    <br/>
+                    <div class="row" style="background-color:#ffc107">
+                        <p th:text="'  Instrument: '"></p>
+                    </div>
+                    <br/>
+                    <div class="row" style="background-color:#ffc107">
+                        <p th:text="'  Sport: '"></p>
+                    </div>
+                    <br/>
+                    <div class="row" style="background-color:#ffc107">
+                        <p th:text="'  Other Activity: '"></p>
+                    </div>
+                    <!--<p>Included daily service:</p>-->
+                    <!--<th:block>-->
+                    <!--<th:ul>-->
+                    <!--<li>Breakfasts upon individual habits of each kid.</li>-->
+                    <!--<li style="background-color: #9370DB">Gymnastics</li>-->
+                    <!--<li>Games</li>-->
+                    <!--<li>Psychologist</li>-->
+                    <!--<li>Speech Therapist</li>-->
+                    <!--<li>Dentist</li>-->
+                    <!--<li>Medical Care.</li>-->
+                    <!--<li>Health professional in required with every kid's needs and abilities;</li>-->
+                    <!--<li>Every day transport from/to your home.</li>-->
+                    <!--<li>Security service on site 24/7</li>-->
+                    <!--</th:ul>-->
+                    <!--</th:block>-->
+                </label>
+            </div>
+            <hr class="hr-2 bg-dark w-25">
+            <br/>
+        </form>
+    </main>
+    <footer>
+        <th:block th:include="~{fragments/footer}"></th:block>
+    </footer>
+</body>
+</html>

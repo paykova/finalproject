@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.models.binding.LanguageAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.LanguageServiceModel;
 import org.softuni.finalpoject.domain.models.view.LanguageViewModel;
+import org.softuni.finalpoject.domain.models.view.ProductViewModel;
 import org.softuni.finalpoject.service.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -92,10 +93,11 @@ public class LanguageController extends BaseController {
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @ResponseBody
     public List<LanguageViewModel> fetchLanguages() {
-        return this.languageService.findAllLanguages()
+        List<LanguageViewModel> languages = this.languageService.findAllLanguages()
                 .stream()
                 .map(l -> this.modelMapper.map(l, LanguageViewModel.class))
                 .collect(Collectors.toList());
+        return languages;
     }
 
 }

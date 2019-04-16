@@ -12,7 +12,7 @@ public interface SportService {
 
     List<SportServiceModel> findAllSports();
 
-    Sport findSportById(String id) throws NotFoundException;
+    SportServiceModel findSportById(String id);
 
     SportServiceModel editSport(String id, SportServiceModel sportServiceModel);
 

@@ -6,6 +6,7 @@ import org.softuni.finalpoject.repository.LanguageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.softuni.finalpoject.domain.models.service.LanguageServiceModel;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,14 +38,12 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public Language findLanguageById(String id) {
+    public LanguageServiceModel findLanguageById(String id) {
         Language language = this.languageRepository.findById(id).orElse(null);
-        if(language == null){
-            throw  new IllegalArgumentException(id);
+        if (language == null) {
+            throw new IllegalArgumentException(id);
         }
-
-       // return this.modelMapper.map(language, LanguageServiceModel.class);
-        return language;
+        return this.modelMapper.map(language, LanguageServiceModel.class);
     }
 
     @Override

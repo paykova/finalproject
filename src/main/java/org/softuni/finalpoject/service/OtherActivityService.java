@@ -12,7 +12,7 @@ public interface OtherActivityService {
 
     List<OtherActivityServiceModel> findAllOtherActivities();
 
-    OtherActivity findOtherActivityById(String id) throws NotFoundException;
+    OtherActivityServiceModel findOtherActivityById(String id);
 
     OtherActivityServiceModel editOtherActivity(String id, OtherActivityServiceModel otherActivityServiceModel);
 

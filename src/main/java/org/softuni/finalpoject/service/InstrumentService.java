@@ -8,13 +8,11 @@ import java.util.List;
 
 public interface InstrumentService {
 
-    InstrumentServiceModel addInstrument (InstrumentServiceModel instrumentServiceModel);
+    InstrumentServiceModel addInstrument(InstrumentServiceModel instrumentServiceModel);
 
     List<InstrumentServiceModel> findAllInstruments();
 
-  // InstrumentServiceModel findInstrumentById(String id);
-
-    Instrument findInstrumentById(String id) throws NotFoundException;
+    InstrumentServiceModel findInstrumentById(String id);
 
     InstrumentServiceModel editInstrument(String id, InstrumentServiceModel instrumentServiceModel);
 
