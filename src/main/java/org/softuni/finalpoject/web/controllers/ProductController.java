@@ -3,6 +3,7 @@ package org.softuni.finalpoject.web.controllers;
 import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.models.binding.ProductAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.*;
+import org.softuni.finalpoject.domain.models.view.ProductViewModel;
 import org.softuni.finalpoject.service.*;
 import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +51,12 @@ public class ProductController extends BaseController {
     public ModelAndView addProductConfirm(@ModelAttribute ProductAddBindingModel model) throws IOException {
         ProductServiceModel productServiceModel = this.modelMapper.map(model, ProductServiceModel.class);
 
-//        productServiceModel.setKid(
-//                this.kidService.findKidById()
-//                        .stream()
-//                        .filter(c -> model.getKid().contains(c.getId()))
-//                        .collect(Collectors.toList())
-//        );
+        productServiceModel.setKid(
+                this.kidService.findAllKids()
+                        .stream()
+                        .filter(c -> model.getKids().contains(c.getId()))
+                        .collect(Collectors.toList())
+        );
 
         productServiceModel.setLanguages(
                 this.languageService.findAllLanguages()
@@ -72,17 +73,31 @@ public class ProductController extends BaseController {
 
         this.productService.createProduct(productServiceModel);
 
-        return super.view("product/details-product");
+        return super.redirect("/products/all");
     }
 
-//    @GetMapping("/details/{id}")
-//    @PreAuthorize("isAuthenticated()")
-//    @PageTitle("Kids Center - Product Details")
-//    public ModelAndView detailsProduct(@PathVariable String id, ModelAndView modelAndView) {
-//        ProductDetailsViewModel model = this.modelMapper.map(this.productService.findProductById(id), ProductDetailsViewModel.class);
-//
-//        modelAndView.addObject("product", model);
-//
-//        return super.view("product/details", modelAndView);
-//    }
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Kids Center - All Products")
+    public ModelAndView allProducts(ModelAndView modelAndView) {
+        modelAndView.addObject("products", this.productService.findAllProducts()
+                .stream()
+                .map(p -> this.modelMapper.map(p, ProductViewModel.class))
+                .collect(Collectors.toList()));
+
+        return super.view("product/all-products", modelAndView);
+    }
+
+
+    @GetMapping("/details/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("Kids Center - Product Details")
+    public ModelAndView detailsProduct(ModelAndView modelAndView, @PathVariable String id) {
+        ProductViewModel model = this.modelMapper.map(this.productService.findProductById(id), ProductViewModel.class);
+
+        modelAndView.addObject("product", model);
+
+        return super.view("product/details", modelAndView);
+    }
 }

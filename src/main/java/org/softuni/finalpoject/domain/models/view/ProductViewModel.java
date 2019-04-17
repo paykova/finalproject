@@ -11,11 +11,10 @@ import java.util.List;
 public class ProductViewModel {
 
     private String id;
-    private BigDecimal price;
     private String language;
     private String sport;
-    private String instrument;
-    private String otherActivity;
+    private String kid;
+    private InstrumentViewModel instrument;
 
     public ProductViewModel() {
     }
@@ -26,14 +25,6 @@ public class ProductViewModel {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public String getLanguage() {
@@ -52,19 +43,19 @@ public class ProductViewModel {
         this.sport = sport;
     }
 
-    public String getInstrument() {
+    public String getKid() {
+        return kid;
+    }
+
+    public void setKid(String kid) {
+        this.kid = kid;
+    }
+
+    public InstrumentViewModel getInstrument() {
         return instrument;
     }
 
-    public void setInstrument(String instrument) {
+    public void setInstrument(InstrumentViewModel instrument) {
         this.instrument = instrument;
-    }
-
-    public String getOtherActivity() {
-        return otherActivity;
-    }
-
-    public void setOtherActivity(String otherActivity) {
-        this.otherActivity = otherActivity;
     }
 }

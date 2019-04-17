@@ -17,4 +17,5 @@ public interface InstrumentService {
     InstrumentServiceModel editInstrument(String id, InstrumentServiceModel instrumentServiceModel);
 
     InstrumentServiceModel deleteInstrument(String id);
+
 }

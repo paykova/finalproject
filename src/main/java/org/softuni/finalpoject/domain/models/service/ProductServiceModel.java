@@ -14,7 +14,8 @@ public class ProductServiceModel extends BaseServiceModel {
     private List<SportServiceModel> sports;
 //    private List<Instrument> instruments;
 //    private List<OtherActivity> otherActivities;
-    private KidServiceModel kid;
+    private List<KidServiceModel> kid;
+    private InstrumentServiceModel instrument;
 
     public ProductServiceModel() {
     }
@@ -52,11 +53,19 @@ public class ProductServiceModel extends BaseServiceModel {
 //    }
 
 
-    public KidServiceModel getKid() {
+    public List<KidServiceModel> getKid() {
         return kid;
     }
 
-    public void setKid(KidServiceModel kid) {
+    public void setKid(List<KidServiceModel> kid) {
         this.kid = kid;
+    }
+
+    public InstrumentServiceModel getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(InstrumentServiceModel instrument) {
+        this.instrument = instrument;
     }
 }

@@ -14,7 +14,8 @@ public class ProductAddBindingModel {
     private List<String> sports;
 //    private List<Instrument> instruments;
 //    private List<OtherActivity> otherActivities;
-    private String kid;
+    private List<String> kids;
+    private String instrument;
 
     public ProductAddBindingModel() {
     }
@@ -52,11 +53,19 @@ public class ProductAddBindingModel {
 //    }
 
 
-    public String getKid() {
-        return kid;
+    public List<String> getKids() {
+        return kids;
     }
 
-    public void setKid(String kid) {
-        this.kid = kid;
+    public void setKids(List<String> kids) {
+        this.kids = kids;
+    }
+
+    public String getInstrument() {
+        return instrument;
+    }
+
+    public void setInstrument(String instrument) {
+        this.instrument = instrument;
     }
 }

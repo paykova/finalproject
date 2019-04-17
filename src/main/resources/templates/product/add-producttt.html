@@ -37,6 +37,12 @@
                     <option selected="" disabled="">--- Select Sport ---</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="add-product-instruments" class="font-weight-bold">Instruments</label>
+                <select multiple="" class="form-control" id="add-product-instruments" name="instruments">
+                    <option selected="" disabled="">--- Select Instrument ---</option>
+                </select>
+            </div>
             <hr class="hr-2 bg-dark w-25">
             <div class="button-holder d-flex justify-content-center">
                 <button type="submit" class="btn btn-success">Add Product</button>
@@ -71,6 +77,14 @@
         .then((response) => response.json())
     .then((json) => {
         json.forEach((kid) => $('#add-product-kids').append(`<option value="${kid.id}">${kid.name}</option>`));
+    })
+    .catch((err) => console.log(err));
+</script>
+<script>
+    fetch('/instruments/fetch')
+        .then((response) => response.json())
+    .then((json) => {
+        json.forEach((instrument) => $('#add-product-instruments').append(`<option value="${instrument.id}">${instrument.name}</option>`));
     })
     .catch((err) => console.log(err));
 </script>

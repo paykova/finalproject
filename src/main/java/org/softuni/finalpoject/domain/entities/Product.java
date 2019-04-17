@@ -12,7 +12,8 @@ public class Product extends BaseEntity{
     private List<Sport> sports;
 //    private List<Instrument> instruments;
 //    private List<OtherActivity> otherActivities;
-      private Kid kid;
+      private List<Kid> kids;
+      private Instrument instrument;
 
     public Product() {
     }
@@ -98,17 +99,38 @@ public class Product extends BaseEntity{
 //        this.otherActivities = otherActivities;
 //    }
 //
-    @ManyToOne(targetEntity = Kid.class)
+
+    @ManyToMany(targetEntity = Kid.class)
+    @JoinTable(
+            name = "products_kids",
+            joinColumns = @JoinColumn(
+                    name = "product_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "kid_id",
+                    referencedColumnName = "id"
+            )
+    )
+    public List<Kid> getKids() {
+        return kids;
+    }
+
+    public void setKids(List<Kid> kids) {
+        this.kids = kids;
+    }
+
+    @ManyToOne(targetEntity = Instrument.class)
     @JoinColumn(
-            name = "kid_id",
+            name = "instrument_id",
             referencedColumnName = "id",
             nullable = false
     )
-    public Kid getKid() {
-        return kid;
+    public Instrument getInstrument() {
+        return instrument;
     }
 
-    public void setKid(Kid kid) {
-        this.kid = kid;
+    public void setInstrument(Instrument instrument) {
+        this.instrument = instrument;
     }
 }

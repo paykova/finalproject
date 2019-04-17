@@ -2,13 +2,17 @@ package org.softuni.finalpoject.domain.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "instruments")
 public class Instrument extends BaseEntity {
 
     private String name;
+    private List<Instrument> instruments = new ArrayList<>();
 
     public Instrument() {
     }
@@ -20,5 +24,14 @@ public class Instrument extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @OneToMany(mappedBy = "instrument", targetEntity = Instrument.class)
+    public List<Instrument> getInstruments() {
+        return instruments;
+    }
+
+    public void setInstruments(List<Instrument> instruments) {
+        this.instruments = instruments;
     }
 }

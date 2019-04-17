@@ -132,4 +132,13 @@ public class ProductServiceImpl implements ProductService {
 //        }
 //        productServiceModel.setLanguages(languageList);
 //    }
+
+    @Override
+    public List<ProductServiceModel> findAllProducts() {
+        return this.productRepository.findAll()
+                .stream()
+                .map(p -> this.modelMapper.map(p, ProductServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
 }

@@ -13,7 +13,7 @@ public class Kid extends BaseEntity {
     private LocalDate birthDate;
     private Gender gender;
     private User parent;
-    private List<Product> products = new ArrayList<>();
+   
 
     public Kid() {
     }
@@ -58,14 +58,5 @@ public class Kid extends BaseEntity {
 
     public void setParent(User parent) {
         this.parent = parent;
-    }
-
-    @OneToMany(mappedBy = "kid", targetEntity = Product.class)
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -76,6 +77,17 @@ public class InstrumentController extends BaseController  {
 
         this.instrumentService.deleteInstrument(id);
         return super.redirect("/instruments/all");
+    }
+
+    @GetMapping("/fetch")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @ResponseBody
+    public List<InstrumentViewModel> fetchInstruments() {
+        List<InstrumentViewModel> instruments = this.instrumentService.findAllInstruments()
+                .stream()
+                .map(i -> this.modelMapper.map(i, InstrumentViewModel.class))
+                .collect(Collectors.toList());
+        return instruments;
     }
 
 }
