@@ -1,6 +1,9 @@
 package org.softuni.finalpoject.web.controllers;
 
+import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.domain.entities.Instrument;
+import org.softuni.finalpoject.domain.models.binding.InstrumentAddBindingModel;
 import org.softuni.finalpoject.domain.models.binding.ProductAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.*;
 import org.softuni.finalpoject.domain.models.view.ProductViewModel;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -49,6 +54,7 @@ public class ProductController extends BaseController {
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     public ModelAndView addProductConfirm(@ModelAttribute ProductAddBindingModel model) throws IOException {
+
         ProductServiceModel productServiceModel = this.modelMapper.map(model, ProductServiceModel.class);
 
         productServiceModel.setKid(
@@ -71,8 +77,9 @@ public class ProductController extends BaseController {
                         .collect(Collectors.toList())
         );
 
-        this.productService.createProduct(productServiceModel);
 
+
+        this.productService.createProduct(productServiceModel);
         return super.redirect("/products/all");
     }
 
@@ -100,4 +107,6 @@ public class ProductController extends BaseController {
 
         return super.view("product/details", modelAndView);
     }
+
+
 }

@@ -14,7 +14,7 @@ public class ProductViewModel {
     private String language;
     private String sport;
     private String kid;
-    private InstrumentViewModel instrument;
+    private String instrument;
 
     public ProductViewModel() {
     }
@@ -51,11 +51,11 @@ public class ProductViewModel {
         this.kid = kid;
     }
 
-    public InstrumentViewModel getInstrument() {
+    public String getInstrument() {
         return instrument;
     }
 
-    public void setInstrument(InstrumentViewModel instrument) {
+    public void setInstrument(String instrument) {
         this.instrument = instrument;
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public class Instrument extends BaseEntity {
 
     private String name;
-    private List<Instrument> instruments = new ArrayList<>();
+
 
     public Instrument() {
     }
@@ -26,12 +26,4 @@ public class Instrument extends BaseEntity {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "instrument", targetEntity = Instrument.class)
-    public List<Instrument> getInstruments() {
-        return instruments;
-    }
-
-    public void setInstruments(List<Instrument> instruments) {
-        this.instruments = instruments;
-    }
 }

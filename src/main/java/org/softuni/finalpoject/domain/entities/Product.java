@@ -13,7 +13,7 @@ public class Product extends BaseEntity{
 //    private List<Instrument> instruments;
 //    private List<OtherActivity> otherActivities;
       private List<Kid> kids;
-      private Instrument instrument;
+      private String instrument;
 
     public Product() {
     }
@@ -120,17 +120,11 @@ public class Product extends BaseEntity{
         this.kids = kids;
     }
 
-    @ManyToOne(targetEntity = Instrument.class)
-    @JoinColumn(
-            name = "instrument_id",
-            referencedColumnName = "id",
-            nullable = false
-    )
-    public Instrument getInstrument() {
+    public String getInstrument() {
         return instrument;
     }
 
-    public void setInstrument(Instrument instrument) {
+    public void setInstrument(String instrument) {
         this.instrument = instrument;
     }
 }
