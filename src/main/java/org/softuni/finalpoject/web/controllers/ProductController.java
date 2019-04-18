@@ -45,9 +45,9 @@ public class ProductController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Kids Center - Add Product")
+    @PageTitle("Add Product")
     public ModelAndView addProduct() {
-        return super.view("product/add-producttt");
+        return super.view("product/add-product");
     }
 
 
@@ -70,12 +70,18 @@ public class ProductController extends BaseController {
                         .filter(c -> model.getLanguages().contains(c.getId()))
                         .collect(Collectors.toList())
         );
+
+
         productServiceModel.setSports(
                 this.sportService.findAllSports()
                         .stream()
                         .filter(c -> model.getSports().contains(c.getId()))
                         .collect(Collectors.toList())
         );
+
+//        InstrumentServiceModel instrumentServiceModel = this.modelMapper.map(model.getInstrument(), InstrumentServiceModel.class);
+//
+//        productServiceModel.setInstrument(instrumentServiceModel);
 
 
 
@@ -86,7 +92,7 @@ public class ProductController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Kids Center - All Products")
+    @PageTitle("All Products")
     public ModelAndView allProducts(ModelAndView modelAndView) {
         modelAndView.addObject("products", this.productService.findAllProducts()
                 .stream()
@@ -99,7 +105,7 @@ public class ProductController extends BaseController {
 
     @GetMapping("/details/{id}")
     @PreAuthorize("isAuthenticated()")
-    @PageTitle("Kids Center - Product Details")
+    @PageTitle("Product Details")
     public ModelAndView detailsProduct(ModelAndView modelAndView, @PathVariable String id) {
         ProductViewModel model = this.modelMapper.map(this.productService.findProductById(id), ProductViewModel.class);
 

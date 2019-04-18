@@ -15,7 +15,7 @@ public class ProductServiceModel extends BaseServiceModel {
 //    private List<Instrument> instruments;
 //    private List<OtherActivity> otherActivities;
     private List<KidServiceModel> kid;
-    private String instrument;
+    private InstrumentServiceModel instrument;
 
     public ProductServiceModel() {
     }
@@ -61,11 +61,11 @@ public class ProductServiceModel extends BaseServiceModel {
         this.kid = kid;
     }
 
-    public String getInstrument() {
+    public InstrumentServiceModel getInstrument() {
         return instrument;
     }
 
-    public void setInstrument(String instrument) {
+    public void setInstrument(InstrumentServiceModel instrument) {
         this.instrument = instrument;
     }
 }

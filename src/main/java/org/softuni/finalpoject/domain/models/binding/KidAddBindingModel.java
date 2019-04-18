@@ -1,9 +1,11 @@
 package org.softuni.finalpoject.domain.models.binding;
 
+import org.hibernate.validator.constraints.Length;
 import org.softuni.finalpoject.domain.entities.Gender;
 import org.softuni.finalpoject.domain.entities.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -17,8 +19,10 @@ public class KidAddBindingModel {
     public KidAddBindingModel() {
     }
 
-    @NotNull
-    @Size(min = 3, max = 10, message = "Name should be between 3 and 10 symbols!")
+    @NotNull(message = "Kid Name cannot be null")
+    @NotEmpty
+    @Length(min = 2, message = "Kid Name must be at least 2 characters long.")
+    @Length(max = 20, message = "Kid Name must be maximum 20 characters long.")
     public String getName() {
         return name;
     }
@@ -27,6 +31,7 @@ public class KidAddBindingModel {
         this.name = name;
     }
 
+    @NotNull(message = "Kid Birth Date cannot be null")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate getBirthDate() {
         return birthDate;

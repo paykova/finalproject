@@ -125,7 +125,7 @@ public class ProductServiceImpl implements ProductService {
 //            Language entity;
 //            try {
 //                entity = this.languageService.findLanguageById(language.getId());
-//            } catch (NotFoundException e) {
+//            } catch (NotFoundExceptions e) {
 //                continue;
 //            }
 //            languageList.add(entity);

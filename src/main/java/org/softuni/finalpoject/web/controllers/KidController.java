@@ -9,6 +9,7 @@ import org.softuni.finalpoject.domain.models.view.KidAllViewModel;
 import org.softuni.finalpoject.domain.models.view.KidViewModel;
 import org.softuni.finalpoject.service.KidService;
 import org.softuni.finalpoject.service.UserService;
+import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,7 @@ public class KidController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Add Kid")
     public ModelAndView addKid(ModelAndView modelAndView, @ModelAttribute(name = "bindingModel") KidAddBindingModel bindingModel) {
         modelAndView.addObject("bindingModel", bindingModel);
         return super.view("kid/add-kid", modelAndView);
@@ -62,6 +64,7 @@ public class KidController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PageTitle("All Kids")
     public ModelAndView allKids(ModelAndView modelAndView) {
         List<KidAllViewModel> viewModels = kidService.findAllKids()
                 .stream()
@@ -75,6 +78,7 @@ public class KidController extends BaseController {
     @GetMapping("/my/{id}")
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
+    @PageTitle("My Kids")
     public ModelAndView getMyKids(ModelAndView modelAndView, @PathVariable String id) {
         List<KidViewModel> kidViewModels = kidService.findKidsByParent(id)
                 .stream()

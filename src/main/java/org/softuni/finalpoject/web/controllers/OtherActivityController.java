@@ -5,6 +5,7 @@ import org.softuni.finalpoject.domain.models.binding.OtherActivityAddBindingMode
 import org.softuni.finalpoject.domain.models.service.OtherActivityServiceModel;
 import org.softuni.finalpoject.domain.models.view.OtherActivityViewModel;
 import org.softuni.finalpoject.service.OtherActivityService;
+import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ public class OtherActivityController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Add Other Activity")
     public ModelAndView addOtherActivity() {
         return super.view("otheractivity/add-otheractivity");
     }
@@ -41,19 +43,21 @@ public class OtherActivityController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("All Other Activities")
     public ModelAndView allOtherActivities(ModelAndView modelAndView) {
         modelAndView.addObject("otheractivities", this.otherActivityService.findAllOtherActivities().stream()
                 .map(o -> this.modelMapper.map(o, OtherActivityViewModel.class)).collect(Collectors.toList()));
         return super.view("otheractivity/all-otheractivities", modelAndView);
     }
 
-//    @GetMapping("/edit/{id}")
-//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-//    public ModelAndView editOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
-//        modelAndView.addObject("model",
-//                this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));
-//        return super.view("otheractivity/edit-otheractivity", modelAndView);
-//    }
+    @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Edit Other Activity")
+    public ModelAndView editOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
+        modelAndView.addObject("model",
+                this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));
+        return super.view("otheractivity/edit-otheractivity", modelAndView);
+    }
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
@@ -64,13 +68,14 @@ public class OtherActivityController extends BaseController {
     }
 
 
-//    @GetMapping("/delete/{id}")
-//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-//    public ModelAndView deleteOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
-//        modelAndView.addObject("model",
-//                this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));
-//        return super.view("otheractivity/delete-otheractivity", modelAndView);
-//    }
+    @GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Delete Other Activity")
+    public ModelAndView deleteOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
+        modelAndView.addObject("model",
+                this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));
+        return super.view("otheractivity/delete-otheractivity", modelAndView);
+    }
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")

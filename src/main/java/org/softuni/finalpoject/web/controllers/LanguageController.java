@@ -7,6 +7,7 @@ import org.softuni.finalpoject.domain.models.service.LanguageServiceModel;
 import org.softuni.finalpoject.domain.models.view.LanguageViewModel;
 import org.softuni.finalpoject.domain.models.view.ProductViewModel;
 import org.softuni.finalpoject.service.LanguageService;
+import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Add Language")
     public ModelAndView addLanguage(){
         return super.view("language/add-language");
     }
@@ -46,6 +48,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("All Languages")
     public ModelAndView allLanguages(ModelAndView modelAndView) {
         modelAndView.addObject("languages", this.languageService.findAllLanguages()
                         .stream()
@@ -58,6 +61,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Edit Language")
     public ModelAndView editLanguage(@PathVariable String id, ModelAndView modelAndView) throws NotFoundException {
         modelAndView.addObject("model",
                 this.modelMapper.map(this.languageService.findLanguageById(id), LanguageViewModel.class));
@@ -75,6 +79,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Delete Language")
     public ModelAndView deleteLanguage(@PathVariable String id, ModelAndView modelAndView) throws NotFoundException {
         modelAndView.addObject("model",
                 this.modelMapper.map(this.languageService.findLanguageById(id), LanguageViewModel.class));

@@ -15,7 +15,7 @@ public class ProductAddBindingModel {
 //    private List<Instrument> instruments;
 //    private List<OtherActivity> otherActivities;
     private List<String> kids;
-    private String instrument;
+    private Instrument instrument;
 
     public ProductAddBindingModel() {
     }
@@ -61,11 +61,11 @@ public class ProductAddBindingModel {
         this.kids = kids;
     }
 
-    public String getInstrument() {
+    public Instrument getInstrument() {
         return instrument;
     }
 
-    public void setInstrument(String instrument) {
+    public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
     }
 }

@@ -3,70 +3,46 @@
 <head>
     <th:block th:include="~{fragments/head}"></th:block>
 </head>
+
 <body>
 <div class="container-fluid">
-
     <header>
         <th:block th:include="~{fragments/navbar}"></th:block>
     </header>
-    <main class="mt-3">
+
+    <main class="mt-3 bg-kidcenter">
+
         <h1 class="text-center text-dark">Full Time Care Programme</h1>
         <hr class="hr-2 bg-dark w-25">
-        <form id="add-product-form" class="form w-50 mx-auto" th:action="@{/products/add}" method="post"><input type="hidden" name="_csrf" value="c686cd14-a7f9-4216-8009-c093b7d3df86">
-            <!--<div class="form-group">-->
-                <!--<label class="font-weight-bold">Name: FULL TIME Programme</label>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-                <!--<label class="font-weight-bold text-left" style="background-color:#9370DB">OBLIGATORY Programme</label>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-                <!--<label class="font-weight-bold">-->
-                    <!--<p>Included daily service:</p>-->
-                    <!--<th:block>-->
-                        <!--<th:ul>-->
-                            <!--<li>4 Breakfasts upon individual habits of each kid.</li>-->
-                            <!--<li>Games</li>-->
-                            <!--<li>Psychologist</li>-->
-                            <!--<li>Speech Therapist</li>-->
-                            <!--<li>Dentist</li>-->
-                            <!--<li>Medical Care.</li>-->
-                            <!--<li>Health professional in required with every kid's needs and abilities;</li>-->
-                            <!--<li>Every day transport from/to your home.</li>-->
-                            <!--<li>Security service on site 24/7</li>-->
-                        <!--</th:ul>-->
-                    <!--</th:block>-->
-                <!--</label>-->
-            <!--</div>-->
-            <!--<div class="form-group">-->
-                <!--<label class="font-weight-bold text-left" style="background-color:#9370DB">OPTIONAL Programme</label>-->
-            <!--</div>-->
+
+        <form id="add-product-form" class="form w-50 mx-auto" th:action="@{/products/add}" method="post">
+            <input type="hidden" name="_csrf" value="c686cd14-a7f9-4216-8009-c093b7d3df86">
+
             <div class="form-group">
-                <label for="add-product-languages" class="font-weight-bold">Languages</label>
-                <select multiple class="form-control" id="add-product-languages" th:field="*{languages}">
-                    <option th:each="language : ${languages}" th:value="${language.id}" th:text="${language.name}">--- Select Language ---</option>
+                <label for="add-product-kids" class="font-weight-bold">Kids</label>
+                <select multiple="" class="form-control" id="add-product-kids" name="kids">
+                    <option selected="" disabled="">--- Select Kid ---</option>
                 </select>
             </div>
 
-            <!--<div class="form-group">-->
-                <!--<label for="add-product-sports" class="font-weight-bold">Sports</label>-->
-                <!--<select multiple class="form-control" id="add-product-sports" th:field="*{sports}">-->
-                    <!--<option th:each="sport : ${sports}" th:value="${sport.id}" th:text="${sport.name}">--- Select Sport ---</option>-->
-                <!--</select>-->
-            <!--</div>-->
-
-            <!--<div class="form-group">-->
-                <!--<label for="add-product-instruments" class="font-weight-bold">Instruments</label>-->
-                <!--<select multiple class="form-control" id="add-product-instruments" th:field="*{instruments}">-->
-                    <!--<option th:each="instrument : ${instruments}" th:value="${instrument.id}" th:text="${instrument.name}">--- Select Instrument ---</option>-->
-                <!--</select>-->
-            <!--</div>-->
-
-            <!--<div class="form-group">-->
-                <!--<label for="add-product-otheractivities" class="font-weight-bold">Other Acvtivity</label>-->
-                <!--<select multiple class="form-control" id="add-product-otheractivities" th:field="*{otheractivities}">-->
-                    <!--<option th:each="otheractivity : ${otheractivities}" th:value="${otheractivity.id}" th:text="${otheractivity.name}">--- Select Other Activity ---</option>-->
-                <!--</select>-->
-            <!--</div>-->
+            <div class="form-group">
+                <label for="add-product-languages" class="font-weight-bold">Languages</label>
+                <select multiple="" class="form-control" id="add-product-languages" name="languages">
+                    <option selected="" disabled="">--- Select Language ---</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="add-product-sports" class="font-weight-bold">Sports</label>
+                <select multiple="" class="form-control" id="add-product-sports" name="sports">
+                    <option selected="" disabled="">--- Select Sport ---</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="add-product-instruments" class="font-weight-bold">Instruments</label>
+                <select multiple="" class="form-control" id="add-product-instruments" name="instruments">
+                    <option selected="" disabled="">--- Select Instrument ---</option>
+                </select>
+            </div>
             <hr class="hr-2 bg-dark w-25">
             <div class="button-holder d-flex justify-content-center">
                 <button type="submit" class="btn btn-success">Add Product</button>
@@ -74,8 +50,42 @@
             <br/>
         </form>
     </main>
+
     <footer>
         <th:block th:include="~{fragments/footer}"></th:block>
     </footer>
+</div>
 </body>
+<script>
+    fetch('/languages/fetch')
+        .then((response) => response.json())
+    .then((json) => {
+        json.forEach((language) => $('#add-product-languages').append(`<option value="${language.id}">${language.name}</option>`));
+    })
+    .catch((err) => console.log(err));
+</script>
+<script>
+    fetch('/sports/fetch')
+        .then((response) => response.json())
+    .then((json) => {
+        json.forEach((sport) => $('#add-product-sports').append(`<option value="${sport.id}">${sport.name}</option>`));
+    })
+    .catch((err) => console.log(err));
+</script>
+<script>
+    fetch('/kids/fetch')
+        .then((response) => response.json())
+    .then((json) => {
+        json.forEach((kid) => $('#add-product-kids').append(`<option value="${kid.id}">${kid.name}</option>`));
+    })
+    .catch((err) => console.log(err));
+</script>
+<script>
+    fetch('/instruments/fetch')
+        .then((response) => response.json())
+    .then((json) => {
+        json.forEach((instrument) => $('#add-product-instruments').append(`<option value="${instrument.id}">${instrument.name}</option>`));
+    })
+    .catch((err) => console.log(err));
+</script>
 </html>

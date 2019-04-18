@@ -13,11 +13,10 @@ public class Instrument extends BaseEntity {
 
     private String name;
 
-
     public Instrument() {
     }
 
-    @Column(name = "instrument", unique = true, updatable = true)
+    @Column(name = "instrument", unique = true)
     public String getName() {
         return name;
     }

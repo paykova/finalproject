@@ -7,6 +7,7 @@ import org.softuni.finalpoject.domain.models.service.UserServiceModel;
 import org.softuni.finalpoject.domain.models.view.UserAllViewModel;
 import org.softuni.finalpoject.domain.models.view.UserProfileViewModel;
 import org.softuni.finalpoject.service.UserService;
+import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
+    @PageTitle("Register")
     public ModelAndView register() {
         return super.view("register");
     }
@@ -50,6 +52,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/login")
     @PreAuthorize("isAnonymous()")
+    @PageTitle("Login")
     public ModelAndView login() {
         return super.view("login");
     }
@@ -57,6 +60,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Profile")
     public ModelAndView profile(Principal principal, ModelAndView modelAndView){
         modelAndView.addObject("model",
                 this.modelMapper.map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
@@ -66,6 +70,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/edit")
     @PreAuthorize("isAuthenticated()")
+    @PageTitle("Edit Profile")
     public ModelAndView editProfile(Principal principal, ModelAndView modelAndView){
         modelAndView.addObject("model",
                 this.modelMapper.map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
@@ -87,6 +92,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PageTitle("All Users")
     public ModelAndView allUsers(ModelAndView modelAndView) {
         List<UserAllViewModel> users = this.userService.findAllUsers()
                 .stream().map(u -> {

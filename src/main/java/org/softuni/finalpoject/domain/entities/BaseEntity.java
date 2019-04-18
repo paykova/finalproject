@@ -14,6 +14,7 @@ public abstract class BaseEntity {
 
     protected BaseEntity() {
     }
+
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
