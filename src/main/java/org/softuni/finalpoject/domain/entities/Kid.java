@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.domain.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +13,17 @@ public class Kid extends BaseEntity {
     private String name;
     private LocalDate birthDate;
     private Gender gender;
-    private User parent;
-   
+    private String imageUrl;
+    private String description;
+    private List<Language> languages;
+    private List<Sport> sports;
+    private List<Instrument> instruments;
+    private List<OtherActivity> otherActivities;
 
     public Kid() {
     }
 
-    @Column(name = "name",nullable = false, unique = false, updatable = true)
+    @Column(name = "name", nullable = false, unique = false, updatable = true)
     public String getName() {
         return name;
     }
@@ -46,17 +51,54 @@ public class Kid extends BaseEntity {
         this.gender = gender;
     }
 
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(
-            name = "parent_id",
-            referencedColumnName = "id",
-            nullable = false
-    )
-    public User getParent() {
-        return parent;
+    @Column(name = "image_url")
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setParent(User parent) {
-        this.parent = parent;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    @Column(name = "description", nullable = false)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+    public List<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<Language> languages) {
+        this.languages = languages;
+    }
+
+    public List<Sport> getSports() {
+        return sports;
+    }
+
+    public void setSports(List<Sport> sports) {
+        this.sports = sports;
+    }
+
+    public List<Instrument> getInstruments() {
+        return instruments;
+    }
+
+    public void setInstruments(List<Instrument> instruments) {
+        this.instruments = instruments;
+    }
+
+    public List<OtherActivity> getOtherActivities() {
+        return otherActivities;
+    }
+
+    public void setOtherActivities(List<OtherActivity> otherActivities) {
+        this.otherActivities = otherActivities;
     }
 }

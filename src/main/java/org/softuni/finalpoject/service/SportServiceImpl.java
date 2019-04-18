@@ -3,6 +3,7 @@ package org.softuni.finalpoject.service;
 import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.entities.Sport;
 import org.softuni.finalpoject.domain.models.service.SportServiceModel;
+import org.softuni.finalpoject.domain.models.view.SportViewModel;
 import org.softuni.finalpoject.repository.SportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,5 +64,13 @@ public class SportServiceImpl implements SportService {
                 .orElseThrow(() -> new IllegalArgumentException());
         this.sportRepository.delete(sport);
         return this.modelMapper.map(sport, SportServiceModel.class);
+    }
+
+    @Override
+    public List<SportViewModel> getSportsNames() {
+        List<SportViewModel> result;
+        result = findAllSports().stream().map(s -> this.modelMapper.map(s, SportViewModel.class)).collect(Collectors.toList());
+
+        return result;
     }
 }

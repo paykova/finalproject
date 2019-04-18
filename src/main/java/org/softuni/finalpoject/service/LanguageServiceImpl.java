@@ -2,6 +2,7 @@ package org.softuni.finalpoject.service;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.entities.Language;
+import org.softuni.finalpoject.domain.models.view.LanguageViewModel;
 import org.softuni.finalpoject.repository.LanguageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +61,14 @@ public class LanguageServiceImpl implements LanguageService {
                 .orElseThrow(() -> new IllegalArgumentException());
         this.languageRepository.delete(language);
         return this.modelMapper.map(language, LanguageServiceModel.class);
+    }
+
+    @Override
+    public List<LanguageViewModel> getLanguagesNames() {
+
+        List<LanguageViewModel> result;
+        result = findAllLanguages().stream().map(l -> this.modelMapper.map(l, LanguageViewModel.class)).collect(Collectors.toList());
+
+        return result;
     }
 }

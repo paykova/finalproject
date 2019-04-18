@@ -3,6 +3,7 @@ package org.softuni.finalpoject.service;
 import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.entities.Instrument;
 import org.softuni.finalpoject.domain.models.service.InstrumentServiceModel;
+import org.softuni.finalpoject.domain.models.view.InstrumentViewModel;
 import org.softuni.finalpoject.repository.InstrumentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +61,13 @@ public class InstrumentServiceImpl implements InstrumentService {
                 .orElseThrow(() -> new IllegalArgumentException());
         this.instrumentRepository.delete(instrument);
         return this.modelMapper.map(instrument, InstrumentServiceModel.class);
+    }
+
+    @Override
+    public List<InstrumentViewModel> getInstrumentNames() {
+        List<InstrumentViewModel> result;
+        result = findAllInstruments().stream().map(i -> this.modelMapper.map(i, InstrumentViewModel.class)).collect(Collectors.toList());
+
+        return result;
     }
 }

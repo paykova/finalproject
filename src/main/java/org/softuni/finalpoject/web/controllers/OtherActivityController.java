@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.web.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.domain.entities.OtherActivity;
 import org.softuni.finalpoject.domain.models.binding.OtherActivityAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.OtherActivityServiceModel;
 import org.softuni.finalpoject.domain.models.view.OtherActivityViewModel;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -83,5 +85,16 @@ public class OtherActivityController extends BaseController {
 
         this.otherActivityService.deleteOtherActivity(id);
         return super.redirect("/otheractivities/all");
+    }
+
+    @GetMapping("/fetch")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @ResponseBody
+    public List<OtherActivityViewModel> fetchOtheractivities() {
+        List<OtherActivityViewModel> otherActivities = this.otherActivityService.findAllOtherActivities()
+                .stream()
+                .map(l -> this.modelMapper.map(l, OtherActivityViewModel.class))
+                .collect(Collectors.toList());
+        return otherActivities;
     }
 }

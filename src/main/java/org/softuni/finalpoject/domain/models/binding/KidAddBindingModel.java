@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 import org.softuni.finalpoject.domain.entities.Gender;
 import org.softuni.finalpoject.domain.entities.User;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,12 @@ public class KidAddBindingModel {
     private String name;
     private LocalDate birthDate;
     private Gender gender;
+    private MultipartFile image;
+    private String description;
+    private String languageId;
+    private String instrumentId;
+    private String otheractivityId;
+    private String sportId;
 
     public KidAddBindingModel() {
     }
@@ -47,5 +54,56 @@ public class KidAddBindingModel {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    @NotEmpty
+    @Length(min = 2, message = "Description must be at least 2 characters long.")
+    @Length(max = 100, message = "Description must be maximum 100 characters long.")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLanguageId() {
+        return languageId;
+    }
+
+    public void setLanguageId(String languageId) {
+        this.languageId = languageId;
+    }
+
+    public String getInstrumentId() {
+        return instrumentId;
+    }
+
+    public void setInstrumentId(String instrumentId) {
+        this.instrumentId = instrumentId;
+    }
+
+    public String getOtheractivityId() {
+        return otheractivityId;
+    }
+
+    public void setOtheractivityId(String otheractivityId) {
+        this.otheractivityId = otheractivityId;
+    }
+
+    public String getSportId() {
+        return sportId;
+    }
+
+    public void setSportId(String sportId) {
+        this.sportId = sportId;
     }
 }

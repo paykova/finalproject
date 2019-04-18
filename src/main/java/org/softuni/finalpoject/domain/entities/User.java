@@ -63,7 +63,7 @@ public class User extends BaseEntity implements UserDetails {
         this.authorities = authorities;
     }
 
-    @OneToMany(mappedBy = "parent", targetEntity = Kid.class)
+    @OneToMany(mappedBy = "parent", targetEntity = Kid.class, fetch = FetchType.EAGER)
     public List<Kid> getKids() {
         return kids;
     }

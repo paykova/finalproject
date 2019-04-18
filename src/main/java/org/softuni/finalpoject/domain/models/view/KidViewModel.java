@@ -12,7 +12,8 @@ public class KidViewModel {
     private String name;
     private LocalDate birthDate;
     private Gender gender;
-    private String parent;
+    private String imageUrl;
+    private String description;
 
     public KidViewModel() {
     }
@@ -49,11 +50,19 @@ public class KidViewModel {
         this.gender = gender;
     }
 
-    public String getParent() {
-        return parent;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setParent(String parent) {
-        this.parent = parent;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

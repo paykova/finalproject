@@ -3,6 +3,7 @@ package org.softuni.finalpoject.service;
 import javassist.NotFoundException;
 import org.softuni.finalpoject.domain.entities.Instrument;
 import org.softuni.finalpoject.domain.models.service.InstrumentServiceModel;
+import org.softuni.finalpoject.domain.models.view.InstrumentViewModel;
 
 import java.util.List;
 
@@ -18,4 +19,9 @@ public interface InstrumentService {
 
     InstrumentServiceModel deleteInstrument(String id);
 
+    List<InstrumentViewModel> getInstrumentNames();
+
 }
+
+
+

@@ -52,6 +52,23 @@ public class KidServiceImpl implements KidService{
     }
 
     @Override
+    public KidServiceModel addKidd(KidServiceModel kidServiceModel) {
+
+      // Kid kid = this.kidRepository.findByName(KidServiceModel.getName()).orElse(null);
+
+        Kid kid = new Kid();
+
+        if (kid != null) {
+            throw new IllegalArgumentException(new IllegalArgumentException());
+        }
+
+        kid = this.modelMapper.map(kidServiceModel, Kid.class);
+        kid = this.kidRepository.save(kid);
+
+        return this.modelMapper.map(kid, KidServiceModel.class);
+    }
+
+    @Override
     public List<KidServiceModel> findAllKids() {
         var models = this.kidRepository.findAll()
                 .stream()

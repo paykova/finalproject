@@ -3,6 +3,7 @@ package org.softuni.finalpoject.service;
 import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.entities.OtherActivity;
 import org.softuni.finalpoject.domain.models.service.OtherActivityServiceModel;
+import org.softuni.finalpoject.domain.models.view.OtherActivityViewModel;
 import org.softuni.finalpoject.repository.OtherActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,5 +59,13 @@ public class OtherActivityServiceImpl implements OtherActivityService {
                 .orElseThrow(() -> new IllegalArgumentException());
         this.otherActivityRepository.delete(otherActivity);
         return this.modelMapper.map(otherActivity, OtherActivityServiceModel.class);
+    }
+
+    @Override
+    public List<OtherActivityViewModel> getOtherActivitiesNames() {
+        List<OtherActivityViewModel> result;
+        result = findAllOtherActivities().stream().map(o -> this.modelMapper.map(o, OtherActivityViewModel.class)).collect(Collectors.toList());
+
+        return result;
     }
 }

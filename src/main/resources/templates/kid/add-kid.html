@@ -28,8 +28,43 @@
         <label class="font-weight-bold" for="inputKidBirthDate">Birth Date</label>
         <input type="date" class="form-control" id="inputKidBirthDate" th:field="*{birthDate}">
         <p></p>
-        <button class="btn btn-dark" type="submit">Add</button>
+        <div class="form-group">
+            <label for="add-product-description" class="font-weight-bold">Description</label>
+            <textarea name="description" id="add-product-description" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="add-product-image" class="font-weight-bold">Image</label>
+            <input type="file" class="form-control-file" id="add-product-image" name="image">
+        </div>
+        <div class="form-group">
+            <label for="add-product-languages" class="font-weight-bold">Languages</label>
+            <select multiple="" class="form-control" id="add-product-languages" name="languages">
+                <option selected="" disabled="">--- Select Language ---</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="add-product-sports" class="font-weight-bold">Sports</label>
+            <select multiple="" class="form-control" id="add-product-sports" name="sports">
+                <option selected="" disabled="">--- Select Sport ---</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="add-product-instruments" class="font-weight-bold">Instruments</label>
+            <select multiple="" class="form-control" id="add-product-instruments" name="instruments">
+                <option selected="" disabled="">--- Select Instrument ---</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="add-product-otheractivities" class="font-weight-bold">Other Activities</label>
+            <select multiple="" class="form-control" id="add-product-otheractivities" name="otheractivities">
+                <option selected="" disabled="">--- Select Other Activity ---</option>
+            </select>
+        </div>
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Add kid</button>
+        </div>
         <br/>
+        <!--<button class="btn btn-dark" type="submit">Add</button>-->
     </form>
 
 </main>
@@ -37,4 +72,36 @@
     <th:block th:include="~{fragments/footer}"></th:block>
 </footer>
 </body>
+<script>
+    fetch('/languages/fetch')
+        .then((response) => response.json())
+    .then((json) => {
+        json.forEach((language) => $('#add-product-languages').append(`<option value="${language.id}">${language.name}</option>`));
+    })
+    .catch((err) => console.log(err));
+</script>
+<script>
+    fetch('/sports/fetch')
+        .then((response) => response.json())
+    .then((json) => {
+        json.forEach((sport) => $('#add-product-sports').append(`<option value="${sport.id}">${sport.name}</option>`));
+    })
+    .catch((err) => console.log(err));
+</script>
+<script>
+    fetch('/instruments/fetch')
+        .then((response) => response.json())
+    .then((json) => {
+        json.forEach((instrument) => $('#add-product-instruments').append(`<option value="${instrument.id}">${instrument.name}</option>`));
+    })
+    .catch((err) => console.log(err));
+</script>
+<script>
+    fetch('/otheractivities/fetch')
+        .then((response) => response.json())
+    .then((json) => {
+        json.forEach((otheractivity) => $('#add-product-otheractivities').append(`<option value="${otheractivity.id}">${otheractivity.name}</option>`));
+    })
+    .catch((err) => console.log(err));
+</script>
 </html>
