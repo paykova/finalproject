@@ -3,6 +3,7 @@ package org.softuni.finalpoject.domain.models.view;
 
 import org.softuni.finalpoject.domain.entities.Gender;
 import org.softuni.finalpoject.domain.entities.User;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -14,6 +15,7 @@ public class KidViewModel {
     private Gender gender;
     private String imageUrl;
     private String description;
+    private String parent;
 
     public KidViewModel() {
     }
@@ -34,6 +36,7 @@ public class KidViewModel {
         this.name = name;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -64,5 +67,13 @@ public class KidViewModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
     }
 }

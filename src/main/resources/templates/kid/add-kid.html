@@ -9,10 +9,9 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="mt-3 bg-kidcenter">
-
     <h1 class="text-center text-dark">Add your kid info</h1>
     <hr class="hr-2 bg-dark w-25">
-    <form class="form w-25 mx-auto" th:action="@{/kids/add}" method="post" th:object="${bindingModel}">
+    <form class="form w-25 mx-auto" th:action="@{/kids/add}" method="post" th:object="${bindingModel}"  enctype="multipart/form-data">
         <div class="form-group" th:classappend="${#fields.hasErrors('name')}? 'text-danger'">
             <label class="font-weight-bold" for="inputKidName">Name</label>
             <input type="text" th:field="*{name}" class="form-control" id="inputKidName" placeholder="Name...">
@@ -30,7 +29,7 @@
         <p></p>
         <div class="form-group">
             <label for="add-product-description" class="font-weight-bold">Description</label>
-            <textarea name="description" id="add-product-description" class="form-control" rows="5"></textarea>
+            <textarea name="description" id="add-product-description" class="form-control" rows="5" placeholder="Describe your kid in short..."></textarea>
         </div>
         <div class="form-group">
             <label for="add-product-image" class="font-weight-bold">Image</label>
@@ -64,9 +63,7 @@
             <button type="submit" class="btn btn-success">Add kid</button>
         </div>
         <br/>
-        <!--<button class="btn btn-dark" type="submit">Add</button>-->
     </form>
-
 </main>
 <footer>
     <th:block th:include="~{fragments/footer}"></th:block>

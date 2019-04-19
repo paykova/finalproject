@@ -122,15 +122,12 @@ public class SportController extends BaseController {
     }
 
     @GetMapping("/fetch")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseBody
     public List<SportViewModel> fetchSports() {
-        List<SportViewModel> sports = this.sportService.findAllSports()
+        return this.sportService.findAllSports()
                 .stream()
                 .map(l -> this.modelMapper.map(l, SportViewModel.class))
                 .collect(Collectors.toList());
-        return sports;
     }
-
-
 }

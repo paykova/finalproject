@@ -15,10 +15,11 @@ public class Kid extends BaseEntity {
     private Gender gender;
     private String imageUrl;
     private String description;
-//    private List<Language> languages;
-//    private List<Sport> sports;
-//    private List<Instrument> instruments;
-//    private List<OtherActivity> otherActivities;
+    private List<Language> languages;
+    private List<Sport> sports;
+    private List<Instrument> instruments;
+    private List<OtherActivity> otherActivities;
+    private User parent;
 
     public Kid() {
     }
@@ -70,35 +71,98 @@ public class Kid extends BaseEntity {
     }
 
 
-//    public List<Language> getLanguages() {
-//        return languages;
-//    }
-//
-//    public void setLanguages(List<Language> languages) {
-//        this.languages = languages;
-//    }
-//
-//    public List<Sport> getSports() {
-//        return sports;
-//    }
-//
-//    public void setSports(List<Sport> sports) {
-//        this.sports = sports;
-//    }
-//
-//    public List<Instrument> getInstruments() {
-//        return instruments;
-//    }
-//
-//    public void setInstruments(List<Instrument> instruments) {
-//        this.instruments = instruments;
-//    }
-//
-//    public List<OtherActivity> getOtherActivities() {
-//        return otherActivities;
-//    }
-//
-//    public void setOtherActivities(List<OtherActivity> otherActivities) {
-//        this.otherActivities = otherActivities;
-//    }
+    @ManyToMany(targetEntity = Language.class)
+    @JoinTable(
+            name = "kids_languages",
+            joinColumns = @JoinColumn(
+                    name = "kid_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "language_id",
+                    referencedColumnName = "id"
+            )
+    )
+    public List<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<Language> languages) {
+        this.languages = languages;
+    }
+
+    @ManyToMany(targetEntity = Sport.class)
+    @JoinTable(
+            name = "kids_sports",
+            joinColumns = @JoinColumn(
+                    name = "kid_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "sport_id",
+                    referencedColumnName = "id"
+            )
+    )
+    public List<Sport> getSports() {
+        return sports;
+    }
+
+    public void setSports(List<Sport> sports) {
+        this.sports = sports;
+    }
+
+    @ManyToMany(targetEntity = Instrument.class)
+    @JoinTable(
+            name = "kids_instruments",
+            joinColumns = @JoinColumn(
+                    name = "kid_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "instrument_id",
+                    referencedColumnName = "id"
+            )
+    )
+    public List<Instrument> getInstruments() {
+        return instruments;
+    }
+
+    public void setInstruments(List<Instrument> instruments) {
+        this.instruments = instruments;
+    }
+
+    @ManyToMany(targetEntity = OtherActivity.class)
+    @JoinTable(
+            name = "kids_otheractivities",
+            joinColumns = @JoinColumn(
+                    name = "kid_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "otheractivity_id",
+                    referencedColumnName = "id"
+            )
+    )
+    public List<OtherActivity> getOtherActivities() {
+        return otherActivities;
+    }
+
+    public void setOtherActivities(List<OtherActivity> otherActivities) {
+        this.otherActivities = otherActivities;
+    }
+
+
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(
+            name = "parent_id",
+            referencedColumnName = "id",
+            nullable = false
+    )
+    public User getParent() {
+        return parent;
+    }
+
+    public void setParent(User parent) {
+        this.parent = parent;
+    }
 }

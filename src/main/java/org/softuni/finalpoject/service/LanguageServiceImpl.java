@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.softuni.finalpoject.domain.models.service.LanguageServiceModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,6 +70,18 @@ public class LanguageServiceImpl implements LanguageService {
         List<LanguageViewModel> result;
         result = findAllLanguages().stream().map(l -> this.modelMapper.map(l, LanguageViewModel.class)).collect(Collectors.toList());
 
+        return result;
+    }
+
+    @Override
+    public List<LanguageServiceModel> getLanguagesByIds(List<String> ids) {
+
+        List<LanguageServiceModel> result = new ArrayList<>();
+
+        for (String id : ids) {
+            LanguageServiceModel model = findLanguageById(id);
+            result.add(model);
+        }
         return result;
     }
 }

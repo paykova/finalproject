@@ -8,6 +8,7 @@ import org.softuni.finalpoject.repository.OtherActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,18 @@ public class OtherActivityServiceImpl implements OtherActivityService {
         List<OtherActivityViewModel> result;
         result = findAllOtherActivities().stream().map(o -> this.modelMapper.map(o, OtherActivityViewModel.class)).collect(Collectors.toList());
 
+        return result;
+    }
+
+    @Override
+    public List<OtherActivityServiceModel> getOtherActivitiesByIds(List<String> ids) {
+
+        List<OtherActivityServiceModel> result = new ArrayList<>();
+
+        for (String id : ids) {
+            OtherActivityServiceModel model = findOtherActivityById(id);
+            result.add(model);
+        }
         return result;
     }
 }

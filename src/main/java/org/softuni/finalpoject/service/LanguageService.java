@@ -20,4 +20,6 @@ public interface LanguageService {
     LanguageServiceModel deleteLanguage(String id);
 
     List<LanguageViewModel> getLanguagesNames();
+
+    List<LanguageServiceModel> getLanguagesByIds(List<String> list);
 }

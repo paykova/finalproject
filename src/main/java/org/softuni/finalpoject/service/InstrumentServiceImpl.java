@@ -8,6 +8,7 @@ import org.softuni.finalpoject.repository.InstrumentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,6 +69,18 @@ public class InstrumentServiceImpl implements InstrumentService {
         List<InstrumentViewModel> result;
         result = findAllInstruments().stream().map(i -> this.modelMapper.map(i, InstrumentViewModel.class)).collect(Collectors.toList());
 
+        return result;
+    }
+
+    @Override
+    public List<InstrumentServiceModel> getInstrumentsByIds(List<String> ids) {
+
+        List<InstrumentServiceModel> result = new ArrayList<>();
+
+        for (String id : ids) {
+            InstrumentServiceModel model = findInstrumentById(id);
+            result.add(model);
+        }
         return result;
     }
 }

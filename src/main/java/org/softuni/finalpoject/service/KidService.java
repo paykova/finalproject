@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface KidService {
 
-    KidServiceModel addKidd(KidServiceModel kidServiceModel);
-
     KidServiceModel addKid(KidServiceModel kidServiceModel, String name);
 
     List<KidServiceModel> findAllKids();
@@ -16,5 +14,8 @@ public interface KidService {
 
     KidServiceModel findKidById(String id);
 
+    void deleteKid(String id);
+
+    KidServiceModel editKid(String id, KidServiceModel kidServiceModel);
 
 }

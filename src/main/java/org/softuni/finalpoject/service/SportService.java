@@ -20,4 +20,6 @@ public interface SportService {
     SportServiceModel deleteSport(String id);
 
     List<SportViewModel> getSportsNames();
+
+    List<SportServiceModel> getSportsByIds(List<String> list);
 }

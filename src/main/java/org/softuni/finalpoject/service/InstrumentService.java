@@ -21,6 +21,8 @@ public interface InstrumentService {
 
     List<InstrumentViewModel> getInstrumentNames();
 
+    List<InstrumentServiceModel> getInstrumentsByIds(List<String> list);
+
 }
 
 

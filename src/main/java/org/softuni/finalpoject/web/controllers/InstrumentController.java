@@ -88,7 +88,7 @@ public class InstrumentController extends BaseController {
     }
 
     @GetMapping("/fetch")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseBody
     public List<InstrumentViewModel> fetchInstruments() {
         List<InstrumentViewModel> instruments = this.instrumentService.findAllInstruments()

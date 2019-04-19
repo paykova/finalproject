@@ -64,6 +64,14 @@ public class User extends BaseEntity implements UserDetails {
     }
 
 
+    @OneToMany(mappedBy = "parent", targetEntity = Kid.class)
+    public List<Kid> getKids() {
+        return kids;
+    }
+
+    public void setKids(List<Kid> kids) {
+        this.kids = kids;
+    }
 
     @Override
     @Transient

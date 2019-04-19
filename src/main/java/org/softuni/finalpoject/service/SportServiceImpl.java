@@ -8,6 +8,7 @@ import org.softuni.finalpoject.repository.SportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,6 +72,17 @@ public class SportServiceImpl implements SportService {
         List<SportViewModel> result;
         result = findAllSports().stream().map(s -> this.modelMapper.map(s, SportViewModel.class)).collect(Collectors.toList());
 
+        return result;
+    }
+    @Override
+    public List<SportServiceModel> getSportsByIds(List<String> ids) {
+
+        List<SportServiceModel> result = new ArrayList<>();
+
+        for (String id : ids) {
+            SportServiceModel model = findSportById(id);
+            result.add(model);
+        }
         return result;
     }
 }

@@ -20,10 +20,12 @@ public class KidServiceModel extends BaseServiceModel{
     private Gender gender;
     private String imageUrl;
     private String description;
-    private LanguageServiceModel language;
-    private InstrumentServiceModel instrument;
-    private SportServiceModel sport;
-    private OtherActivityServiceModel otheractivity;
+
+    List<LanguageServiceModel> languages;
+    List<InstrumentServiceModel> instruments;
+    List<SportServiceModel> sports;
+    List<OtherActivityServiceModel> otheractivities;
+    private User parent;
 
     public KidServiceModel() {
     }
@@ -78,35 +80,43 @@ public class KidServiceModel extends BaseServiceModel{
         this.description = description;
     }
 
-    public LanguageServiceModel getLanguage() {
-        return language;
+    public List<LanguageServiceModel> getLanguages() {
+        return languages;
     }
 
-    public void setLanguage(LanguageServiceModel language) {
-        this.language = language;
+    public void setLanguages(List<LanguageServiceModel> languages) {
+        this.languages = languages;
     }
 
-    public InstrumentServiceModel getInstrument() {
-        return instrument;
+    public List<InstrumentServiceModel> getInstruments() {
+        return instruments;
     }
 
-    public void setInstrument(InstrumentServiceModel instrument) {
-        this.instrument = instrument;
+    public void setInstruments(List<InstrumentServiceModel> instruments) {
+        this.instruments = instruments;
     }
 
-    public SportServiceModel getSport() {
-        return sport;
+    public List<SportServiceModel> getSports() {
+        return sports;
     }
 
-    public void setSport(SportServiceModel sport) {
-        this.sport = sport;
+    public void setSports(List<SportServiceModel> sports) {
+        this.sports = sports;
     }
 
-    public OtherActivityServiceModel getOtheractivity() {
-        return otheractivity;
+    public List<OtherActivityServiceModel> getOtheractivities() {
+        return otheractivities;
     }
 
-    public void setOtheractivity(OtherActivityServiceModel otheractivity) {
-        this.otheractivity = otheractivity;
+    public void setOtheractivities(List<OtherActivityServiceModel> otheractivities) {
+        this.otheractivities = otheractivities;
+    }
+
+    public User getParent() {
+        return parent;
+    }
+
+    public void setParent(User parent) {
+        this.parent = parent;
     }
 }

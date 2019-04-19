@@ -10,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 public class KidAddBindingModel {
 
@@ -18,10 +19,11 @@ public class KidAddBindingModel {
     private Gender gender;
     private MultipartFile image;
     private String description;
-    private String languageId;
-    private String instrumentId;
-    private String otheractivityId;
-    private String sportId;
+
+    private List<String> languages;
+    private List<String> instruments;
+    private List<String> sports;
+    private List<String> otheractivities;
 
     public KidAddBindingModel() {
     }
@@ -75,35 +77,36 @@ public class KidAddBindingModel {
         this.description = description;
     }
 
-    public String getLanguageId() {
-        return languageId;
+    public List<String> getLanguages() {
+        return languages;
     }
 
-    public void setLanguageId(String languageId) {
-        this.languageId = languageId;
+    public void setLanguages(List<String> languages) {
+        this.languages = languages;
     }
 
-    public String getInstrumentId() {
-        return instrumentId;
+
+    public List<String> getInstruments() {
+        return instruments;
     }
 
-    public void setInstrumentId(String instrumentId) {
-        this.instrumentId = instrumentId;
+    public void setInstruments(List<String> instruments) {
+        this.instruments = instruments;
     }
 
-    public String getOtheractivityId() {
-        return otheractivityId;
+    public List<String> getSports() {
+        return sports;
     }
 
-    public void setOtheractivityId(String otheractivityId) {
-        this.otheractivityId = otheractivityId;
+    public void setSports(List<String> sports) {
+        this.sports = sports;
     }
 
-    public String getSportId() {
-        return sportId;
+    public List<String> getOtheractivities() {
+        return otheractivities;
     }
 
-    public void setSportId(String sportId) {
-        this.sportId = sportId;
+    public void setOtheractivities(List<String> otheractivities) {
+        this.otheractivities = otheractivities;
     }
 }

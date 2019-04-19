@@ -55,7 +55,6 @@ public class LanguageController extends BaseController {
                         .map(l -> this.modelMapper.map(l, LanguageViewModel.class))
                         .collect(Collectors.toList())
         );
-
         return super.view("language/all-languages", modelAndView);
     }
 
@@ -95,14 +94,12 @@ public class LanguageController extends BaseController {
     }
 
     @GetMapping("/fetch")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseBody
     public List<LanguageViewModel> fetchLanguages() {
-        List<LanguageViewModel> languages = this.languageService.findAllLanguages()
+      return  this.languageService.findAllLanguages()
                 .stream()
                 .map(l -> this.modelMapper.map(l, LanguageViewModel.class))
                 .collect(Collectors.toList());
-        return languages;
     }
-
 }

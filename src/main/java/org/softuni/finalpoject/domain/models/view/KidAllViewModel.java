@@ -11,6 +11,8 @@ public class KidAllViewModel {
     private String name;
     private LocalDate birthDate;
     private Gender gender;
+    private String imageUrl;
+    private String description;
     private User parent;
 
     public KidAllViewModel() {
@@ -46,6 +48,22 @@ public class KidAllViewModel {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public User getParent() {

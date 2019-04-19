@@ -82,19 +82,17 @@ public class OtherActivityController extends BaseController {
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     public ModelAndView deleteOtherActivityConfirm(@PathVariable String id) {
-
         this.otherActivityService.deleteOtherActivity(id);
         return super.redirect("/otheractivities/all");
     }
 
     @GetMapping("/fetch")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseBody
     public List<OtherActivityViewModel> fetchOtheractivities() {
-        List<OtherActivityViewModel> otherActivities = this.otherActivityService.findAllOtherActivities()
+      return this.otherActivityService.findAllOtherActivities()
                 .stream()
                 .map(l -> this.modelMapper.map(l, OtherActivityViewModel.class))
                 .collect(Collectors.toList());
-        return otherActivities;
     }
 }
