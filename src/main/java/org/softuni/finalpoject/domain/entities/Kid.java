@@ -15,10 +15,10 @@ public class Kid extends BaseEntity {
     private Gender gender;
     private String imageUrl;
     private String description;
-    private List<Language> languages;
-    private List<Sport> sports;
-    private List<Instrument> instruments;
-    private List<OtherActivity> otherActivities;
+//    private List<Language> languages;
+//    private List<Sport> sports;
+//    private List<Instrument> instruments;
+//    private List<OtherActivity> otherActivities;
 
     public Kid() {
     }
@@ -70,35 +70,35 @@ public class Kid extends BaseEntity {
     }
 
 
-    public List<Language> getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(List<Language> languages) {
-        this.languages = languages;
-    }
-
-    public List<Sport> getSports() {
-        return sports;
-    }
-
-    public void setSports(List<Sport> sports) {
-        this.sports = sports;
-    }
-
-    public List<Instrument> getInstruments() {
-        return instruments;
-    }
-
-    public void setInstruments(List<Instrument> instruments) {
-        this.instruments = instruments;
-    }
-
-    public List<OtherActivity> getOtherActivities() {
-        return otherActivities;
-    }
-
-    public void setOtherActivities(List<OtherActivity> otherActivities) {
-        this.otherActivities = otherActivities;
-    }
+//    public List<Language> getLanguages() {
+//        return languages;
+//    }
+//
+//    public void setLanguages(List<Language> languages) {
+//        this.languages = languages;
+//    }
+//
+//    public List<Sport> getSports() {
+//        return sports;
+//    }
+//
+//    public void setSports(List<Sport> sports) {
+//        this.sports = sports;
+//    }
+//
+//    public List<Instrument> getInstruments() {
+//        return instruments;
+//    }
+//
+//    public void setInstruments(List<Instrument> instruments) {
+//        this.instruments = instruments;
+//    }
+//
+//    public List<OtherActivity> getOtherActivities() {
+//        return otherActivities;
+//    }
+//
+//    public void setOtherActivities(List<OtherActivity> otherActivities) {
+//        this.otherActivities = otherActivities;
+//    }
 }

@@ -10,8 +10,6 @@ import java.util.Optional;
 @Repository
 public interface KidRepository extends JpaRepository<Kid, String> {
 
-    List<Kid> findAllKidsByParentId(String id);
+
     Optional<Kid> findByName(String name);
-    List<Kid> findAllByParent(String id);
-    List<Kid> findAllKidsByParent_Id(String username);
 }

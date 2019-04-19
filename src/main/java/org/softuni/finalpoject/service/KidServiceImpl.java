@@ -41,7 +41,7 @@ public class KidServiceImpl implements KidService{
     public KidServiceModel addKid(KidServiceModel kidServiceModel, String name) {
         User user = userRepository.findByUsername(name).orElseThrow();
         Kid kid = this.modelMapper.map(kidServiceModel, Kid.class);
-        kid.setParent(user);
+
         try {
             kid = this.kidRepository.saveAndFlush(kid);
             return this.modelMapper.map(kid, KidServiceModel.class);
@@ -80,10 +80,8 @@ public class KidServiceImpl implements KidService{
 
     @Override
     public List<KidServiceModel> findKidsByParent(String username) {
-        var model = this.kidRepository.findAllKidsByParent_Id(username)
-                .stream()
-                .map(k -> modelMapper.map(k, KidServiceModel.class))
-                .collect(Collectors.toList());
-        return model;
+        return null;
     }
+
+
 }
