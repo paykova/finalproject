@@ -17,6 +17,7 @@ public class User extends BaseEntity implements UserDetails {
     private String email;
     private Set<Role> authorities;
     private List<Kid> kids = new ArrayList<>();
+    private List<Message> messages = new ArrayList<>();
 
     public User() {
     }
@@ -71,6 +72,15 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setKids(List<Kid> kids) {
         this.kids = kids;
+    }
+
+    @OneToMany(mappedBy = "author", targetEntity = Kid.class)
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 
     @Override

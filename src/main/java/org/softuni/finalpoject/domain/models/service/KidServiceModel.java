@@ -20,7 +20,6 @@ public class KidServiceModel extends BaseServiceModel{
     private Gender gender;
     private String imageUrl;
     private String description;
-
     private List<LanguageServiceModel> languages;
     private List<InstrumentServiceModel> instruments;
     private List<SportServiceModel> sports;

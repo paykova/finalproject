@@ -19,7 +19,6 @@ public class KidAddBindingModel {
     private Gender gender;
     private MultipartFile image;
     private String description;
-
     private List<String> languages;
     private List<String> instruments;
     private List<String> sports;

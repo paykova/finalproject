@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "kid")
+@Table(name = "kids")
 public class Kid extends BaseEntity {
 
     private String name;
