@@ -18,5 +18,4 @@ public interface KidService {
     void deleteKid(String id);
 
     KidServiceModel editKid(String id, KidServiceModel kidServiceModel);
-
 }

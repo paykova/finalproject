@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/kids")
 public class KidController extends BaseController {
 
-
     private final KidService kidService;
     private final ModelMapper modelMapper;
     private final CloudinaryService cloudinaryService;

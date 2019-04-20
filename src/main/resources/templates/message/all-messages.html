@@ -9,26 +9,24 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="mt-3 bg-kidcenter">
-    <h1 class="text-center text-dark">All Products</h1>
+    <h1 class="text-center text-dark">All received messages</h1>
     <hr class="hr-2 bg-dark w-75">
     <table class="table table-hover w-75 mx-auto">
         <thead>
         <tr class="row mx-auto">
             <th class="col-md-1 text-center">#</th>
-            <th class="col-md-3 text-center">Id</th>
-            <th class="col-md-5 text-center">Actions</th>
+            <th class="col-md-3 text-center">Title</th>
+            <th class="col-md-3 text-center">Content</th>
+            <th class="col-md-2 text-center">Author</th>
         </tr>
         </thead>
         <tbody>
-        <th:block th:each="product, iter : ${products}">
+        <th:block th:each="message, iter : ${messages}">
             <tr class="row mx-auto">
                 <th class="col-md-1 text-center" th:text="${iter.index + 1}"></th>
-                <td class="col-md-3 text-center" th:text="${product.id}"></td>
-                <td class="col-md-5 text-center">
-                    <a th:href="@{/products/details/{id}(id=${product.id})}" class="btn btn-secondary font-weight-bold text-white">Details</a>
-                    <a th:href="@{/products/edit/{id}(id=${product.id})}" class="btn btn-success font-weight-bold text-white">Edit</a>
-                    <a th:href="@{/products/delete/{id}(id=${product.id})}" class="btn btn-danger font-weight-bold text-white">Delete</a>
-                </td>
+                <td class="col-md-3 text-center" th:text="${message.title}"></td>
+                <td class="col-md-3 text-center" th:text="${message.content}"></td>
+                <td class="col-md-2 text-center" th:text="${message.getAuthor().getUsername()}"></td>
             </tr>
         </th:block>
         </tbody>

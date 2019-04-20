@@ -74,7 +74,7 @@ public class User extends BaseEntity implements UserDetails {
         this.kids = kids;
     }
 
-    @OneToMany(mappedBy = "author", targetEntity = Kid.class)
+    @OneToMany(mappedBy = "author", targetEntity = Message.class)
     public List<Message> getMessages() {
         return messages;
     }

@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.domain.models.service;
 
 import org.hibernate.validator.constraints.Length;
+import org.softuni.finalpoject.domain.entities.User;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,7 @@ public class MessageServiceModel extends BaseServiceModel {
 
     private String title;
     private String content;
+    private User author;
 
     public MessageServiceModel() {
     }
@@ -35,5 +37,13 @@ public class MessageServiceModel extends BaseServiceModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 }
