@@ -19,8 +19,10 @@
             <th class="col-md-1 text-center">Name</th>
             <th class="col-md-1 text-center">Birth Date</th>
             <th class="col-md-1 text-center">Gender</th>
-            <th class="col-md-3 text-center">Description</th>
-            <th class="col-md-1 text-center">Parent name</th>
+            <th class="col-md-1 text-center">Description</th>
+            <th class="col-md-1 text-center">Parent</th>
+            <th class="col-md-1 text-center">ACTIONS</th>
+
         </tr>
         </thead>
         <tbody>
@@ -31,12 +33,13 @@
                 <td class="col-md-1 text-center" th:text="${kid.name}"></td>
                 <td class="col-md-1 text-center" th:text="${kid.birthDate}"></td>
                 <td class="col-md-1 text-center" th:text="${kid.gender}"></td>
-                <td class="col-md-3 text-center" th:text="${kid.description}"></td>
+                <td class="col-md-1 text-center" th:text="${kid.description}"></td>
                 <td class="col-md-1 text-center" th:text="${kid.getParent().getUsername()}"></td>
-                <td class="col-md-3 text-center">
+                <td class="col-md-4 text-center">
                     <a th:href="@{/kids/details/{id}(id=${kid.id})}" class="btn btn-secondary font-weight-bold text-white">Details</a>
                     <a th:href="@{/kids/edit/{id}(id=${kid.id})}" class="btn btn-success font-weight-bold text-white">Edit</a>
                     <a th:href="@{/kids/delete/{id}(id=${kid.id})}" class="btn btn-danger font-weight-bold text-white">Delete</a>
+                    <a th:href="@{/kids/schedule/{id}(id=${kid.id})}" class="btn btn-info font-weight-bold text-white">Schedule</a>
                 </td>
             </tr>
         </th:block>

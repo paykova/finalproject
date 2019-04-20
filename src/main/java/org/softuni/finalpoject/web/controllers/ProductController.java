@@ -1,31 +1,7 @@
 package org.softuni.finalpoject.web.controllers;
 
-import javassist.NotFoundException;
-import org.modelmapper.ModelMapper;
-import org.softuni.finalpoject.domain.entities.Instrument;
-import org.softuni.finalpoject.domain.entities.User;
-import org.softuni.finalpoject.domain.models.binding.InstrumentAddBindingModel;
-import org.softuni.finalpoject.domain.models.binding.ProductAddBindingModel;
-import org.softuni.finalpoject.domain.models.service.*;
-import org.softuni.finalpoject.domain.models.view.KidViewModel;
-import org.softuni.finalpoject.domain.models.view.ProductViewModel;
-import org.softuni.finalpoject.service.*;
-import org.softuni.finalpoject.web.annotations.PageTitle;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
-import java.io.IOException;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/products")

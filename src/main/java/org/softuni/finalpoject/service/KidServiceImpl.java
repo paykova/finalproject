@@ -97,6 +97,7 @@ public class KidServiceImpl implements KidService{
                 .orElseThrow(() -> new IllegalArgumentException("Kid with the given id was not found!"));
 
 
+
         kidServiceModel.setLanguages(
                 this.languageService.findAllLanguages()
                         .stream()
@@ -124,13 +125,16 @@ public class KidServiceImpl implements KidService{
                         .filter(o -> kidServiceModel.getOtheractivities().contains(o.getId()))
                         .collect(Collectors.toList())
         );
-
-
+//
+//        User user = new User();
+//        user.setId(kidServiceModel.getParent().getId());
+//        kidServiceModel.setParent(user);
+//        kid.setParent(user);
 
         kid.setName(kidServiceModel.getName());
         kid.setDescription(kidServiceModel.getDescription());
         kid.setBirthDate(kidServiceModel.getBirthDate());
-        kid.setParent(kidServiceModel.getParent());
+        kid.setParent(kid.getParent());
 
         kid.setLanguages(
                 kidServiceModel.getLanguages()

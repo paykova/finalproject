@@ -2,9 +2,11 @@ package org.softuni.finalpoject.web.controllers;
 
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.domain.entities.User;
 import org.softuni.finalpoject.domain.models.binding.KidAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.KidServiceModel;
 import org.softuni.finalpoject.domain.models.view.KidAllViewModel;
+import org.softuni.finalpoject.domain.models.view.KidScheduleViewModel;
 import org.softuni.finalpoject.domain.models.view.KidViewModel;
 import org.softuni.finalpoject.service.*;
 import org.softuni.finalpoject.web.annotations.PageTitle;
@@ -33,9 +35,10 @@ public class KidController extends BaseController {
     private final InstrumentService instrumentService;
     private final OtherActivityService otherActivityService;
     private final SportService sportService;
+    private final UserService userService;
 
     @Autowired
-    public KidController(KidService kidService, ModelMapper modelMapper, CloudinaryService cloudinaryService, LanguageService languageService, InstrumentService instrumentService, OtherActivityService otherActivityService, SportService sportService) {
+    public KidController(KidService kidService, ModelMapper modelMapper, CloudinaryService cloudinaryService, LanguageService languageService, InstrumentService instrumentService, OtherActivityService otherActivityService, SportService sportService, UserService userService) {
         this.kidService = kidService;
         this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
@@ -43,6 +46,7 @@ public class KidController extends BaseController {
         this.instrumentService = instrumentService;
         this.otherActivityService = otherActivityService;
         this.sportService = sportService;
+        this.userService = userService;
     }
 
     @GetMapping("/add")
@@ -139,7 +143,8 @@ public class KidController extends BaseController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Edit Kid")
-    public ModelAndView editKid(@PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView editKid(@PathVariable String id, ModelAndView modelAndView, @ModelAttribute(name = "bindingModel") KidAddBindingModel bindingModel) {
+
         KidServiceModel kidServiceModel = this.kidService.findKidById(id);
         KidAddBindingModel model = this.modelMapper.map(kidServiceModel, KidAddBindingModel.class);
 
@@ -157,15 +162,43 @@ public class KidController extends BaseController {
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     public ModelAndView editKidConfirm(@PathVariable String id, @ModelAttribute KidAddBindingModel model) {
-        KidServiceModel kidServiceModel = this.modelMapper.map(model, KidServiceModel.class);
+        KidServiceModel kidServiceModel;
+        kidServiceModel = this.modelMapper.map(model, KidServiceModel.class);
+        kidServiceModel.setId(id);
+        kidServiceModel.setParent(this.kidService.findKidById(id).getParent());
+        kidServiceModel.setLanguages(
+                this.languageService.findAllLanguages()
+                        .stream()
+                        .filter(l -> model.getLanguages().contains(l.getId()))
+                        .collect(Collectors.toList())
+        );
+        kidServiceModel.setInstruments(
+                this.instrumentService.findAllInstruments()
+                        .stream()
+                        .filter(i -> model.getInstruments().contains(i.getId()))
+                        .collect(Collectors.toList())
+        );
 
-        kidServiceModel.setLanguages(this.languageService.getLanguagesByIds(model.getLanguages()));
-        kidServiceModel.setInstruments(this.instrumentService.getInstrumentsByIds(model.getInstruments()));
-        kidServiceModel.setSports(this.sportService.getSportsByIds(model.getSports()));
-        kidServiceModel.setOtheractivities(this.otherActivityService.getOtherActivitiesByIds(model.getOtheractivities()));
+        kidServiceModel.setSports(
+                this.sportService.findAllSports()
+                        .stream()
+                        .filter(s -> model.getSports().contains(s.getId()))
+                        .collect(Collectors.toList())
+        );
 
-        kidServiceModel = this.kidService.editKid(id, this.modelMapper.map(model, KidServiceModel.class));
+        kidServiceModel.setOtheractivities(
+                this.otherActivityService.findAllOtherActivities()
+                        .stream()
+                        .filter(o -> model.getOtheractivities().contains(o.getId()))
+                        .collect(Collectors.toList())
+        );
+//        kidServiceModel.setInstruments(this.instrumentService.getInstrumentsByIds(model.getInstruments()));
+//        kidServiceModel.setSports(this.sportService.getSportsByIds(model.getSports()));
+//        kidServiceModel.setOtheractivities(this.otherActivityService.getOtherActivitiesByIds(model.getOtheractivities()));
+//
+//        kidServiceModel = this.kidService.editKid(id, this.modelMapper.map(model, KidServiceModel.class));
 
+        this.kidService.editKid(id, this.modelMapper.map(model, KidServiceModel.class ));
         // return super.redirect("/kid/kid-details/" + id);
         return super.redirect("/home");
     }
@@ -196,6 +229,24 @@ public class KidController extends BaseController {
         return super.redirect("/kids/all");
     }
 
+    @GetMapping("/schedule/{id}")
+    @PreAuthorize("isAuthenticated()")
+    @PageTitle("Kid Schedule")
+    public ModelAndView scheduleKid(@PathVariable String id, ModelAndView modelAndView) {
+
+        KidServiceModel kidServiceModel = this.kidService.findKidById(id);
+        KidAddBindingModel model = this.modelMapper.map(kidServiceModel, KidAddBindingModel.class);
+        model.setLanguages(kidServiceModel.getLanguages().stream().map(l -> l.getName()).collect(Collectors.toList()));
+        model.setInstruments(kidServiceModel.getInstruments().stream().map(i -> i.getName()).collect(Collectors.toList()));
+        model.setSports(kidServiceModel.getSports().stream().map(s -> s.getName()).collect(Collectors.toList()));
+        model.setOtheractivities(kidServiceModel.getOtheractivities().stream().map(o -> o.getName()).collect(Collectors.toList()));
+       // KidScheduleViewModel model = this.modelMapper.map(this.kidService.findKidById(id), KidScheduleViewModel.class);
+
+        modelAndView.addObject("kid", model);
+        modelAndView.addObject("kidId", id);
+
+        return super.view("kid/kid-schedule", modelAndView);
+    }
 
 
 

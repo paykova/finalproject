@@ -5,7 +5,6 @@ import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.models.binding.LanguageAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.LanguageServiceModel;
 import org.softuni.finalpoject.domain.models.view.LanguageViewModel;
-import org.softuni.finalpoject.domain.models.view.ProductViewModel;
 import org.softuni.finalpoject.service.LanguageService;
 import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;

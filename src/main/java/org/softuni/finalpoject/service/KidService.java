@@ -1,5 +1,6 @@
 package org.softuni.finalpoject.service;
 
+import org.softuni.finalpoject.domain.models.service.KidEditServiceModel;
 import org.softuni.finalpoject.domain.models.service.KidServiceModel;
 
 import java.util.List;

@@ -21,10 +21,10 @@ public class KidServiceModel extends BaseServiceModel{
     private String imageUrl;
     private String description;
 
-    List<LanguageServiceModel> languages;
-    List<InstrumentServiceModel> instruments;
-    List<SportServiceModel> sports;
-    List<OtherActivityServiceModel> otheractivities;
+    private List<LanguageServiceModel> languages;
+    private List<InstrumentServiceModel> instruments;
+    private List<SportServiceModel> sports;
+    private List<OtherActivityServiceModel> otheractivities;
     private User parent;
 
     public KidServiceModel() {
