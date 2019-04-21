@@ -22,5 +22,4 @@ public interface OtherActivityService {
     List<OtherActivityViewModel> getOtherActivitiesNames();
 
     List<OtherActivityServiceModel> getOtherActivitiesByIds(List<String> list);
-
 }

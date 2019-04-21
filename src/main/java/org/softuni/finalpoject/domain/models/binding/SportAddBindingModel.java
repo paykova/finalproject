@@ -12,10 +12,10 @@ public class SportAddBindingModel {
     public SportAddBindingModel() {
     }
 
-    @NotNull(message = "Sport Name cannot be null")
-    @NotEmpty
-    @Length(min = 2, message = "Sport Name must be at least 2 characters long.")
-    @Length(max = 20, message = "Sport Name must be maximum 20 characters long.")
+    @NotNull(message = "Sport Name must not be null!")
+    @NotEmpty(message = "Sport name must not be empty!")
+    @Length(min = 2, message = "Sport Name must be at least 2 characters long!")
+    @Length(max = 20, message = "Sport Name must be maximum 20 characters long!")
     public String getName() {
         return name;
     }

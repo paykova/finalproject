@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,10 +35,15 @@ public class KidController extends BaseController {
     private final InstrumentService instrumentService;
     private final OtherActivityService otherActivityService;
     private final SportService sportService;
-    private final UserService userService;
 
     @Autowired
-    public KidController(KidService kidService, ModelMapper modelMapper, CloudinaryService cloudinaryService, LanguageService languageService, InstrumentService instrumentService, OtherActivityService otherActivityService, SportService sportService, UserService userService) {
+    public KidController(KidService kidService,
+                         ModelMapper modelMapper,
+                         CloudinaryService cloudinaryService,
+                         LanguageService languageService,
+                         InstrumentService instrumentService,
+                         OtherActivityService otherActivityService,
+                         SportService sportService) {
         this.kidService = kidService;
         this.modelMapper = modelMapper;
         this.cloudinaryService = cloudinaryService;
@@ -45,56 +51,63 @@ public class KidController extends BaseController {
         this.instrumentService = instrumentService;
         this.otherActivityService = otherActivityService;
         this.sportService = sportService;
-        this.userService = userService;
     }
 
     @GetMapping("/add")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Add Kid")
-    public ModelAndView addKid(ModelAndView modelAndView, @ModelAttribute(name = "bindingModel") KidAddBindingModel bindingModel) {
-        modelAndView.addObject("bindingModel", bindingModel);
+    public ModelAndView addKid(ModelAndView modelAndView, @ModelAttribute(name = "model") KidAddBindingModel model) {
+        modelAndView.addObject("model", model);
         return super.view("kid/add-kid", modelAndView);
     }
 
     @PostMapping("/add")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView addKidConfirm(@Valid @ModelAttribute(name = "bindingModel") KidAddBindingModel bindingModel,
-                                      BindingResult bindingResult, ModelAndView modelAndView, Principal principal) throws IOException {
+    public ModelAndView addKidConfirm(@Valid @ModelAttribute(name = "model") KidAddBindingModel model,
+                                      BindingResult bindingResult,
+                                      ModelAndView modelAndView,
+                                      Principal principal) throws IOException {
+
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("bindingModel", bindingModel);
+
+            modelAndView.addObject("model", model);
 
             return super.view("kid/add-kid", modelAndView);
         }
 
-        KidServiceModel kidServiceModel = this.modelMapper.map(bindingModel, KidServiceModel.class);
+        if ((model.getBirthDate()).isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Kid Birth Date must not be in the future!");
+        }
+
+        KidServiceModel kidServiceModel = this.modelMapper.map(model, KidServiceModel.class);
         kidServiceModel.setImageUrl(
-                this.cloudinaryService.uploadImage(bindingModel.getImage()));
+                this.cloudinaryService.uploadImage(model.getImage()));
 
         kidServiceModel.setLanguages(
                 this.languageService.findAllLanguages()
                         .stream()
-                        .filter(l -> bindingModel.getLanguages().contains(l.getId()))
+                        .filter(l -> model.getLanguages().contains(l.getId()))
                         .collect(Collectors.toList())
         );
 
         kidServiceModel.setInstruments(
                 this.instrumentService.findAllInstruments()
                         .stream()
-                        .filter(i -> bindingModel.getInstruments().contains(i.getId()))
+                        .filter(i -> model.getInstruments().contains(i.getId()))
                         .collect(Collectors.toList())
         );
 
         kidServiceModel.setSports(
                 this.sportService.findAllSports()
                         .stream()
-                        .filter(s -> bindingModel.getSports().contains(s.getId()))
+                        .filter(s -> model.getSports().contains(s.getId()))
                         .collect(Collectors.toList())
         );
 
         kidServiceModel.setOtheractivities(
                 this.otherActivityService.findAllOtherActivities()
                         .stream()
-                        .filter(o -> bindingModel.getOtheractivities().contains(o.getId()))
+                        .filter(o -> model.getOtheractivities().contains(o.getId()))
                         .collect(Collectors.toList())
         );
 

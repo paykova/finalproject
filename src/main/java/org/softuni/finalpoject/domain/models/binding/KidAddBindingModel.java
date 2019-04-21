@@ -27,10 +27,10 @@ public class KidAddBindingModel {
     public KidAddBindingModel() {
     }
 
-    @NotNull(message = "Kid Name cannot be null")
-    @NotEmpty
-    @Length(min = 2, message = "Kid Name must be at least 2 characters long.")
-    @Length(max = 20, message = "Kid Name must be maximum 20 characters long.")
+    @NotNull(message = "Kid Name must not be null!")
+    @NotEmpty(message = "Kid Name must not be null!")
+    @Length(min = 2, message = "Kid Name must be at least 2 characters long!")
+    @Length(max = 20, message = "Kid Name must be maximum 20 characters long!")
     public String getName() {
         return name;
     }
@@ -39,7 +39,7 @@ public class KidAddBindingModel {
         this.name = name;
     }
 
-    @NotNull(message = "Kid Birth Date cannot be null")
+   // @NotNull(message = "Kid Birth Date must not be null!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate getBirthDate() {
         return birthDate;
@@ -65,9 +65,9 @@ public class KidAddBindingModel {
         this.image = image;
     }
 
-    @NotEmpty
-    @Length(min = 2, message = "Description must be at least 2 characters long.")
-    @Length(max = 100, message = "Description must be maximum 100 characters long.")
+    @NotEmpty(message = "Description must not be empty!")
+    @Length(min = 2, message = "Description must be at least 2 characters long!")
+    @Length(max = 100, message = "Description must be maximum 100 characters long!")
     public String getDescription() {
         return description;
     }

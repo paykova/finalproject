@@ -1,4 +1,4 @@
-package org.softuni.finalpoject.utils;
+package org.softuni.finalpoject.validation;
 
 import org.softuni.finalpoject.domain.models.binding.SportAddBindingModel;
 import org.softuni.finalpoject.repository.SportRepository;
@@ -34,7 +34,7 @@ public class SportAddValidator implements Validator {
             errors.rejectValue("name", "Sport Name cannot be Empty!", "Sport Name cannot be Empty!");
         }
         if(sportAddBindingModel.getName().length()<3){
-            errors.rejectValue("name", "Sport Name must contains at least 2 characters!", "Sport Name must contains at least 2 characters!");
+            errors.rejectValue("name", "Sport Name must contains at least 3 characters!", "Sport Name must contains at least 3 characters!");
         }
 
         this.sportRepository.findByName(sportAddBindingModel.getName()).ifPresent((c) -> errors.rejectValue("name", "Sport already exists!", "Sport already exists!"));

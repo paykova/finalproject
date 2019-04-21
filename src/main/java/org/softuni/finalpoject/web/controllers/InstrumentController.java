@@ -10,9 +10,11 @@ import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,14 +34,25 @@ public class InstrumentController extends BaseController {
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Add Instrument")
-    public ModelAndView addInstrument() {
-        return super.view("instrument/add-instrument");
+    public ModelAndView addInstrument(ModelAndView modelAndView, InstrumentAddBindingModel model) {
+
+        modelAndView.addObject("model", model);
+        return super.view("instrument/add-instrument", modelAndView);
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView addInstrumentConfirm(@ModelAttribute InstrumentAddBindingModel model) {
+    public ModelAndView addInstrumentConfirm(ModelAndView modelAndView,
+                                        @Valid @ModelAttribute(name = "model") InstrumentAddBindingModel model,
+                                        BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("model", model);
+            return super.view("instrument/add-instrument", modelAndView);
+        }
+
         this.instrumentService.addInstrument(this.modelMapper.map(model, InstrumentServiceModel.class));
+
         return super.redirect("/instruments/all");
     }
 

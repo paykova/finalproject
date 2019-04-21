@@ -12,10 +12,10 @@ public class LanguageServiceModel extends BaseServiceModel {
     public LanguageServiceModel() {
     }
 
-    @NotNull(message = "Language Name cannot be null")
-    @NotEmpty
-    @Length(min = 2, message = "Language Name must be at least 2 characters long.")
-    @Length(max = 20, message = "Language Name must be maximum 20 characters long.")
+    @NotNull(message = "Language Name must not be null!")
+    @NotEmpty(message = "Language Name must not be empty!")
+    @Length(min = 2, message = "Language Name must be at least 2 characters long!")
+    @Length(max = 20, message = "Language Name must be maximum 20 characters long!")
     public String getName() {
         return name;
     }

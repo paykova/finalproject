@@ -29,10 +29,10 @@ public class KidServiceModel extends BaseServiceModel{
     public KidServiceModel() {
     }
 
-    @NotNull(message = "Kid Name cannot be null")
-    @NotEmpty
-    @Length(min = 2, message = "Kid Name must be at least 2 characters long.")
-    @Length(max = 20, message = "Kid Name must be maximum 20 characters long.")
+    @NotNull(message = "Kid Name must not be null!")
+    @NotEmpty(message = "Kid Name must not be empty!")
+    @Length(min = 2, message = "Kid Name must be at least 2 characters long!")
+    @Length(max = 20, message = "Kid Name must be maximum 20 characters long!")
     public String getName() {
         return name;
     }
@@ -41,8 +41,8 @@ public class KidServiceModel extends BaseServiceModel{
         this.name = name;
     }
 
-    @NotNull(message = "Kid Birth Date cannot be null")
-    @NotEmpty
+    @NotNull(message = "Kid Birth Date must not be null!")
+    @NotEmpty(message = "Kid Birth Dtae must not be empty!")
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -67,10 +67,10 @@ public class KidServiceModel extends BaseServiceModel{
         this.imageUrl = imageUrl;
     }
 
-    @NotNull(message = "Description Name cannot be null")
-    @NotEmpty
-    @Length(min = 2, message = "Description must be at least 2 characters long.")
-    @Length(max = 100, message = "Description must be maximum 100 characters long.")
+    @NotNull(message = "Description Name must not be null!")
+    @NotEmpty(message = "Description must not be empty!")
+    @Length(min = 2, message = "Description must be at least 2 characters long!")
+    @Length(max = 100, message = "Description must be maximum 100 characters long!")
     public String getDescription() {
         return description;
     }

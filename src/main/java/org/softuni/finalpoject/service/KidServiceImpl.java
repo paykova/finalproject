@@ -38,21 +38,22 @@ public class KidServiceImpl implements KidService{
     public KidServiceModel findKidById(String id) {
         Kid kid = this.kidRepository.findById(id).orElse(null);
         if (kid == null) {
-            throw new IllegalArgumentException(id);
+            throw new IllegalArgumentException("Kid not found!");
         }
         return this.modelMapper.map(kid, KidServiceModel.class);
-
     }
 
     @Override
     public KidServiceModel addKid(KidServiceModel kidServiceModel, String name) {
+
         Kid kid = this.kidRepository.findByName(kidServiceModel.getName()).orElse(null);
 
         if(kid != null){
-            throw new IllegalArgumentException("Kid name already exist");
+            throw new IllegalArgumentException("Kid with this name already exist");
         }
 
         kid = this.modelMapper.map(kidServiceModel, Kid.class);
+
         User user = userRepository.findByUsername(name).orElseThrow();
         kid.setParent(user);
 
@@ -67,36 +68,35 @@ public class KidServiceImpl implements KidService{
 
     @Override
     public List<KidServiceModel> findAllKids() {
-        var models = this.kidRepository.findAll()
+        return this.kidRepository.findAll()
                 .stream()
                 .map(u -> this.modelMapper
                         .map(u, KidServiceModel.class))
                 .collect(Collectors.toList());
-        return models;
     }
 
     @Override
     public List<KidServiceModel> findKidsByParent(String username) {
-        var model = this.kidRepository.findAllKidsByParent_Id(username)
+      return this.kidRepository.findAllKidsByParent_Id(username)
                 .stream()
                 .map(k -> modelMapper.map(k, KidServiceModel.class))
                 .collect(Collectors.toList());
-        return model;
     }
 
     @Override
     public void deleteKid(String id) {
-        Kid kid = this.kidRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Kid with the given id was not found!"));
+
+        Kid kid = this.kidRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Kid not found!"));
 
         this.kidRepository.delete(kid);
     }
 
     @Override
     public KidServiceModel editKid(String id, KidServiceModel kidServiceModel) {
+
         Kid kid = this.kidRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Kid with the given id was not found!"));
-
-
+                .orElseThrow(() -> new IllegalArgumentException("Kid not found!"));
 
         kidServiceModel.setLanguages(
                 this.languageService.findAllLanguages()
@@ -160,7 +160,6 @@ public class KidServiceImpl implements KidService{
                         .map(o -> this.modelMapper.map(o, OtherActivity.class))
                         .collect(Collectors.toList())
         );
-
 
         return this.modelMapper.map(this.kidRepository.saveAndFlush(kid), KidServiceModel.class);
     }

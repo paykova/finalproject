@@ -1,12 +1,12 @@
 package org.softuni.finalpoject.web.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.domain.entities.Sport;
 import org.softuni.finalpoject.domain.models.binding.SportAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.SportServiceModel;
 import org.softuni.finalpoject.domain.models.view.SportViewModel;
 import org.softuni.finalpoject.service.SportService;
-import org.softuni.finalpoject.utils.SportAddValidator;
-import org.softuni.finalpoject.utils.SportEditValidator;
+import org.softuni.finalpoject.validation.SportEditValidator;
 import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,37 +25,34 @@ public class SportController extends BaseController {
 
     private final SportService sportService;
     private final ModelMapper modelMapper;
-    private final SportAddValidator addValidator;
     private final SportEditValidator editValidator;
 
     @Autowired
-    public SportController(SportService sportService, ModelMapper modelMapper, SportAddValidator addValidator, SportEditValidator editValidator) {
+    public SportController(SportService sportService, ModelMapper modelMapper, SportEditValidator editValidator) {
         this.sportService = sportService;
         this.modelMapper = modelMapper;
-        this.addValidator = addValidator;
         this.editValidator = editValidator;
     }
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Add Sport")
-    public ModelAndView addSport() {
-        return super.view("sport/add-sport");
+    public ModelAndView addSport(ModelAndView modelAndView, SportAddBindingModel model) {
+        modelAndView.addObject("model", model);
+        return super.view("sport/add-sport", modelAndView);
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView addSportConfirm(ModelAndView modelAndView, @ModelAttribute @Valid SportAddBindingModel model, BindingResult bindingResult) {
-
-        addValidator.validate(model, bindingResult);
+    public ModelAndView addSportConfirm(ModelAndView modelAndView,
+                                        @Valid @ModelAttribute(name = "model") SportAddBindingModel model,
+                                        BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("model", model);
-
             return super.view("sport/add-sport", modelAndView);
         }
         this.sportService.addSport(this.modelMapper.map(model, SportServiceModel.class));
-
         return super.redirect("/sports/all");
     }
 
@@ -80,7 +77,9 @@ public class SportController extends BaseController {
                                   ModelAndView modelAndView,
                                   @ModelAttribute(name = "model") SportAddBindingModel model) {
 
+
         model = this.modelMapper.map(this.sportService.findSportById(id), SportAddBindingModel.class);
+
 
         modelAndView.addObject("sportId", id);
         modelAndView.addObject("model", model);
@@ -92,15 +91,16 @@ public class SportController extends BaseController {
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     public ModelAndView editSportConfirm(@PathVariable String id,
                                          ModelAndView modelAndView,
-                                         @ModelAttribute SportAddBindingModel model,
+                                         @ModelAttribute(name = "model") SportAddBindingModel model,
                                          BindingResult bindingResult) {
-        this.editValidator.validate(model, bindingResult);
+         this.editValidator.validate(model, bindingResult);
 
-        if(bindingResult.hasErrors()){
 
+        if (bindingResult.hasErrors()) {
             modelAndView.addObject("model", model);
             return super.view("sport/edit-sport", modelAndView);
         }
+
         this.sportService.editSport(id, this.modelMapper.map(model, SportServiceModel.class));
         return super.redirect("/sports/all");
     }

@@ -29,6 +29,16 @@
             <button class="btn btn-dark" type="submit">Login</button>
         </div>
     </form>
+    <th:block th:if="${param.error}">
+        <div class="text-center" style="color: red" th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}">
+            <!--Bad Credentials-->
+        </div>
+    </th:block>
+    <th:block th:if="${param.logout}">
+        <div class="text-center" style="color: greenyellow">
+            Successful logout
+        </div>
+    </th:block>
 </main>
 <footer>
     <th:block th:include="~{fragments/footer}"></th:block>

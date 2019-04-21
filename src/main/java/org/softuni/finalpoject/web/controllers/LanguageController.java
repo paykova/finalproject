@@ -10,9 +10,11 @@ import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,15 +35,24 @@ public class LanguageController extends BaseController {
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Add Language")
-    public ModelAndView addLanguage(){
-        return super.view("language/add-language");
+    public ModelAndView addLanguage(ModelAndView modelAndView, LanguageAddBindingModel model) {
+        modelAndView.addObject("model", model);
+        return super.view("language/add-language", modelAndView);
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView addLanguageConfirm(@ModelAttribute LanguageAddBindingModel model){
-        this.languageService.addLanguage(this.modelMapper.map(model, LanguageServiceModel.class));
+    public ModelAndView addLanguageConfirm(ModelAndView modelAndView,
+                                        @Valid @ModelAttribute(name = "model") LanguageAddBindingModel model,
+                                        BindingResult bindingResult) {
 
+        //  addValidator.validate(model, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("model", model);
+            return super.view("language/add-language", modelAndView);
+        }
+        this.languageService.addLanguage(this.modelMapper.map(model, LanguageServiceModel.class));
         return super.redirect("/languages/all");
     }
 

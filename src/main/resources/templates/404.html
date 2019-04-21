@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"></th:block>
+</header>
+
+<main class="jumbotron mt-3 bg-kidcenter">
+    <div class="text-kidcenter">
+        <h1 >Hmmm..</h1>
+        <br/>
+        <h4>Something went wrong! <img src="https://freefrontend.com/assets/img/html-css-404-page-templates/404-SVG-Animated-Page-Concept.png" height="50" title=""></h4>
+        <h4>Go back to  <a class="btn btn-secondary font-weight-bold text-white" style="background-color: #9370DB" th:href="@{/}">HOMEPAGE</a></h4>
+        <br/>
+        <img src="https://szymeckakatarzyna.pl/wp-content/uploads/2019/02/banner-1090830__340.jpg" height="200" title="">
+        <!--<img src="https://freefrontend.com/assets/img/html-css-404-page-templates/404-SVG-Animated-Page-Concept.png" height="200" title="">-->
+    </div>
+</main>
+
+<footer>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
+</body>
+</html>

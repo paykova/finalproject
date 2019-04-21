@@ -12,10 +12,10 @@ public class InstrumentAddBindingModel {
     public InstrumentAddBindingModel() {
     }
 
-    @NotNull(message = "Instrument Name cannot be null")
-    @NotEmpty
-    @Length(min = 2, message = "Instrument Name must be at least 2 characters long.")
-    @Length(max = 20, message = "Instrument Name must be maximum 20 characters long.")
+    @NotNull(message = "Instrument Name must not be null!")
+    @NotEmpty(message = "Instrument Name must not be empty!")
+    @Length(min = 2, message = "Instrument Name must be at least 2 characters long!")
+    @Length(max = 20, message = "Instrument Name must be maximum 20 characters long!")
     public String getName() {
         return name;
     }

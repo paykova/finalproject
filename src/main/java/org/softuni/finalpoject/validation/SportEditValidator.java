@@ -1,4 +1,4 @@
-package org.softuni.finalpoject.utils;
+package org.softuni.finalpoject.validation;
 
 import org.softuni.finalpoject.domain.models.binding.SportAddBindingModel;
 import org.springframework.stereotype.Component;

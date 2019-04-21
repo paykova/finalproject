@@ -10,9 +10,11 @@ import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,13 +34,21 @@ public class OtherActivityController extends BaseController {
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Add Other Activity")
-    public ModelAndView addOtherActivity() {
-        return super.view("otheractivity/add-otheractivity");
+    public ModelAndView addOtherActivity(ModelAndView modelAndView, OtherActivityAddBindingModel model) {
+        modelAndView.addObject("model", model);
+        return super.view("otheractivity/add-otheractivity", modelAndView);
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView addOtherActivityConfirm(@ModelAttribute OtherActivityAddBindingModel model) {
+    public ModelAndView addOtherActivityConfirm(ModelAndView modelAndView,
+                                        @Valid @ModelAttribute(name = "model") OtherActivityAddBindingModel model,
+                                        BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("model", model);
+            return super.view("otheractivity/add-otheractivity", modelAndView);
+        }
         this.otherActivityService.addOtherActivity(this.modelMapper.map(model, OtherActivityServiceModel.class));
         return super.redirect("/otheractivities/all");
     }

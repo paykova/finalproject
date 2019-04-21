@@ -12,10 +12,10 @@ public class OtherActivityAddBindingModel {
     public OtherActivityAddBindingModel() {
     }
 
-    @NotNull(message = "Other Activity Name cannot be null")
-    @NotEmpty
-    @Length(min = 2, message = "Other Activity Name must be at least 2 characters long.")
-    @Length(max = 20, message = "Other Activity Name must be maximum 20 characters long.")
+    @NotNull(message = "Other Activity Name cannot be null!")
+    @NotEmpty(message = "Other Activity Name must not be empty!")
+    @Length(min = 2, message = "Other Activity Name must be at least 2 characters long!")
+    @Length(max = 20, message = "Other Activity Name must be maximum 20 characters long!")
     public String getName() {
         return name;
     }

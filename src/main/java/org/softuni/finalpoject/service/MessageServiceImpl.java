@@ -31,9 +31,12 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public MessageServiceModel addMessage(MessageServiceModel messageServiceModel, String name) {
+
         Message message = this.modelMapper.map(messageServiceModel, Message.class);
 
-        User user = userRepository.findByUsername(name).orElseThrow();
+        User user = userRepository.findByUsername(name)
+                .orElseThrow(() -> new IllegalArgumentException("User not found!"));
+
         message.setAuthor(user);
 
         try {
@@ -45,7 +48,6 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
-
     @Override
     public List<MessageServiceModel> findAllMessages() {
         return this.messageRepository.findAll()
@@ -56,9 +58,10 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public MessageServiceModel findMessageById(String id) throws NotFoundException {
+
         Message message = this.messageRepository.findById(id).orElse(null);
         if (message == null) {
-            throw new IllegalArgumentException(id);
+            throw new IllegalArgumentException("Message not found!");
         }
         return this.modelMapper.map(message, MessageServiceModel.class);
     }
@@ -66,8 +69,10 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public MessageServiceModel editMassage(String id, MessageServiceModel messageServiceModel) {
+
         Message message = this.messageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("Message not found!"));
+
         message.setId(messageServiceModel.getId());
         return this.modelMapper.map(this.messageRepository.saveAndFlush(message), MessageServiceModel.class);
     }
@@ -75,8 +80,10 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public MessageServiceModel deleteMessage(String id) {
+
         Message message = this.messageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("Message not found!"));
+
         this.messageRepository.delete(message);
         return this.modelMapper.map(message, MessageServiceModel.class);
     }
