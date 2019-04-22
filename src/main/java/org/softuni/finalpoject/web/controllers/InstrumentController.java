@@ -2,6 +2,7 @@ package org.softuni.finalpoject.web.controllers;
 
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.models.binding.InstrumentAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.InstrumentServiceModel;
 import org.softuni.finalpoject.domain.models.view.InstrumentViewModel;
@@ -33,7 +34,7 @@ public class InstrumentController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Add Instrument")
+    @PageTitle(Constants.PAGE_TITLE_ADD_INSTRUMENT)
     public ModelAndView addInstrument(ModelAndView modelAndView, InstrumentAddBindingModel model) {
 
         modelAndView.addObject("model", model);
@@ -58,7 +59,7 @@ public class InstrumentController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("All Instruments")
+    @PageTitle(Constants.PAGE_TITLE_ALL_INSTRUMENTS)
     public ModelAndView allInstrument(ModelAndView modelAndView) {
         modelAndView.addObject("instruments", this.instrumentService.findAllInstruments().stream()
                 .map(i -> this.modelMapper.map(i, InstrumentViewModel.class)).collect(Collectors.toList()));
@@ -67,14 +68,13 @@ public class InstrumentController extends BaseController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Edit Instrument")
+    @PageTitle(Constants.PAGE_TITLE_EDIT_INSTRUMENT)
     public ModelAndView editInstrument(@PathVariable String id,
                                        ModelAndView modelAndView,
                                        @ModelAttribute(name = "model") InstrumentAddBindingModel model) {
 
 
         model = this.modelMapper.map(this.instrumentService.findInstrumentById(id), InstrumentAddBindingModel.class);
-
 
         modelAndView.addObject("instrumentId", id);
         modelAndView.addObject("model", model);
@@ -101,10 +101,13 @@ public class InstrumentController extends BaseController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Delete Instrument")
-    public ModelAndView deleteInstrument(@PathVariable String id, ModelAndView modelAndView) throws NotFoundException {
+    @PageTitle(Constants.PAGE_TITLE_DELETE_INSTRUMENT)
+    public ModelAndView deleteInstrument(@PathVariable String id,
+                                         ModelAndView modelAndView) throws NotFoundException {
+
         modelAndView.addObject("model",
                 this.modelMapper.map(this.instrumentService.findInstrumentById(id), InstrumentViewModel.class));
+
         return super.view("instrument/delete-instrument", modelAndView);
     }
 

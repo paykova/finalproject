@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.config;
 
 import com.cloudinary.Cloudinary;
+import org.softuni.finalpoject.constants.Constants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +21,9 @@ public class ApplicationCloudConfiguration {
     @Bean
     public Cloudinary cloudinary() {
         return new Cloudinary(new HashMap<String, Object>(){{
-            put("cloud_name", cloudApiName);
-            put("api_key", cloudApiKey);
-            put("api_secret", cloudApiSecret);
+            put(Constants.CLOUD_NAME, cloudApiName);
+            put(Constants.API_KEY, cloudApiKey);
+            put(Constants.API_SECRET, cloudApiSecret);
         }});
     }
 }

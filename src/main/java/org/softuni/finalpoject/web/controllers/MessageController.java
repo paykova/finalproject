@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.web.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.models.binding.MessageAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.LanguageServiceModel;
 import org.softuni.finalpoject.domain.models.service.MessageServiceModel;
@@ -35,30 +36,14 @@ public class MessageController extends BaseController {
         this.modelMapper = modelMapper;
     }
 
-    //    @GetMapping("/add")
-//    @PreAuthorize("hasRole('ROLE_USER')")
-//    @PageTitle("Add Message")
-//    public ModelAndView addMessage(){
-//        return super.view("message/add-message");
-//    }
-
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_USER')")
-    @PageTitle("Add Message")
+    @PageTitle(Constants.PAGE_TITLE_ADD_MESSAGE)
     public ModelAndView addMessage(ModelAndView modelAndView, MessageAddBindingModel model) {
         modelAndView.addObject("model", model);
         return super.view("message/add-message", modelAndView);
     }
 
-//    @PostMapping("/add")
-//    @PreAuthorize("hasRole('ROLE_USER')")
-//    public ModelAndView addMessageConfirm(@ModelAttribute MessageAddBindingModel model, Principal principal) {
-//        MessageServiceModel messageServiceModel = this.modelMapper.map(model, MessageServiceModel.class);
-//        this.messageService.addMessage(messageServiceModel, principal.getName());
-//
-//        return super.view("message/thanks-message");
-//    }
-//
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ModelAndView addMessageConfirm(ModelAndView modelAndView,
@@ -78,7 +63,7 @@ public class MessageController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("All Messages")
+    @PageTitle(Constants.PAGE_TITLE_ALL_MESSAGES)
     public ModelAndView allMessages(ModelAndView modelAndView) {
         List<MessageViewModel> viewModels = messageService.findAllMessages()
                 .stream()

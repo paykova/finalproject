@@ -2,6 +2,7 @@ package org.softuni.finalpoject.web.controllers;
 
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.OtherActivity;
 import org.softuni.finalpoject.domain.models.binding.OtherActivityAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.OtherActivityServiceModel;
@@ -34,7 +35,7 @@ public class OtherActivityController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Add Other Activity")
+    @PageTitle(Constants.PAGE_TITLE_ADD_ACTIVITY)
     public ModelAndView addOtherActivity(ModelAndView modelAndView, OtherActivityAddBindingModel model) {
         modelAndView.addObject("model", model);
         return super.view("otheractivity/add-otheractivity", modelAndView);
@@ -56,7 +57,7 @@ public class OtherActivityController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("All Other Activities")
+    @PageTitle(Constants.PAGE_TITLE_ALL_ACTIVITIES)
     public ModelAndView allOtherActivities(ModelAndView modelAndView) {
         modelAndView.addObject("otheractivities", this.otherActivityService.findAllOtherActivities().stream()
                 .map(o -> this.modelMapper.map(o, OtherActivityViewModel.class)).collect(Collectors.toList()));
@@ -65,7 +66,7 @@ public class OtherActivityController extends BaseController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Edit Other Activity")
+    @PageTitle(Constants.PAGE_TITLE_EDIT_ACTIVITY)
     public ModelAndView editOtherActivity(@PathVariable String id,
                                      ModelAndView modelAndView,
                                      @ModelAttribute(name = "model") OtherActivityAddBindingModel model) throws NotFoundException {
@@ -97,7 +98,7 @@ public class OtherActivityController extends BaseController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Delete Other Activity")
+    @PageTitle(Constants.PAGE_TITLE_DELETE_ACTIVITY)
     public ModelAndView deleteOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
         modelAndView.addObject("model",
                 this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));

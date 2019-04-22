@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.domain.models.binding;
 
 import org.hibernate.validator.constraints.Length;
+import org.softuni.finalpoject.constants.Constants;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,10 +13,10 @@ public class OtherActivityAddBindingModel {
     public OtherActivityAddBindingModel() {
     }
 
-    @NotNull(message = "Other Activity Name cannot be null!")
-    @NotEmpty(message = "Other Activity Name must not be empty!")
-    @Length(min = 2, message = "Other Activity Name must be at least 2 characters long!")
-    @Length(max = 20, message = "Other Activity Name must be maximum 20 characters long!")
+    @NotNull(message = Constants.ACTIVITY_NAME_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.ACTIVITY_NAME_MUST_NOT_BE_EMPTY)
+    @Length(min = 2, message = Constants.ACTIVITY_NAME_MUST_BE_AT_LEAST_2_CHARACTERS_LONG)
+    @Length(max = 20, message = Constants.ACTIVITY_NAME_MUST_BE_MAX_20_CHARACTERS_LONG)
     public String getName() {
         return name;
     }

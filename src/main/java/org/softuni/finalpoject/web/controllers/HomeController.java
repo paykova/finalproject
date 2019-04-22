@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.web.controllers;
 
 
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -12,14 +13,14 @@ public class HomeController extends BaseController {
 
     @GetMapping("/")
     @PreAuthorize("isAnonymous()")
-    @PageTitle("Index")
+    @PageTitle(Constants.PAGE_TITLE_INDEX)
     public ModelAndView index(){
         return super.view("index");
     }
 
     @GetMapping("/home")
     @PreAuthorize("isAuthenticated()")
-    @PageTitle("Home")
+    @PageTitle(Constants.PAGE_TITLE_HOME)
     public ModelAndView home(){
         return super.view("home");
     }
@@ -27,14 +28,14 @@ public class HomeController extends BaseController {
 
     @GetMapping("/contact")
     @PreAuthorize("isAnonymous()")
-    @PageTitle("Contact us")
+    @PageTitle(Constants.PAGE_TITLE_CONTACT_US)
     public ModelAndView contact(){
         return super.view("contact");
     }
 
     @GetMapping("/contact-logged")
     @PreAuthorize("isAuthenticated()")
-    @PageTitle("Contact us")
+    @PageTitle(Constants.PAGE_TITLE_CONTACT_US)
     public ModelAndView contactLogged(){
         return super.view("contact");
     }

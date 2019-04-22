@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.web.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.Sport;
 import org.softuni.finalpoject.domain.models.binding.SportAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.SportServiceModel;
@@ -36,7 +37,7 @@ public class SportController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Add Sport")
+    @PageTitle(Constants.PAGE_TITLE_ADD_SPORT)
     public ModelAndView addSport(ModelAndView modelAndView, SportAddBindingModel model) {
         modelAndView.addObject("model", model);
         return super.view("sport/add-sport", modelAndView);
@@ -58,7 +59,7 @@ public class SportController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("All Sports")
+    @PageTitle(Constants.PAGE_TITLE_ALL_SPORTS)
     public ModelAndView allSports(ModelAndView modelAndView) {
         modelAndView.addObject("sports",
                 this.sportService.findAllSports()
@@ -72,7 +73,7 @@ public class SportController extends BaseController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Edit Sport")
+    @PageTitle(Constants.PAGE_TITLE_EDIT_SPORT)
     public ModelAndView editSport(@PathVariable String id,
                                   ModelAndView modelAndView,
                                   @ModelAttribute(name = "model") SportAddBindingModel model) {
@@ -106,7 +107,7 @@ public class SportController extends BaseController {
 
     @GetMapping("delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Delete Sport")
+    @PageTitle(Constants.PAGE_TITLE_DELETE_SPORT)
     public ModelAndView deleteSport(@PathVariable String id, ModelAndView modelAndView) {
         modelAndView.addObject("model", this.modelMapper.map(this.sportService.findSportById(id), SportViewModel.class));
         return super.view("sport/delete-sport", modelAndView);

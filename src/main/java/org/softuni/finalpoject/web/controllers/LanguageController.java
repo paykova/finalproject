@@ -2,6 +2,7 @@ package org.softuni.finalpoject.web.controllers;
 
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.models.binding.LanguageAddBindingModel;
 import org.softuni.finalpoject.domain.models.binding.SportAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.LanguageServiceModel;
@@ -35,7 +36,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Add Language")
+    @PageTitle(Constants.PAGE_TITLE_ADD_LANGUAGE)
     public ModelAndView addLanguage(ModelAndView modelAndView, LanguageAddBindingModel model) {
         modelAndView.addObject("model", model);
         return super.view("language/add-language", modelAndView);
@@ -59,7 +60,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("All Languages")
+    @PageTitle(Constants.PAGE_TITLE_ALL_LANGUAGES)
     public ModelAndView allLanguages(ModelAndView modelAndView) {
         modelAndView.addObject("languages", this.languageService.findAllLanguages()
                         .stream()
@@ -71,7 +72,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Edit Sport")
+    @PageTitle(Constants.PAGE_TITLE_EDIT_LANGUAGE)
     public ModelAndView editLanguage(@PathVariable String id,
                                   ModelAndView modelAndView,
                                   @ModelAttribute(name = "model") LanguageAddBindingModel model) throws NotFoundException {
@@ -105,7 +106,7 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Delete Language")
+    @PageTitle(Constants.PAGE_TITLE_DELETE_LANGUAGE)
     public ModelAndView deleteLanguage(@PathVariable String id, ModelAndView modelAndView) throws NotFoundException {
         modelAndView.addObject("model",
                 this.modelMapper.map(this.languageService.findLanguageById(id), LanguageViewModel.class));

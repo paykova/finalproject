@@ -2,6 +2,7 @@ package org.softuni.finalpoject.web.controllers;
 
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.User;
 import org.softuni.finalpoject.domain.models.binding.KidAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.KidServiceModel;
@@ -55,7 +56,7 @@ public class KidController extends BaseController {
 
     @GetMapping("/add")
     @PreAuthorize("isAuthenticated()")
-    @PageTitle("Add Kid")
+    @PageTitle(Constants.PAGE_TITLE_ADD_KID)
     public ModelAndView addKid(ModelAndView modelAndView, @ModelAttribute(name = "model") KidAddBindingModel model) {
         modelAndView.addObject("model", model);
         return super.view("kid/add-kid", modelAndView);
@@ -118,7 +119,7 @@ public class KidController extends BaseController {
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PageTitle("All Kids")
+    @PageTitle(Constants.PAGE_TITLE_ALL_KIDS)
     public ModelAndView allKids(ModelAndView modelAndView) {
         List<KidAllViewModel> viewModels = kidService.findAllKids()
                 .stream()
@@ -131,7 +132,7 @@ public class KidController extends BaseController {
     @GetMapping("/my/{id}")
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
-    @PageTitle("My Kids")
+    @PageTitle(Constants.PAGE_TITLE_MY_KIDS)
     public ModelAndView getMyKids(ModelAndView modelAndView, @PathVariable String id) {
         List<KidViewModel> kidViewModels = kidService.findKidsByParent(id)
                 .stream()
@@ -143,7 +144,7 @@ public class KidController extends BaseController {
 
     @GetMapping("/details/{id}")
     @PreAuthorize("isAuthenticated()")
-    @PageTitle("Kid Details")
+    @PageTitle(Constants.PAGE_TITLE_KID_DETAILS)
     public ModelAndView detailsKid(@PathVariable String id, ModelAndView modelAndView) {
         KidViewModel model = this.modelMapper.map(this.kidService.findKidById(id), KidViewModel.class);
 
@@ -154,7 +155,7 @@ public class KidController extends BaseController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Edit Kid")
+    @PageTitle(Constants.PAGE_TITLE_EDIT_KID)
     public ModelAndView editKid(@PathVariable String id, ModelAndView modelAndView, @ModelAttribute(name = "bindingModel") KidAddBindingModel bindingModel) {
 
         KidServiceModel kidServiceModel = this.kidService.findKidById(id);
@@ -218,7 +219,7 @@ public class KidController extends BaseController {
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Delete Kid")
+    @PageTitle(Constants.PAGE_TITLE_DELETE_KID)
     public ModelAndView deleteKid(@PathVariable String id, ModelAndView modelAndView) {
         KidServiceModel kidServiceModel = this.kidService.findKidById(id);
         KidAddBindingModel model = this.modelMapper.map(kidServiceModel, KidAddBindingModel.class);
@@ -243,7 +244,7 @@ public class KidController extends BaseController {
 
     @GetMapping("/schedule/{id}")
     @PreAuthorize("isAuthenticated()")
-    @PageTitle("Kid Schedule")
+    @PageTitle(Constants.PAGE_TITLE_KID_SCHEDULE)
     public ModelAndView scheduleKid(@PathVariable String id, ModelAndView modelAndView) {
 
         KidServiceModel kidServiceModel = this.kidService.findKidById(id);

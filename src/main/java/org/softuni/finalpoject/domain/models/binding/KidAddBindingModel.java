@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.domain.models.binding;
 
 import org.hibernate.validator.constraints.Length;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.Gender;
 import org.softuni.finalpoject.domain.entities.User;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,10 +28,10 @@ public class KidAddBindingModel {
     public KidAddBindingModel() {
     }
 
-    @NotNull(message = "Kid Name must not be null!")
-    @NotEmpty(message = "Kid Name must not be null!")
-    @Length(min = 2, message = "Kid Name must be at least 2 characters long!")
-    @Length(max = 20, message = "Kid Name must be maximum 20 characters long!")
+    @NotNull(message = Constants.KID_NAME_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.KID_NAME_MUST_NOT_BE_EMPTY)
+    @Length(min = 2, message = Constants.KID_NAME_MUST_BE_AT_LEAST_2_CHARACTERS_LONG)
+    @Length(max = 20, message = Constants.KID_NAME_MUST_BE_MAX_20_CHARACTERS_LONG)
     public String getName() {
         return name;
     }
@@ -39,8 +40,7 @@ public class KidAddBindingModel {
         this.name = name;
     }
 
-   // @NotNull(message = "Kid Birth Date must not be null!")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = Constants.LOCAL_DATE_FORMAT_PATTERN)
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -65,9 +65,10 @@ public class KidAddBindingModel {
         this.image = image;
     }
 
-    @NotEmpty(message = "Description must not be empty!")
-    @Length(min = 2, message = "Description must be at least 2 characters long!")
-    @Length(max = 100, message = "Description must be maximum 100 characters long!")
+    @NotNull(message = Constants.DESCRIPTION_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.DESCRIPTION_MUST_NOT_BE_EMPTY)
+    @Length(min = 2, message = Constants.DESCRIPTION_MUST_BE_AT_LEAST_10_CHARACTERS_LONG)
+    @Length(max = 20, message = Constants.DESCRIPTION_MUST_BE_MAX_20_CHARACTERS_LONG)
     public String getDescription() {
         return description;
     }

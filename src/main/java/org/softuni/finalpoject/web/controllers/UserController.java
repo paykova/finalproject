@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.web.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.models.binding.UserEditBindingModel;
 import org.softuni.finalpoject.domain.models.binding.UserRegisterBindingModel;
 import org.softuni.finalpoject.domain.models.service.UserServiceModel;
@@ -33,7 +34,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/register")
     @PreAuthorize("isAnonymous()")
-    @PageTitle("Register")
+    @PageTitle(Constants.PAGE_TITLE_REGISTER)
     public ModelAndView register() {
         return super.view("register");
     }
@@ -52,7 +53,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/login")
     @PreAuthorize("isAnonymous()")
-    @PageTitle("Login")
+    @PageTitle(Constants.PAGE_TITLE_LOGIN)
     public ModelAndView login() {
         return super.view("login");
     }
@@ -60,7 +61,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
-    @PageTitle("Profile")
+    @PageTitle(Constants.PAGE_TITLE_PROFILE)
     public ModelAndView profile(Principal principal, ModelAndView modelAndView){
         modelAndView.addObject("model",
                 this.modelMapper.map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
@@ -70,7 +71,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/edit")
     @PreAuthorize("isAuthenticated()")
-    @PageTitle("Edit Profile")
+    @PageTitle(Constants.PAGE_TITLE_EDIT_PROFILE)
     public ModelAndView editProfile(Principal principal, ModelAndView modelAndView){
         modelAndView.addObject("model",
                 this.modelMapper.map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
@@ -92,7 +93,7 @@ public class UserController extends BaseController{
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PageTitle("All Users")
+    @PageTitle(Constants.PAGE_TITLE_ALL_USERS)
     public ModelAndView allUsers(ModelAndView modelAndView) {
         List<UserAllViewModel> users = this.userService.findAllUsers()
                 .stream().map(u -> {
