@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.Language;
 import org.softuni.finalpoject.domain.models.service.OtherActivityServiceModel;
 import org.softuni.finalpoject.domain.models.view.LanguageViewModel;
@@ -22,7 +23,9 @@ public class LanguageServiceImpl implements LanguageService {
     private final Validator validator;
 
     @Autowired
-    public LanguageServiceImpl(LanguageRepository languageRepository, ModelMapper modelMapper, Validator validator) {
+    public LanguageServiceImpl(LanguageRepository languageRepository,
+                               ModelMapper modelMapper,
+                               Validator validator) {
         this.languageRepository = languageRepository;
         this.modelMapper = modelMapper;
         this.validator = validator;
@@ -32,12 +35,13 @@ public class LanguageServiceImpl implements LanguageService {
     public LanguageServiceModel addLanguage(LanguageServiceModel languageServiceModel) {
 
         if(!validator.validate(languageServiceModel).isEmpty()){
-            throw new IllegalArgumentException("Invalid Language!");
+            throw new IllegalArgumentException(Constants.INVALID_LANGUAGE_ERROR_MESSAGE);
         }
+
         Language language = this.modelMapper.map(languageServiceModel, Language.class);
 
         if (this.languageRepository.findByName(language.getName()).orElse(null) != null) {
-            throw new IllegalArgumentException("Language with this name already exists!");
+            throw new IllegalArgumentException(Constants.LANGUAGE_EXISTS_ERROR_MESSAGE);
         }
 
         return this.modelMapper.map(this.languageRepository.saveAndFlush(language), LanguageServiceModel.class);
@@ -45,6 +49,7 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public List<LanguageServiceModel> findAllLanguages() {
+
         return this.languageRepository.findAll()
                 .stream()
                 .map(l -> this.modelMapper.map(l, LanguageServiceModel.class))
@@ -55,7 +60,7 @@ public class LanguageServiceImpl implements LanguageService {
     public LanguageServiceModel findLanguageById(String id) {
 
         Language language = this.languageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Language not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.LANGUAGE_NOT_FOUND_ERROR_MESSAGE));
 
         return this.modelMapper.map(language, LanguageServiceModel.class);
     }
@@ -64,12 +69,12 @@ public class LanguageServiceImpl implements LanguageService {
     public LanguageServiceModel editLanguage(String id, LanguageServiceModel languageServiceModel) {
 
         Language language = this.languageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Language not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.LANGUAGE_NOT_FOUND_ERROR_MESSAGE));
 
         language.setName(languageServiceModel.getName());
 
         if (this.languageRepository.findByName(language.getName()).orElse(null) != null) {
-            throw new IllegalArgumentException("Language with this name already exists!");
+            throw new IllegalArgumentException(Constants.LANGUAGE_EXISTS_ERROR_MESSAGE);
         }
 
         return this.modelMapper.map(this.languageRepository.saveAndFlush(language), LanguageServiceModel.class);
@@ -79,7 +84,7 @@ public class LanguageServiceImpl implements LanguageService {
     public LanguageServiceModel deleteLanguage(String id) {
 
         Language language = this.languageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Language not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.LANGUAGE_NOT_FOUND_ERROR_MESSAGE));
 
         this.languageRepository.delete(language);
 

@@ -1,5 +1,10 @@
 package org.softuni.finalpoject.domain.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -70,7 +75,7 @@ public class Kid extends BaseEntity {
         this.description = description;
     }
 
-
+    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(targetEntity = Language.class)
     @JoinTable(
             name = "kids_languages",
@@ -91,7 +96,8 @@ public class Kid extends BaseEntity {
         this.languages = languages;
     }
 
-    @ManyToMany(targetEntity = Sport.class)
+    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(targetEntity = Sport.class, cascade = CascadeType.ALL)
     @JoinTable(
             name = "kids_sports",
             joinColumns = @JoinColumn(
@@ -111,7 +117,8 @@ public class Kid extends BaseEntity {
         this.sports = sports;
     }
 
-    @ManyToMany(targetEntity = Instrument.class)
+    @Fetch(FetchMode.SUBSELECT)
+    @ManyToMany(targetEntity = Instrument.class, fetch = FetchType.EAGER)
     @JoinTable(
             name = "kids_instruments",
             joinColumns = @JoinColumn(
@@ -131,6 +138,7 @@ public class Kid extends BaseEntity {
         this.instruments = instruments;
     }
 
+    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(targetEntity = OtherActivity.class)
     @JoinTable(
             name = "kids_otheractivities",

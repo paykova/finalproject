@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.Instrument;
 import org.softuni.finalpoject.domain.models.service.InstrumentServiceModel;
 import org.softuni.finalpoject.domain.models.view.InstrumentViewModel;
@@ -21,7 +22,9 @@ public class InstrumentServiceImpl implements InstrumentService {
     private final Validator validator;
 
     @Autowired
-    public InstrumentServiceImpl(InstrumentRepository instrumentRepository, ModelMapper modelMapper, Validator validator) {
+    public InstrumentServiceImpl(InstrumentRepository instrumentRepository,
+                                 ModelMapper modelMapper,
+                                 Validator validator) {
         this.instrumentRepository = instrumentRepository;
         this.modelMapper = modelMapper;
         this.validator = validator;
@@ -31,12 +34,12 @@ public class InstrumentServiceImpl implements InstrumentService {
     public InstrumentServiceModel addInstrument(InstrumentServiceModel instrumentServiceModel) {
 
         if(!validator.validate(instrumentServiceModel).isEmpty()){
-            throw new IllegalArgumentException("Invalid Instrument!");
+            throw new IllegalArgumentException(Constants.INVALID_INSTRUMENT_ERROR_MESSAGE);
         }
         Instrument instrument = this.modelMapper.map(instrumentServiceModel, Instrument.class);
 
         if (this.instrumentRepository.findByName(instrument.getName()).orElse(null) != null) {
-            throw new IllegalArgumentException("Instrument with this name already exists!");
+            throw new IllegalArgumentException(Constants.INSTRUMENT_EXISTS_ERROR_MESSAGE);
         }
 
         return this.modelMapper.map(this.instrumentRepository.saveAndFlush(instrument), InstrumentServiceModel.class);
@@ -53,8 +56,9 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public InstrumentServiceModel findInstrumentById(String id) {
+
         Instrument instrument = this.instrumentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Instrument not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.INSTRUMENT_NOT_FOUND_ERROR_MESSAGE));
 
         return this.modelMapper.map(instrument, InstrumentServiceModel.class);
     }
@@ -62,14 +66,19 @@ public class InstrumentServiceImpl implements InstrumentService {
     @Override
     public InstrumentServiceModel editInstrument(String id, InstrumentServiceModel instrumentServiceModel) {
 
+        if(!validator.validate(instrumentServiceModel).isEmpty()){
+            throw new IllegalArgumentException(Constants.INVALID_INSTRUMENT_ERROR_MESSAGE);
+        }
+
         Instrument instrument = this.instrumentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Instrument not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.INSTRUMENT_NOT_FOUND_ERROR_MESSAGE));
 
         instrument.setName(instrumentServiceModel.getName());
 
         if (this.instrumentRepository.findByName(instrument.getName()).orElse(null) != null) {
-            throw new IllegalArgumentException("Instrument with this name already exists!");
+            throw new IllegalArgumentException(Constants.INSTRUMENT_EXISTS_ERROR_MESSAGE);
         }
+
         return this.modelMapper.map(this.instrumentRepository.saveAndFlush(instrument), InstrumentServiceModel.class);
     }
 
@@ -77,7 +86,7 @@ public class InstrumentServiceImpl implements InstrumentService {
     public InstrumentServiceModel deleteInstrument(String id) {
 
         Instrument instrument = this.instrumentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Instrument not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.INSTRUMENT_NOT_FOUND_ERROR_MESSAGE));
 
         this.instrumentRepository.delete(instrument);
 
@@ -86,7 +95,9 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public List<InstrumentViewModel> getInstrumentNames() {
+
         List<InstrumentViewModel> result;
+
         result = findAllInstruments()
                 .stream()
                 .map(i -> this.modelMapper.map(i, InstrumentViewModel.class))

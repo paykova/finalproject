@@ -2,6 +2,7 @@ package org.softuni.finalpoject.service;
 
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.Message;
 import org.softuni.finalpoject.domain.entities.User;
 import org.softuni.finalpoject.domain.models.service.MessageServiceModel;
@@ -22,7 +23,9 @@ public class MessageServiceImpl implements MessageService {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public MessageServiceImpl(MessageRepository messageRepository, UserRepository userRepository, ModelMapper modelMapper) {
+    public MessageServiceImpl(MessageRepository messageRepository,
+                              UserRepository userRepository,
+                              ModelMapper modelMapper) {
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
@@ -35,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
         Message message = this.modelMapper.map(messageServiceModel, Message.class);
 
         User user = userRepository.findByUsername(name)
-                .orElseThrow(() -> new IllegalArgumentException("User not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.USER_NOT_FOUND_ERROR_MESSAGE));
 
         message.setAuthor(user);
 
@@ -50,6 +53,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<MessageServiceModel> findAllMessages() {
+
         return this.messageRepository.findAll()
                 .stream()
                 .map(m -> this.modelMapper.map(m, MessageServiceModel.class))
@@ -60,9 +64,11 @@ public class MessageServiceImpl implements MessageService {
     public MessageServiceModel findMessageById(String id) throws NotFoundException {
 
         Message message = this.messageRepository.findById(id).orElse(null);
+
         if (message == null) {
-            throw new IllegalArgumentException("Message not found!");
+            throw new IllegalArgumentException(Constants.MESSAGE_NOT_FOUND_ERROR_MESSAGE);
         }
+
         return this.modelMapper.map(message, MessageServiceModel.class);
     }
 
@@ -71,7 +77,7 @@ public class MessageServiceImpl implements MessageService {
     public MessageServiceModel editMassage(String id, MessageServiceModel messageServiceModel) {
 
         Message message = this.messageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Message not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.MESSAGE_NOT_FOUND_ERROR_MESSAGE));
 
         message.setId(messageServiceModel.getId());
         return this.modelMapper.map(this.messageRepository.saveAndFlush(message), MessageServiceModel.class);
@@ -82,9 +88,10 @@ public class MessageServiceImpl implements MessageService {
     public MessageServiceModel deleteMessage(String id) {
 
         Message message = this.messageRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Message not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.MESSAGE_NOT_FOUND_ERROR_MESSAGE));
 
         this.messageRepository.delete(message);
+
         return this.modelMapper.map(message, MessageServiceModel.class);
     }
 }

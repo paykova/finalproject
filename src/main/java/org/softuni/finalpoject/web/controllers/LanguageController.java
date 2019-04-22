@@ -3,6 +3,7 @@ package org.softuni.finalpoject.web.controllers;
 import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.models.binding.LanguageAddBindingModel;
+import org.softuni.finalpoject.domain.models.binding.SportAddBindingModel;
 import org.softuni.finalpoject.domain.models.service.LanguageServiceModel;
 import org.softuni.finalpoject.domain.models.view.LanguageViewModel;
 import org.softuni.finalpoject.service.LanguageService;
@@ -70,16 +71,32 @@ public class LanguageController extends BaseController {
 
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Edit Language")
-    public ModelAndView editLanguage(@PathVariable String id, ModelAndView modelAndView) throws NotFoundException {
-        modelAndView.addObject("model",
-                this.modelMapper.map(this.languageService.findLanguageById(id), LanguageViewModel.class));
+    @PageTitle("Edit Sport")
+    public ModelAndView editLanguage(@PathVariable String id,
+                                  ModelAndView modelAndView,
+                                  @ModelAttribute(name = "model") LanguageAddBindingModel model) throws NotFoundException {
+
+
+        model = this.modelMapper.map(this.languageService.findLanguageById(id), LanguageAddBindingModel.class);
+
+
+        modelAndView.addObject("languageId", id);
+        modelAndView.addObject("model", model);
+
         return super.view("language/edit-language", modelAndView);
     }
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editLanguageConfirm(@PathVariable String id, @ModelAttribute LanguageAddBindingModel model) {
+    public ModelAndView editLanguageConfirm(@PathVariable String id,
+                                         ModelAndView modelAndView,
+                                         @Valid @ModelAttribute(name = "model") LanguageAddBindingModel model,
+                                         BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("model", model);
+            return super.view("language/edit-language", modelAndView);
+        }
 
         this.languageService.editLanguage(id, this.modelMapper.map(model, LanguageServiceModel.class));
         return super.redirect("/languages/all");

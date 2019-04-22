@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.*;
 import org.softuni.finalpoject.domain.models.service.KidServiceModel;
 import org.softuni.finalpoject.repository.KidRepository;
@@ -24,7 +25,13 @@ public class KidServiceImpl implements KidService{
 
 
     @Autowired
-    public KidServiceImpl(KidRepository kidRepository, ModelMapper modelMapper, UserRepository userRepository, SportService sportService, LanguageService languageService, OtherActivityService otherActivityService, InstrumentService instrumentService) {
+    public KidServiceImpl(KidRepository kidRepository,
+                          ModelMapper modelMapper,
+                          UserRepository userRepository,
+                          SportService sportService,
+                          LanguageService languageService,
+                          OtherActivityService otherActivityService,
+                          InstrumentService instrumentService) {
         this.kidRepository = kidRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
@@ -36,10 +43,13 @@ public class KidServiceImpl implements KidService{
 
     @Override
     public KidServiceModel findKidById(String id) {
+
         Kid kid = this.kidRepository.findById(id).orElse(null);
+
         if (kid == null) {
-            throw new IllegalArgumentException("Kid not found!");
+            throw new IllegalArgumentException(Constants.KID_NOT_FOUND_ERROR_MESSAGE);
         }
+
         return this.modelMapper.map(kid, KidServiceModel.class);
     }
 
@@ -49,12 +59,13 @@ public class KidServiceImpl implements KidService{
         Kid kid = this.kidRepository.findByName(kidServiceModel.getName()).orElse(null);
 
         if(kid != null){
-            throw new IllegalArgumentException("Kid with this name already exist");
+            throw new IllegalArgumentException(Constants.KID_EXISTS_ERROR_MESSAGE);
         }
 
         kid = this.modelMapper.map(kidServiceModel, Kid.class);
 
         User user = userRepository.findByUsername(name).orElseThrow();
+
         kid.setParent(user);
 
         try {
@@ -68,10 +79,10 @@ public class KidServiceImpl implements KidService{
 
     @Override
     public List<KidServiceModel> findAllKids() {
+
         return this.kidRepository.findAll()
                 .stream()
-                .map(u -> this.modelMapper
-                        .map(u, KidServiceModel.class))
+                .map(u -> this.modelMapper.map(u, KidServiceModel.class))
                 .collect(Collectors.toList());
     }
 
@@ -87,7 +98,7 @@ public class KidServiceImpl implements KidService{
     public void deleteKid(String id) {
 
         Kid kid = this.kidRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Kid not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.KID_NOT_FOUND_ERROR_MESSAGE));
 
         this.kidRepository.delete(kid);
     }
@@ -96,7 +107,7 @@ public class KidServiceImpl implements KidService{
     public KidServiceModel editKid(String id, KidServiceModel kidServiceModel) {
 
         Kid kid = this.kidRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Kid not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.KID_NOT_FOUND_ERROR_MESSAGE));
 
         kidServiceModel.setLanguages(
                 this.languageService.findAllLanguages()

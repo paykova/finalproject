@@ -22,7 +22,6 @@ public class RoleServiceImpl implements RoleService {
         this.modelMapper = modelMapper;
     }
 
-
     @Override
     public void seedRolesInDb() {
         if (this.roleRepository.count() == 0) {
@@ -45,18 +44,4 @@ public class RoleServiceImpl implements RoleService {
     public RoleServiceModel findByAuthority(String authority) {
         return this.modelMapper.map(this.roleRepository.findByAuthority(authority), RoleServiceModel.class);
     }
-
-    //    @Override
-//    public void assignUserRoles(UserServiceModel userServiceModel, long numberOfUsers) {
-//        if (numberOfUsers == 0) {
-//            userServiceModel
-//                    .setAuthorities(this.roleRepository
-//                            .findAll()
-//                            .stream()
-//                            .map(r -> this.modelMapper.map(r, RoleServiceModel.class))
-//                            .collect(Collectors.toSet()));
-//        }
-//    }
-
-
 }

@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.User;
 import org.softuni.finalpoject.domain.models.service.UserServiceModel;
 import org.softuni.finalpoject.repository.UserRepository;
@@ -48,23 +49,24 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND_ERROR_MESSAGE));
     }
 
     @Override
     public UserServiceModel findUserByUserName(String username) {
         return this.userRepository.findByUsername(username)
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND_ERROR_MESSAGE));
     }
 
     @Override
     public UserServiceModel editUserProfile(UserServiceModel userServiceModel, String oldPassword) {
+
         User user = this.userRepository.findByUsername(userServiceModel.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND_ERROR_MESSAGE));
 
         if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new IllegalArgumentException("Incorrect password");
+            throw new IllegalArgumentException(Constants.INCORRECT_PASSWORD_ERROR_MESSAGE);
         }
         user.setPassword(!"".equals(userServiceModel.getPassword())  ?
                 this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()) :
@@ -80,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void setUserRole(String id, String role) {
-        User user = this.userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Incorrect id."));
+        User user = this.userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(Constants.INCORRECT_ID_ERROR_MESSAGE));
         UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
         userServiceModel.getAuthorities().clear();
 

@@ -24,7 +24,9 @@ public class SportServiceImpl implements SportService {
 
 
     @Autowired
-    public SportServiceImpl(SportRepository sportRepository, ModelMapper modelMapper, Validator validator) {
+    public SportServiceImpl(SportRepository sportRepository,
+                            ModelMapper modelMapper,
+                            Validator validator) {
         this.sportRepository = sportRepository;
         this.modelMapper = modelMapper;
         this.validator = validator;
@@ -34,11 +36,13 @@ public class SportServiceImpl implements SportService {
     public SportServiceModel addSport(SportServiceModel sportServiceModel) {
 
         if(!validator.validate(sportServiceModel).isEmpty()){
-            throw new IllegalArgumentException("Invalid Sport!");
+            throw new IllegalArgumentException(Constants.INVALID_SPORT_ERROR_MESSAGE);
         }
+
         Sport sport = this.modelMapper.map(sportServiceModel, Sport.class);
+
         if (this.sportRepository.findByName(sport.getName()).orElse(null) != null) {
-            throw new IllegalArgumentException("Sport with this name already exists!");
+            throw new IllegalArgumentException(Constants.SPORT_EXISTS_ERROR_MESSAGE);
         }
 
         return this.modelMapper.map(this.sportRepository.saveAndFlush(sport), SportServiceModel.class);
@@ -46,6 +50,7 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public List<SportServiceModel> findAllSports() {
+
         return this.sportRepository.findAll()
                 .stream()
                 .map(s -> this.modelMapper.map(s, SportServiceModel.class))
@@ -56,19 +61,21 @@ public class SportServiceImpl implements SportService {
     public SportServiceModel findSportById(String id) {
 
         Sport sport = this.sportRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sport not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.SPORT_NOT_FOUND_ERROR_MESSAGE));
 
         return this.modelMapper.map(sport, SportServiceModel.class);
     }
 
     @Override
     public SportServiceModel editSport(String id, SportServiceModel sportServiceModel) {
+
         Sport sport = this.sportRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sport not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.SPORT_NOT_FOUND_ERROR_MESSAGE));
 
         sport.setName(sportServiceModel.getName());
+
         if (this.sportRepository.findByName(sport.getName()).orElse(null) != null) {
-            throw new IllegalArgumentException("Sport with this name already exists!");
+            throw new IllegalArgumentException(Constants.SPORT_EXISTS_ERROR_MESSAGE);
         }
 
         return this.modelMapper.map(this.sportRepository.saveAndFlush(sport), SportServiceModel.class);
@@ -78,7 +85,7 @@ public class SportServiceImpl implements SportService {
     public SportServiceModel deleteSport(String id) {
 
         Sport sport = this.sportRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Sport not found"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.SPORT_NOT_FOUND_ERROR_MESSAGE));
 
         this.sportRepository.delete(sport);
 
@@ -87,7 +94,9 @@ public class SportServiceImpl implements SportService {
 
     @Override
     public List<SportViewModel> getSportsNames() {
+
         List<SportViewModel> result;
+
         result = findAllSports()
                 .stream()
                 .map(s -> this.modelMapper.map(s, SportViewModel.class))

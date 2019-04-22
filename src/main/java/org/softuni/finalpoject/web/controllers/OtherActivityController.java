@@ -1,5 +1,6 @@
 package org.softuni.finalpoject.web.controllers;
 
+import javassist.NotFoundException;
 import org.modelmapper.ModelMapper;
 import org.softuni.finalpoject.domain.entities.OtherActivity;
 import org.softuni.finalpoject.domain.models.binding.OtherActivityAddBindingModel;
@@ -65,20 +66,34 @@ public class OtherActivityController extends BaseController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Edit Other Activity")
-    public ModelAndView editOtherActivity(@PathVariable String id, ModelAndView modelAndView) {
-        modelAndView.addObject("model",
-                this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityViewModel.class));
+    public ModelAndView editOtherActivity(@PathVariable String id,
+                                     ModelAndView modelAndView,
+                                     @ModelAttribute(name = "model") OtherActivityAddBindingModel model) throws NotFoundException {
+
+        model = this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityAddBindingModel.class);
+
+        modelAndView.addObject("model", model);
+        modelAndView.addObject("otheractivityId", id);
+
         return super.view("otheractivity/edit-otheractivity", modelAndView);
     }
 
+
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editOtherActivityConfirm(@PathVariable String id, @ModelAttribute OtherActivityAddBindingModel model) {
+    public ModelAndView editOtherActivityConfirm(@PathVariable String id,
+                                            ModelAndView modelAndView,
+                                            @Valid @ModelAttribute(name = "model") OtherActivityAddBindingModel model,
+                                            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("model", model);
+            return super.view("otheractivity/edit-otheractivity", modelAndView);
+        }
 
         this.otherActivityService.editOtherActivity(id, this.modelMapper.map(model, OtherActivityServiceModel.class));
         return super.redirect("/otheractivities/all");
     }
-
 
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")

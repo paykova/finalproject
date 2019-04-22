@@ -128,4 +128,3 @@ public class UserController extends BaseController{
         return super.redirect("/users/all");
     }
 }
-

@@ -43,8 +43,8 @@ public class InstrumentController extends BaseController {
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     public ModelAndView addInstrumentConfirm(ModelAndView modelAndView,
-                                        @Valid @ModelAttribute(name = "model") InstrumentAddBindingModel model,
-                                        BindingResult bindingResult) {
+                                             @Valid @ModelAttribute(name = "model") InstrumentAddBindingModel model,
+                                             BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("model", model);
@@ -68,15 +68,32 @@ public class InstrumentController extends BaseController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Edit Instrument")
-    public ModelAndView editInstrument(@PathVariable String id, ModelAndView modelAndView) {
-        modelAndView.addObject("model",
-                this.modelMapper.map(this.instrumentService.findInstrumentById(id), InstrumentViewModel.class));
+    public ModelAndView editInstrument(@PathVariable String id,
+                                       ModelAndView modelAndView,
+                                       @ModelAttribute(name = "model") InstrumentAddBindingModel model) {
+
+
+        model = this.modelMapper.map(this.instrumentService.findInstrumentById(id), InstrumentAddBindingModel.class);
+
+
+        modelAndView.addObject("instrumentId", id);
+        modelAndView.addObject("model", model);
+
         return super.view("instrument/edit-instrument", modelAndView);
     }
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editInstrumentConfirm(@PathVariable String id, @ModelAttribute InstrumentAddBindingModel model) {
+    public ModelAndView editInstrumentConfirm(@PathVariable String id,
+                                              ModelAndView modelAndView,
+                                              @Valid @ModelAttribute(name = "model") InstrumentAddBindingModel model,
+                                              BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("model", model);
+            return super.view("instrument/edit-instrument", modelAndView);
+        }
+
         this.instrumentService.editInstrument(id, this.modelMapper.map(model, InstrumentServiceModel.class));
         return super.redirect("/instruments/all");
     }

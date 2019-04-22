@@ -95,7 +95,6 @@ public class SportController extends BaseController {
                                          BindingResult bindingResult) {
          this.editValidator.validate(model, bindingResult);
 
-
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("model", model);
             return super.view("sport/edit-sport", modelAndView);

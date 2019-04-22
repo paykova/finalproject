@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.OtherActivity;
 import org.softuni.finalpoject.domain.models.service.OtherActivityServiceModel;
 import org.softuni.finalpoject.domain.models.view.OtherActivityViewModel;
@@ -21,7 +22,9 @@ public class OtherActivityServiceImpl implements OtherActivityService {
     private final Validator validator;
 
     @Autowired
-    public OtherActivityServiceImpl(OtherActivityRepository otherActivityRepository, ModelMapper modelMapper, Validator validator) {
+    public OtherActivityServiceImpl(OtherActivityRepository otherActivityRepository,
+                                    ModelMapper modelMapper,
+                                    Validator validator) {
         this.otherActivityRepository = otherActivityRepository;
         this.modelMapper = modelMapper;
         this.validator = validator;
@@ -31,12 +34,13 @@ public class OtherActivityServiceImpl implements OtherActivityService {
     public OtherActivityServiceModel addOtherActivity(OtherActivityServiceModel otherActivityServiceModel) {
 
         if(!validator.validate(otherActivityServiceModel).isEmpty()){
-            throw new IllegalArgumentException("Invalid Activity!");
+            throw new IllegalArgumentException(Constants.INVALID_ACTIVITY_ERROR_MESSAGE);
         }
+
         OtherActivity otherActivity = this.modelMapper.map(otherActivityServiceModel, OtherActivity.class);
 
         if (this.otherActivityRepository.findByName(otherActivity.getName()).orElse(null) != null) {
-            throw new IllegalArgumentException("Activity with this name already exists!");
+            throw new IllegalArgumentException(Constants.ACTIVITY_EXISTS_ERROR_MESSAGE);
         }
 
         return this.modelMapper.map(this.otherActivityRepository.saveAndFlush(otherActivity), OtherActivityServiceModel.class);
@@ -55,7 +59,7 @@ public class OtherActivityServiceImpl implements OtherActivityService {
     public OtherActivityServiceModel findOtherActivityById(String id) {
 
         OtherActivity otherActivity = this.otherActivityRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Activity not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.ACTIVITY_NOT_FOUND_ERROR_MESSAGE));
 
         return this.modelMapper.map(otherActivity, OtherActivityServiceModel.class);
     }
@@ -64,13 +68,13 @@ public class OtherActivityServiceImpl implements OtherActivityService {
     public OtherActivityServiceModel editOtherActivity(String id, OtherActivityServiceModel otherActivityServiceModel) {
 
         OtherActivity otherActivity = this.otherActivityRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Activity not found!"));
-
-        otherActivity.setName(otherActivityServiceModel.getName());
+                .orElseThrow(() -> new IllegalArgumentException(Constants.ACTIVITY_NOT_FOUND_ERROR_MESSAGE));
 
         if (this.otherActivityRepository.findByName(otherActivity.getName()).orElse(null) != null) {
-            throw new IllegalArgumentException("Activity with this name already exists!");
+            throw new IllegalArgumentException(Constants.ACTIVITY_EXISTS_ERROR_MESSAGE);
         }
+        otherActivity.setName(otherActivityServiceModel.getName());
+
         return this.modelMapper.map(this.otherActivityRepository.saveAndFlush(otherActivity), OtherActivityServiceModel.class);
     }
 
@@ -78,7 +82,7 @@ public class OtherActivityServiceImpl implements OtherActivityService {
     public OtherActivityServiceModel deleteOtherActivity(String id) {
 
         OtherActivity otherActivity = this.otherActivityRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Activity not found!"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.ACTIVITY_NOT_FOUND_ERROR_MESSAGE));
 
         this.otherActivityRepository.delete(otherActivity);
 
