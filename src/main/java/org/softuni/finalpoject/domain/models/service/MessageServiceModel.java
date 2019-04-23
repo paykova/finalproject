@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.domain.models.service;
 
 import org.hibernate.validator.constraints.Length;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.User;
 
 import javax.validation.constraints.NotEmpty;
@@ -15,10 +16,10 @@ public class MessageServiceModel extends BaseServiceModel {
     public MessageServiceModel() {
     }
 
-    @NotNull(message = "Title must not be null!")
-    @NotEmpty(message = "Title must not be empty!")
-    @Length(min = 2, message = "Title must be at least 2 characters long!")
-    @Length(max = 20, message = "Title must be maximum 20 characters long!")
+    @NotNull(message = Constants.TITLE_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.TITLE_MUST_NOT_BE_EMPTY)
+    @Length(min = 2, message = Constants.TITLE_MUST_BE_AT_LEAST_2_CHARACTERS_LONG)
+    @Length(max = 20, message = Constants.TITLE_MUST_BE_MAX_20_CHARACTERS_LONG)
     public String getTitle() {
         return title;
     }
@@ -27,10 +28,10 @@ public class MessageServiceModel extends BaseServiceModel {
         this.title = title;
     }
 
-    @NotNull(message = "Content must not be null!")
-    @NotEmpty(message = "Content must not be empty!")
-    @Length(min = 10, message = "Content must be at least 10 characters long!")
-    @Length(max = 100, message = "Content must be maximum 100 characters long!")
+    @NotNull(message = Constants.CONTENT_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.CONTENT_MUST_NOT_BE_EMPTY)
+    @Length(min = 10, message = Constants.CONTENT_MUST_BE_AT_LEAST_10_CHARACTERS_LONG)
+    @Length(max = 100, message = Constants.CONTENT_MUST_BE_MAX_100_CHARACTERS_LONG)
     public String getContent() {
         return content;
     }

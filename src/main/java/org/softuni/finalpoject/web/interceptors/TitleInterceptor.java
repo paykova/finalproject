@@ -1,5 +1,6 @@
 package org.softuni.finalpoject.web.interceptors;
 
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.web.annotations.PageTitle;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -18,7 +19,7 @@ public class TitleInterceptor extends HandlerInterceptorAdapter {
                            Object handler,
                            ModelAndView modelAndView) throws Exception {
 
-        String title = "Kid Center";
+        String title = Constants.PAGE_TITLE;
 
         if (modelAndView == null) {
             modelAndView = new ModelAndView();

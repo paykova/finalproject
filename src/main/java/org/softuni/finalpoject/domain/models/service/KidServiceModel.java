@@ -2,6 +2,7 @@ package org.softuni.finalpoject.domain.models.service;
 
 import org.hibernate.validator.constraints.Length;
 import org.modelmapper.ModelMapper;
+import org.softuni.finalpoject.constants.Constants;
 import org.softuni.finalpoject.domain.entities.Gender;
 import org.softuni.finalpoject.domain.entities.Kid;
 import org.softuni.finalpoject.domain.entities.User;
@@ -29,10 +30,10 @@ public class KidServiceModel extends BaseServiceModel{
     public KidServiceModel() {
     }
 
-    @NotNull(message = "Kid Name must not be null!")
-    @NotEmpty(message = "Kid Name must not be empty!")
-    @Length(min = 2, message = "Kid Name must be at least 2 characters long!")
-    @Length(max = 20, message = "Kid Name must be maximum 20 characters long!")
+    @NotNull(message = Constants.KID_NAME_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.KID_NAME_MUST_NOT_BE_EMPTY)
+    @Length(min = 2, message = Constants.KID_NAME_MUST_BE_AT_LEAST_2_CHARACTERS_LONG)
+    @Length(max = 20, message = Constants.KID_NAME_MUST_BE_MAX_20_CHARACTERS_LONG)
     public String getName() {
         return name;
     }
@@ -41,8 +42,6 @@ public class KidServiceModel extends BaseServiceModel{
         this.name = name;
     }
 
-    @NotNull(message = "Kid Birth Date must not be null!")
-    @NotEmpty(message = "Kid Birth Dtae must not be empty!")
     public LocalDate getBirthDate() {
         return birthDate;
     }
@@ -67,10 +66,10 @@ public class KidServiceModel extends BaseServiceModel{
         this.imageUrl = imageUrl;
     }
 
-    @NotNull(message = "Description Name must not be null!")
-    @NotEmpty(message = "Description must not be empty!")
-    @Length(min = 2, message = "Description must be at least 2 characters long!")
-    @Length(max = 100, message = "Description must be maximum 100 characters long!")
+    @NotNull(message = Constants.DESCRIPTION_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.DESCRIPTION_MUST_NOT_BE_EMPTY)
+    @Length(min = 5, message = Constants.DESCRIPTION_MUST_BE_AT_LEAST_5_CHARACTERS_LONG)
+    @Length(max = 50, message = Constants.DESCRIPTION_MUST_BE_MAX_50_CHARACTERS_LONG)
     public String getDescription() {
         return description;
     }

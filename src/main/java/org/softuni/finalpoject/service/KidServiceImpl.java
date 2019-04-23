@@ -6,6 +6,7 @@ import org.softuni.finalpoject.domain.entities.*;
 import org.softuni.finalpoject.domain.models.service.KidServiceModel;
 import org.softuni.finalpoject.repository.KidRepository;
 import org.softuni.finalpoject.repository.UserRepository;
+import org.softuni.finalpoject.utils.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,32 +14,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class KidServiceImpl implements KidService{
+public class KidServiceImpl implements KidService {
 
     private final KidRepository kidRepository;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
-    private final SportService sportService;
-    private final LanguageService languageService;
-    private final OtherActivityService otherActivityService;
-    private final InstrumentService instrumentService;
+    private final ValidationUtil validationUtil;
 
 
     @Autowired
     public KidServiceImpl(KidRepository kidRepository,
                           ModelMapper modelMapper,
                           UserRepository userRepository,
-                          SportService sportService,
-                          LanguageService languageService,
-                          OtherActivityService otherActivityService,
-                          InstrumentService instrumentService) {
+                          ValidationUtil validationUtil) {
         this.kidRepository = kidRepository;
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
-        this.sportService = sportService;
-        this.languageService = languageService;
-        this.otherActivityService = otherActivityService;
-        this.instrumentService = instrumentService;
+        this.validationUtil = validationUtil;
     }
 
     @Override
@@ -56,9 +48,13 @@ public class KidServiceImpl implements KidService{
     @Override
     public KidServiceModel addKid(KidServiceModel kidServiceModel, String name) {
 
+        if (!this.validationUtil.isValid(kidServiceModel)) {
+            throw new IllegalArgumentException(Constants.TRYING_TO_ADD_INVALID_DATA);
+        }
+
         Kid kid = this.kidRepository.findByName(kidServiceModel.getName()).orElse(null);
 
-        if(kid != null){
+        if (kid != null) {
             throw new IllegalArgumentException(Constants.KID_EXISTS_ERROR_MESSAGE);
         }
 
@@ -71,7 +67,7 @@ public class KidServiceImpl implements KidService{
         try {
             kid = this.kidRepository.saveAndFlush(kid);
             return this.modelMapper.map(kid, KidServiceModel.class);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -88,7 +84,7 @@ public class KidServiceImpl implements KidService{
 
     @Override
     public List<KidServiceModel> findKidsByParent(String username) {
-      return this.kidRepository.findAllKidsByParent_Id(username)
+        return this.kidRepository.findAllKidsByParent_Id(username)
                 .stream()
                 .map(k -> modelMapper.map(k, KidServiceModel.class))
                 .collect(Collectors.toList());
@@ -98,80 +94,34 @@ public class KidServiceImpl implements KidService{
     public void deleteKid(String id) {
 
         Kid kid = this.kidRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(Constants.KID_NOT_FOUND_ERROR_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.PROBLEM_ERROR_MESSAGE));
 
         this.kidRepository.delete(kid);
     }
 
     @Override
-    public KidServiceModel editKid(String id, KidServiceModel kidServiceModel) {
+    public KidServiceModel editKid(String id, KidServiceModel kidServiceModel, String name) {
 
         Kid kid = this.kidRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException(Constants.KID_NOT_FOUND_ERROR_MESSAGE));
+                .orElse(null);
 
-        kidServiceModel.setLanguages(
-                this.languageService.findAllLanguages()
-                        .stream()
-                        .filter(l -> kidServiceModel.getLanguages().contains(l.getId()))
-                        .collect(Collectors.toList())
-        );
+        String image = kid.getImageUrl();
 
-        kidServiceModel.setInstruments(
-                this.instrumentService.findAllInstruments()
-                        .stream()
-                        .filter(i -> kidServiceModel.getInstruments().contains(i.getId()))
-                        .collect(Collectors.toList())
-        );
+        if (kid == null) {
+            throw new IllegalArgumentException(Constants.KID_EXISTS_ERROR_MESSAGE);
+        }
 
-        kidServiceModel.setSports(
-                this.sportService.findAllSports()
-                        .stream()
-                        .filter(s -> kidServiceModel.getSports().contains(s.getId()))
-                        .collect(Collectors.toList())
-        );
+        kid = this.modelMapper.map(kidServiceModel, Kid.class);
+        User user = userRepository.findByUsername(name).orElseThrow();
+        kid.setParent(user);
+        kid.setImageUrl(image);
 
-        kidServiceModel.setOtheractivities(
-                this.otherActivityService.findAllOtherActivities()
-                        .stream()
-                        .filter(o -> kidServiceModel.getOtheractivities().contains(o.getId()))
-                        .collect(Collectors.toList())
-        );
-//
-//        User user = new User();
-//        user.setId(kidServiceModel.getParent().getId());
-//        kidServiceModel.setParent(user);
-//        kid.setParent(user);
-
-        kid.setName(kidServiceModel.getName());
-        kid.setDescription(kidServiceModel.getDescription());
-        kid.setBirthDate(kidServiceModel.getBirthDate());
-        kid.setParent(kid.getParent());
-
-        kid.setLanguages(
-                kidServiceModel.getLanguages()
-                        .stream()
-                        .map(l -> this.modelMapper.map(l, Language.class))
-                        .collect(Collectors.toList())
-        );
-        kid.setInstruments(
-                kidServiceModel.getInstruments()
-                        .stream()
-                        .map(i -> this.modelMapper.map(i, Instrument.class))
-                        .collect(Collectors.toList())
-        );
-        kid.setSports(
-                kidServiceModel.getSports()
-                        .stream()
-                        .map(l -> this.modelMapper.map(l, Sport.class))
-                        .collect(Collectors.toList())
-        );
-        kid.setOtherActivities(
-                kidServiceModel.getOtheractivities()
-                        .stream()
-                        .map(o -> this.modelMapper.map(o, OtherActivity.class))
-                        .collect(Collectors.toList())
-        );
-
-        return this.modelMapper.map(this.kidRepository.saveAndFlush(kid), KidServiceModel.class);
+        try {
+            kid = this.kidRepository.saveAndFlush(kid);
+            return this.modelMapper.map(kid, KidServiceModel.class);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(Constants.ALL_REQUIRED_INFO_ERROR_MESSAGE);
+        }
+        // return this.modelMapper.map(this.kidRepository.saveAndFlush(kid), KidServiceModel.class);
     }
 }

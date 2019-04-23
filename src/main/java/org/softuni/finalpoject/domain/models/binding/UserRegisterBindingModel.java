@@ -1,6 +1,7 @@
 package org.softuni.finalpoject.domain.models.binding;
 
 import org.hibernate.validator.constraints.Length;
+import org.softuni.finalpoject.constants.Constants;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,10 +16,10 @@ public class UserRegisterBindingModel {
     public UserRegisterBindingModel() {
     }
 
-    @NotNull(message = "User Name must not be null!")
-    @NotEmpty(message = "User Name must not be empty!")
-    @Length(min = 2, message = "User Name must be at least 2 characters long!")
-    @Length(max = 20, message = "User Name must be maximum 20 characters long!")
+    @NotNull(message = Constants.USER_NAME_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.USER_NAME_MUST_NOT_BE_EMPTY)
+    @Length(min = 2, message = Constants.USER_NAME_MUST_BE_AT_LEAST_2_CHARACTERS_LONG)
+    @Length(max = 20, message = Constants.USER_NAME_MUST_BE_MAX_20_CHARACTERS_LONG)
     public String getUsername() {
         return username;
     }
@@ -27,10 +28,10 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
-    @NotNull(message = "Password must not be null!")
-    @NotEmpty(message = "Password must not be empty!")
-    @Length(min = 6, message = "Password must be at least 2 characters long!")
-    @Length(max = 20, message = "Password must be maximum 20 characters long!")
+    @NotNull(message = Constants.PASSWORD_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.PASSWORD_MUST_NOT_BE_EMPTY)
+    @Length(min = 6, message = Constants.PASSWORD_MUST_BE_AT_LEAST_6_CHARACTERS_LONG)
+    @Length(max = 20, message = Constants.PASSWORD_MUST_BE_MAX_20_CHARACTERS_LONG)
     public String getPassword() {
         return password;
     }
@@ -39,10 +40,10 @@ public class UserRegisterBindingModel {
         this.password = password;
     }
 
-    @NotNull(message = "Confirm password must not be null!")
-    @NotEmpty(message = "Confirm Password must not be empty!")
-    @Length(min = 6, message = "Confirm Password must be at least 2 characters long!")
-    @Length(max = 20, message = "Confirm Password must be maximum 20 characters long!")
+    @NotNull(message = Constants.CONFIRM_PASSWORD_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.CONFIRM_PASSWORD_MUST_NOT_BE_EMPTY)
+    @Length(min = 6, message = Constants.CONFIRM_PASSWORD_MUST_BE_AT_LEAST_6_CHARACTERS_LONG)
+    @Length(max = 20, message = Constants.CONFIRM_PASSWORD_MUST_BE_MAX_20_CHARACTERS_LONG)
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -51,10 +52,10 @@ public class UserRegisterBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
-    @NotNull(message = "Email must not be null!")
-    @NotEmpty(message = "Email must not be empty!")
-    @Length(min = 2, message = "Email must be at least 2 characters long!")
-    @Length(max = 20, message = "Email must be maximum 20 characters long!")
+    @NotNull(message = Constants.EMAIL_MUST_NOT_BE_NULL)
+    @NotEmpty(message = Constants.EMAIL_MUST_NOT_BE_EMPTY)
+    @Length(min = 6, message = Constants.EMAIL_MUST_BE_AT_LEAST_6_CHARACTERS_LONG)
+    @Length(max = 20, message = Constants.EMAIL_MUST_BE_MAX_20_CHARACTERS_LONG)
     public String getEmail() {
         return email;
     }

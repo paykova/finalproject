@@ -30,6 +30,9 @@ public class Constants {
     public static final String USER_NOT_FOUND_ERROR_MESSAGE = "User not found!";
     public static final String MESSAGE_NOT_FOUND_ERROR_MESSAGE = "Message not found!";
 
+    public static final String ALL_REQUIRED_INFO_ERROR_MESSAGE = "Something went wrong! To edit - please, fulfill all required info!";
+    public static final String PROBLEM_ERROR_MESSAGE = "Something went wrong! We are working hard to fix this problem!";
+
     public static final String INSTRUMENT_NAME_MUST_NOT_BE_NULL = "Instrument Name must not be null!";
     public static final String INSTRUMENT_NAME_MUST_NOT_BE_EMPTY = "Instrument Name must not be empty!";
     public static final String INSTRUMENT_NAME_MUST_BE_AT_LEAST_2_CHARACTERS_LONG = "Instrument Name must be at least 2 characters long!";
@@ -57,8 +60,8 @@ public class Constants {
 
     public static final String DESCRIPTION_MUST_NOT_BE_NULL = "Description must not be null!";
     public static final String DESCRIPTION_MUST_NOT_BE_EMPTY = "Description must not be empty!";
-    public static final String DESCRIPTION_MUST_BE_AT_LEAST_10_CHARACTERS_LONG = "Description must be at least 10 characters long!";
-    public static final String DESCRIPTION_MUST_BE_MAX_20_CHARACTERS_LONG = "Description must be maximum 20 characters long!";
+    public static final String DESCRIPTION_MUST_BE_AT_LEAST_5_CHARACTERS_LONG = "Description must be at least 5 characters long!";
+    public static final String DESCRIPTION_MUST_BE_MAX_50_CHARACTERS_LONG = "Description must be maximum 50 characters long!";
 
     public static final String TITLE_MUST_NOT_BE_NULL = "Title must not be null!";
     public static final String TITLE_MUST_NOT_BE_EMPTY = "Title must not be empty!";
@@ -70,11 +73,41 @@ public class Constants {
     public static final String CONTENT_MUST_BE_AT_LEAST_10_CHARACTERS_LONG = "Content must be at least 10 characters long!";
     public static final String CONTENT_MUST_BE_MAX_100_CHARACTERS_LONG = "Content must be maximum 100 characters long!";
 
+    public static final String USER_NAME_MUST_NOT_BE_NULL = "User Name must not be null!";
+    public static final String USER_NAME_MUST_NOT_BE_EMPTY = "User Name must not be empty!";
+    public static final String USER_NAME_MUST_BE_AT_LEAST_2_CHARACTERS_LONG = "User Name must be at least 2 characters long!";
+    public static final String USER_NAME_MUST_BE_MAX_20_CHARACTERS_LONG = "User Name must be maximum 20 characters long!";
+
+    public static final String PASSWORD_MUST_NOT_BE_NULL = "Password must not be null!";
+    public static final String PASSWORD_MUST_NOT_BE_EMPTY = "Password must not be empty!";
+    public static final String PASSWORD_MUST_BE_AT_LEAST_6_CHARACTERS_LONG = "Password must be at least 6 characters long!";
+    public static final String PASSWORD_MUST_BE_MAX_20_CHARACTERS_LONG = "Password must be maximum 20 characters long!";
+
+    public static final String CONFIRM_PASSWORD_MUST_NOT_BE_NULL = "Confirm Password must not be null!";
+    public static final String CONFIRM_PASSWORD_MUST_NOT_BE_EMPTY = "Confirm Password must not be empty!";
+    public static final String CONFIRM_PASSWORD_MUST_BE_AT_LEAST_6_CHARACTERS_LONG = "Confirm Password must be at least 6 characters long!";
+    public static final String CONFIRM_PASSWORD_MUST_BE_MAX_20_CHARACTERS_LONG = "Confirm Password must be maximum 20 characters long!";
+
+    public static final String OLD_PASSWORD_MUST_NOT_BE_NULL = "Old Password must not be null!";
+    public static final String OLD_PASSWORD_MUST_NOT_BE_EMPTY = "Old Password must not be empty!";
+    public static final String OLD_PASSWORD_MUST_BE_AT_LEAST_6_CHARACTERS_LONG = "Old Password must be at least 6 characters long!";
+    public static final String OLD_PASSWORD_MUST_BE_MAX_20_CHARACTERS_LONG = "Old Password must be maximum 20 characters long!";
+
+    public static final String EMAIL_MUST_NOT_BE_NULL = "Email must not be null!";
+    public static final String EMAIL_MUST_NOT_BE_EMPTY = "Email must not be empty!";
+    public static final String EMAIL_MUST_BE_AT_LEAST_6_CHARACTERS_LONG = "Email must be at least 6 characters long!";
+    public static final String EMAIL_MUST_BE_MAX_20_CHARACTERS_LONG = "Email must be maximum 20 characters long!";
+
+
+
+    public static final String KID_BIRTH_DATE_MUST_NOT_BE_IN_THE_FUTURE = "Kid Birth Date must not be in the future!";
 
     public static final String LOCAL_DATE_FORMAT_PATTERN = "yyyy-MM-dd";
 
 
     //Page Titles
+    public static final String PAGE_TITLE = "Kid Center";
+
     public static final String PAGE_TITLE_HOME = "Home";
     public static final String PAGE_TITLE_INDEX = "Index";
     public static final String PAGE_TITLE_CONTACT_US = "Contact us";

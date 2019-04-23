@@ -48,8 +48,6 @@ public class LanguageController extends BaseController {
                                         @Valid @ModelAttribute(name = "model") LanguageAddBindingModel model,
                                         BindingResult bindingResult) {
 
-        //  addValidator.validate(model, bindingResult);
-
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("model", model);
             return super.view("language/add-language", modelAndView);

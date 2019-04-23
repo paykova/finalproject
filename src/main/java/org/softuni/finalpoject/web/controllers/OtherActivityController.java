@@ -70,7 +70,6 @@ public class OtherActivityController extends BaseController {
     public ModelAndView editOtherActivity(@PathVariable String id,
                                      ModelAndView modelAndView,
                                      @ModelAttribute(name = "model") OtherActivityAddBindingModel model) throws NotFoundException {
-
         model = this.modelMapper.map(this.otherActivityService.findOtherActivityById(id), OtherActivityAddBindingModel.class);
 
         modelAndView.addObject("model", model);

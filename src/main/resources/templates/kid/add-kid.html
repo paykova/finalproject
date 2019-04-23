@@ -14,7 +14,7 @@
     <form class="form w-25 mx-auto" th:action="@{/kids/add}" method="post" th:object="${model}"  enctype="multipart/form-data">
         <div class="form-group">
             <label for="inputKidName" class="font-weight-bold">Name</label>
-            <input type="text" th:value="*{name}" th:field="*{name}" class="form-control" id="inputKidName" placeholder="Name...">
+            <input type="text" th:value="*{name}" th:field="*{name}" class="form-control" id="inputKidName" placeholder="Kid Name">
             <th:block th:if="${#fields.hasErrors('name')}">
                 <small style="color: red" th:errors ="*{name}"></small>
             </th:block>
@@ -34,7 +34,7 @@
         <p></p>
         <div class="form-group">
             <label for="add-product-description" class="font-weight-bold">Description</label>
-            <textarea name="description" th:value="*{description}" id="add-product-description" class="form-control" rows="5" placeholder="Describe your kid in short..."></textarea>
+            <textarea name="description" th:value="*{description}" id="add-product-description" class="form-control" rows="5" placeholder="Kid Description"></textarea>
             <th:block th:if="${#fields.hasErrors('description')}">
                 <small style="color: red" th:errors ="*{description}"></small>
             </th:block>

@@ -75,7 +75,6 @@ public class Kid extends BaseEntity {
         this.description = description;
     }
 
-    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(targetEntity = Language.class)
     @JoinTable(
             name = "kids_languages",
@@ -96,8 +95,7 @@ public class Kid extends BaseEntity {
         this.languages = languages;
     }
 
-    @Fetch(FetchMode.SUBSELECT)
-    @ManyToMany(targetEntity = Sport.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Sport.class)
     @JoinTable(
             name = "kids_sports",
             joinColumns = @JoinColumn(
@@ -117,8 +115,7 @@ public class Kid extends BaseEntity {
         this.sports = sports;
     }
 
-    @Fetch(FetchMode.SUBSELECT)
-    @ManyToMany(targetEntity = Instrument.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Instrument.class)
     @JoinTable(
             name = "kids_instruments",
             joinColumns = @JoinColumn(
@@ -138,7 +135,6 @@ public class Kid extends BaseEntity {
         this.instruments = instruments;
     }
 
-    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(targetEntity = OtherActivity.class)
     @JoinTable(
             name = "kids_otheractivities",

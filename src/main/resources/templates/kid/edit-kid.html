@@ -11,24 +11,18 @@
 <main class="mt-3 bg-kidcenter">
     <h1 class="text-center text-dark">Edit Kid</h1>
     <hr class="hr-2 bg-dark w-25">
-    <form class="form w-25 mx-auto" th:action="@{/kids/edit/{id}(id=${kidId})}" method="post" th:object="${bindingModel}" enctype="multipart/form-data">
+    <form class="form w-25 mx-auto" th:action="@{/kids/edit/{id}(id=${kidId})}" method="post" th:object="${model}" enctype="multipart/form-data">
         <div class="form-group">
             <label class="font-weight-bold" for="add-kid-name">Name</label>
             <input type="text" class="form-control text-center" id="add-kid-name" name="name" th:value="${kid.name}">
+            <th:block th:if="${#fields.hasErrors('name')}">
+                <small style="color: red" th:errors ="${kid.name}"></small>
+            </th:block>
         </div>
         <div class="form-group">
             <label class="font-weight-bold" for="add-kid-description">Description</label>
             <input type="text" class="form-control text-center" id="add-kid-description" name="description" th:value="${kid.description}">
         </div>
-        <!--<div class="form-group">-->
-            <!--<label class="font-weight-bold" for="add-kid-birthdate">Birth Date</label>-->
-            <!--<input type="date" class="form-control" id="inputKidBirthDate" th:field="*{birthDate}">-->
-            <!--<input type="text" class="form-control text-center" id="add-kid-birthdate" name="birthdate" th:value="${kid.birthDate}">-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label class="font-weight-bold" for="add-kid-gender">Gender</label>-->
-            <!--<input type="text" class="form-control text-center" id="add-kid-gender" name="gender" th:value="${kid.gender}">-->
-        <!--</div>-->
         <div class="form-group">
             <label class="font-weight-bold" for="inputKidGender">Gender</label>
             <select class="form-control text-center" id="inputKidGender" th:field="*{gender}">
@@ -39,11 +33,6 @@
         <label class="font-weight-bold" for="inputKidBirthDate">Birth Date</label>
         <input type="date" class="form-control text-center" id="inputKidBirthDate" th:field="*{birthDate}">
         <p></p>
-        <!--<div class="form-group">-->
-            <!--<label for="add-kid-languages" class="font-weight-bold">Languages</label>-->
-            <!--<select multiple="" class="form-control" id="add-kid-languages" name="languages">-->
-            <!--</select>-->
-        <!--</div>-->
         <div class="form-group">
             <label for="add-product-languages" class="font-weight-bold">Languages</label>
             <select multiple="" class="form-control text-center" id="add-product-languages" name="languages">
@@ -64,21 +53,6 @@
             <select multiple="" class="form-control text-center" id="add-product-otheractivities" name="otheractivities">
             </select>
         </div>
-        <!--<div class="form-group">-->
-            <!--<label for="add-product-instruments" class="font-weight-bold">Instruments</label>-->
-            <!--<select multiple="" class="form-control" id="add-product-instruments" name="instruments">-->
-            <!--</select>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="add-kid-sports" class="font-weight-bold">Sport</label>-->
-            <!--<select multiple="" class="form-control" id="add-kid-sports" name="sports">-->
-            <!--</select>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="add-kid-otheractivities" class="font-weight-bold">Other Activities</label>-->
-            <!--<select multiple="" class="form-control" id="add-kid-otheractivities" name="otheractivities">-->
-            <!--</select>-->
-        <!--</div>-->
         <hr class="hr-2 bg-dark w-25">
         <div class="button-holder d-flex justify-content-center">
             <button type="submit" class="btn btn-success font-weight-bold text-white">Edit Kid</button>
@@ -90,38 +64,6 @@
     <th:block th:include="~{fragments/footer}"></th:block>
 </footer>
 </body>
-<!--<script>-->
-    <!--fetch('/languages/fetch')-->
-        <!--.then((response) => response.json())-->
-    <!--.then((json) => {-->
-        <!--json.forEach((language) => $('#add-product-languages').append(`<option value="${language.id}">${language.name}</option>`));-->
-    <!--})-->
-    <!--.catch((err) => console.log(err));-->
-<!--</script>-->
-<!--<script>-->
-    <!--fetch('/sports/fetch')-->
-        <!--.then((response) => response.json())-->
-    <!--.then((json) => {-->
-        <!--json.forEach((sport) => $('#add-product-sports').append(`<option value="${sport.id}">${sport.name}</option>`));-->
-    <!--})-->
-    <!--.catch((err) => console.log(err));-->
-<!--</script>-->
-<!--<script>-->
-    <!--fetch('/instruments/fetch')-->
-        <!--.then((response) => response.json())-->
-    <!--.then((json) => {-->
-        <!--json.forEach((instrument) => $('#add-product-instruments').append(`<option value="${instrument.id}">${instrument.name}</option>`));-->
-    <!--})-->
-    <!--.catch((err) => console.log(err));-->
-<!--</script>-->
-<!--<script>-->
-    <!--fetch('/otheractivities/fetch')-->
-        <!--.then((response) => response.json())-->
-    <!--.then((json) => {-->
-        <!--json.forEach((otheractivity) => $('#add-product-otheractivities').append(`<option value="${otheractivity.id}">${otheractivity.name}</option>`));-->
-    <!--})-->
-    <!--.catch((err) => console.log(err));-->
-<!--</script>-->
 <script th:inline="javascript">
     fetch('/languages/fetch')
         .then((response) => response.json())

@@ -67,8 +67,8 @@ public class KidAddBindingModel {
 
     @NotNull(message = Constants.DESCRIPTION_MUST_NOT_BE_NULL)
     @NotEmpty(message = Constants.DESCRIPTION_MUST_NOT_BE_EMPTY)
-    @Length(min = 2, message = Constants.DESCRIPTION_MUST_BE_AT_LEAST_10_CHARACTERS_LONG)
-    @Length(max = 20, message = Constants.DESCRIPTION_MUST_BE_MAX_20_CHARACTERS_LONG)
+    @Length(min = 5, message = Constants.DESCRIPTION_MUST_BE_AT_LEAST_5_CHARACTERS_LONG)
+    @Length(max = 50, message = Constants.DESCRIPTION_MUST_BE_MAX_50_CHARACTERS_LONG)
     public String getDescription() {
         return description;
     }
@@ -77,6 +77,7 @@ public class KidAddBindingModel {
         this.description = description;
     }
 
+    @NotEmpty(message = Constants.DESCRIPTION_MUST_NOT_BE_EMPTY)
     public List<String> getLanguages() {
         return languages;
     }
